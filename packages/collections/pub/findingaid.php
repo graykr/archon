@@ -14,7 +14,7 @@ $in_RootContentID = $_REQUEST['rootcontentid'] ? $_REQUEST['rootcontentid'] : 0;
 
 // Load the collection and all of its items (pre-processed)
 // into one object
-$objCollection = New Collection($_REQUEST['id']);
+$objCollection = New Collection((int) $_REQUEST['id']);
 
 
 $objCollection->dbLoadAll(LOADCONTENT_NONE);
