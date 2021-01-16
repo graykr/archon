@@ -6,7 +6,7 @@ isset($_ARCHON) or die();
 <div id='themeindex' class='bground'>
    <h1><label for="q">PDF/Deep Search</label></h1>
    <div id='pdfinput'>
-      <form name="form1" action="http://www.google.com/search" class="search">
+      <form name="form1" action="https://www.google.com/search" class="search">
          <input type="hidden" name="hq" value="inurl:www.library.illinois.edu/archives/alasfa" />
          <input type="hidden" name="safe" value="off" />
          <input type="hidden" name="filter" value="0" />
