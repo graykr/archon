@@ -206,6 +206,14 @@ img.cart
     display: none;
 }
 
+/*fully suppress the research cart functionality by hiding the links, not just the image*/
+.research_add{
+	display:none;
+}
+#viewcartlink{
+	display:none;
+}
+
 /*suppresses view of dl images*/
 
 img.dl
