@@ -29,5 +29,8 @@ $_ARCHON->config->RequestMaterialTypeList = array();//Example: array ('Official 
 $_ARCHON->config->RequestVarBoxes = "";//Example:"&ItemInfo8=";
 
 //define location codes to send based on the archon location ids; only if using custom location table
-$_ARCHON->config->RequestLinkLocationList = array();//Example:array (100 => 'LIBRARY',203 => 'OFFSITE');
+$_ARCHON->config->RequestLinkLocationList = array();//Example:array (100 => 'LIBRARY',101 => 'LIBRARY',190 => 'OFFSITE',191 => 'OFFSITE');
+
+//public location info to display in a custom location table
+$_ARCHON->config->PublicLocationInfoList = array();//Example: array ('LIBRARY'=> 'Main Library, 1000 Main St.','OFFSITE'=> 'Offsite: 24 hours notice required');
 ?>
