@@ -107,7 +107,8 @@ if (!empty($objDigitalContent->Files))
          echo("</span>");
       }
 
-echo ("<br/><span class='digcontentrequest'><a href='https://archives.library.illinois.edu/email-ahx.php?this_page=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'>Email us to request a hi-resolution copy.</a></span>");
+  echo ("<br/><span class='digcontentrequest'><a href='https://archives.library.illinois.edu/email-ahx.php?this_page=https://archon.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'>Email us to request a hi-resolution copy.</a></span>");
+//echo ("<br/><span class='digcontentrequest'><a href='https://archives.library.illinois.edu/email-ahx.php?this_page=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'>Email us to request a hi-resolution copy.</a></span>");
 
       echo("<br/><br/></div>");
    }
@@ -205,7 +206,19 @@ if ($objDigitalContent->Collection)
 
    <div class='digcontentlabel'>Found in:</div>
    <div class='digcontentdata'><?php
-   echo($objDigitalContent->Collection->toString(LINK_TOTAL));
+   //echo($objDigitalContent->Collection->toString(LINK_TOTAL));
+   
+   //add the record series number
+   $objCollection=$objDigitalContent->Collection;
+   if($objCollection->ClassificationID) { 
+		$objCollection->Classification = New Classification($objCollection->ClassificationID);
+		$objCollection->Classification->dbLoad();
+		echo($objCollection->Classification->toString(LINK_NONE, true, false, true, false) . '/');
+	}
+
+	//add the collection identifier at the front after the last slash of the series
+   echo($objDigitalContent->Collection->toString(LINK_TOTAL, true));
+
    if ($objDigitalContent->CollectionContent)
    {
       echo($_ARCHON->PublicInterface->Delimiter . $objDigitalContent->CollectionContent->toString(LINK_EACH, true, true, true, true, $_ARCHON->PublicInterface->Delimiter));
