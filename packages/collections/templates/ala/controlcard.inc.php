@@ -26,64 +26,9 @@ isset($_ARCHON) or die();
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
 
-
-/** Gather text to build a request link **/
-
-	$requestTitle = ($objCollection->Title) ? $objCollection->Title : "";
-	$requestDates = ($objCollection->InclusiveDates) ? ", ".$objCollection->InclusiveDates : "";
-	$requestTitle = urlencode($requestTitle . $requestDates);
-
-	$requestIdentifier = ($objCollection->Classification) ? $objCollection->Classification->toString(LINK_NONE, true, false, true, false)."/".$objCollection->getString('CollectionIdentifier') : $objCollection->getString('CollectionIdentifier');
-
-	$requestExtent = ($objCollection->Extent) ? preg_replace('/\.(\d)0/', ".$1", $objCollection->getString('Extent')) . " " . $objCollection->getString('ExtentUnit') : "";
-	$requestExtent .= ($objCollection->AltExtentStatement) ? "; ".$objCollection->AltExtentStatement : "";
-	
-	$requestRestrictions = ($objCollection->AccessRestrictions) ? "Access restrictions: " . strip_tags($objCollection->getString('AccessRestrictions')) : "";
-	
-	if($objCollection->MaterialType){
-		$requestMaterialType = ($_ARCHON->config->RequestMaterialTypeList[$objCollection->MaterialType]) ? $_ARCHON->config->RequestMaterialTypeList[$objCollection->MaterialType] : $objCollection->MaterialType;
-	}
-
-/*For reading room request link */
-if($_ARCHON->config->AddRequestLink and $_ARCHON->config->RequestURL) 
-{
-	$requestBaseLink =	$_ARCHON->config->RequestURL;//defined in config file
-
-	//concatenate the field names (URL parameters) and metadata from the collection to form the request link
-	$requestLink = $requestBaseLink;
-	if($_ARCHON->config->RequestVarTitle){
-		$requestLink .= $_ARCHON->config->RequestVarTitle . $requestTitle;
-	}
-	if($_ARCHON->config->RequestVarIdentifier) {
-		$requestLink .= $_ARCHON->config->RequestVarIdentifier . $requestIdentifier;
-	}
-	if($_ARCHON->config->RequestVarDates) {
-		$requestLink .= $_ARCHON->config->RequestVarDates;
-		$requestLink .= ($objCollection->InclusiveDates) ? $objCollection->InclusiveDates : "";
-	}
-	if($_ARCHON->config->RequestVarExtent) {
-		$requestLink .= $_ARCHON->config->RequestVarExtent . $requestExtent;
-	}
-	
-	if($_ARCHON->config->RequestVarRestrictions) {
-		$requestLink .= $_ARCHON->config->RequestVarRestrictions . $requestRestrictions;
-	}
-	
-	if($_ARCHON->config->RequestVarMaterialType) {
-		$requestLink .= $_ARCHON->config->RequestVarMaterialType . $requestMaterialType;
-	}
-	
-	if($_ARCHON->config->RequestHasConsistentLocation) {
-		if($_ARCHON->config->RequestVarLocation and $_ARCHON->config->RequestDefaultLocation){
-			$requestLink .= $_ARCHON->config->RequestVarLocation . $_ARCHON->config->RequestDefaultLocation;
-		}
-	}
-}
-/** End section for preparation of the request link.*/
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
 
 ?>
-
-
 
 
 <div id='ccardleft'>
@@ -529,14 +474,9 @@ else            //user is not authenticated
 {
 	
 	        echo("<div id='ccardstaff' class='mdround'>");
-			include("packages/collections/templates/ala/openlocationtable.inc.php");
+			include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/openlocationtable.inc.php");
 			echo("</div>");
-			
-   
-         ?>
 
-      </div> <!--end ccardstaffdiv -->
-         <?php
       }
 
 
@@ -545,69 +485,7 @@ else            //user is not authenticated
       echo ("<div id='ccardprintcontact' class='smround'>");
 
 /**add request button, or launch a modal with the location table if variable locations */
-		if($requestLink) {
-			if($_ARCHON->config->RequestHasConsistentLocation){
-				echo("<a href='" . $requestLink . "' target='_blank'>");
-			} else {
-				echo("<a href='#' id='requestModalLink'>");
-			}
-			echo("<img src='" . $_ARCHON->PublicInterface->ImagePath . "/box.png' alt='Request' style='padding-right:2px'/>");
-			echo($_ARCHON->config->RequestLinkText ? $_ARCHON->config->RequestLinkText : "Submit request");
-			echo("</a> | ");
-		}
-		if($requestLink && !$_ARCHON->config->RequestHasConsistentLocation) {
-			?>
-			<!-- The Modal to show request locations -->
-			<div id="requestModal" class="request-modal" style="display:none">
-
-			  <!-- Modal content -->
-			  <div class="request-modal-content">
-				<span class="request-modal-close">&times;</span>
-				  <?php
-					if(file_exists("packages/collections/templates/ala/openlocationtable.inc.php")){
-						include("packages/collections/templates/ala/openlocationtable.inc.php");
-					} else {
-						echo("Please see location table below at left.");
-					}
-					?>
-			  </div>
-
-			</div>
-
-			<script>
-			// adapted from https://www.w3schools.com/howto/howto_css_modals.asp
-			// Get the modal
-			var modal = document.getElementById("requestModal");
-
-			// Get the button that opens the modal
-			var btn = document.getElementById("requestModalLink");
-
-			// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("request-modal-close")[0];
-
-			// When the user clicks the button, open the modal 
-			btn.onclick = function() {
-			  modal.style.display = "block";
-			}
-
-			// When the user clicks on <span> (x), close the modal
-			span.onclick = function() {
-			  modal.style.display = "none";
-			}
-
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-			  if (event.target == modal) {
-				modal.style.display = "none";
-			  }
-			}
-			</script>
-<?php
-		}
-		
-
-/**end section with the request button*/	  
-	  
+		include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");	  
 	  
 	  $emailsubject="Inquiry: ALA Archives";
 	  if($objCollection->Classification) {
