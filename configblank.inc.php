@@ -190,5 +190,8 @@
 
 $_ARCHON->config->SearchExactIdentifier=false;
 
-
+ // ***********************************************
+// * Request link configuration *
+// ***********************************************
+include("config_request.inc.php");
 ?>
