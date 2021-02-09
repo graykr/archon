@@ -25,9 +25,9 @@
 isset($_ARCHON) or die();
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
-//echo ("<pre>");
-//var_dump ($objCollection->PrimaryCreator->CreatorType->CreatorType);
-//echo ("</pre>");
+//echo '<pre>'; var_dump($objCollection); echo '</pre>';
+
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
 ?>
   
 <div id='ccardleft'>
@@ -466,64 +466,10 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
          }
          else            //user is not authenticated
          {
-            if(!empty($objCollection->LocationEntries))
-            {
-               ?>
-            <div id='ccardstaff' class='mdround'><span class='ccardlabel'>Available for use at:</span><br/><br/>
-
-
-               <table id='locationtable' border='1' style='margin-left:0'>
-                  <tr>
-
-                     <th style='width:400px'>Service Location</th>
-                     <th style='width:100px'>Boxes</th>
-                  </tr>
-
-
-
-      <?php
-      foreach($objCollection->LocationEntries as $loc)
-      {
-         echo("<tr>");
-
-	if($loc->LocationID ==11)
-         {
-            echo("<td><b>Temporarily unavailable.  Please contact the archives for more information.</b></td>");
-         }
-
-         elseif($loc->LocationID < 5 || ($loc->LocationID > 7 and $loc->LocationID < 22) || $loc->LocationID == 34)
-         {
-            echo("<td>Archives Research Center, 1707 S. Orchard</td>");
-         }
-         elseif($loc->LocationID == 23 || $loc->LocationID == 29)
-         {
-            echo("<td>SACAM, Band Building</td>");
-         }
-         elseif($loc->LocationID == 33)
-         {
-            echo("<td>Online: See links above or <a href='https://archives.library.illinois.edu/email-ahx.php?this_page=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'>contact us for help.</a></td>");
-         }
-         elseif($loc->LocationID >= 27 and $loc->LocationID <=32 )
-         {
-            echo("<td>Room 146 Main Library, Prior Request Preferred</td>");
-         }
-         
-         elseif($loc->LocationID == 39 )
-         {
-            echo("<td>Room 146 Main Library</td>");
-         }
-         else
-         {
-            echo("<td>Offsite: Prior notice required</td>");
-         }
-         echo ("<td>" . $loc->Content . "</td></tr>");
-      }
-      echo ('</table>');
-   }
-   else
-   {
-      echo("<div id='ccardstaff'><span class='ccardlabel'>Service Location:</span><br/>Please <a href='https://archives.library.illinois.edu/email-ahx.php?this_page=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'>Email us to request a hi-resolution copy.</a>>contact the Archives</a> for assistance. </span>");
-   }
+            echo("<div id='ccardstaff' class='mdround'>");
+			include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/openlocationtable.inc.php");
+			echo("</div>");
+   
    ?>
 
          </div> <!--end ccardstaffdiv -->
@@ -531,14 +477,26 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
             }
 
 
-            echo("</div>"); //ending left div
+    echo("</div>"); //ending left div
 
-            echo ("<div id='ccardprintcontact' class='smround'> <a href='https://archives.library.illinois.edu/email-ahx.php?this_page=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='email' /> Email us about these ");
+	echo("<div id='ccardprintcontact' class='smround'>");
+   
+   /**add request button, or launch a modal with the location table if variable locations */
+			include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
 
-            if($objCollection->MaterialType == 'Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
-            {
-               echo ('records');
-            }
+			if ($objCollection->RepositoryID == 2)
+			{
+				echo("<a href='mailto:sousa@illinois.edu?subject=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='email' /> Email us about these ");
+			}
+			else 
+			{
+				echo ("<a href='https://archives.library.illinois.edu/email-ahx.php?this_page=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='email' /> Email us about these ");
+			}
+					
+			if($objCollection->MaterialType == 'Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
+			{
+				echo ('records');
+			}
             elseif($objCollection->MaterialType == 'Publications')
             {
                echo ('publications');
@@ -634,10 +592,19 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
                   $onclick = ($_ARCHON->config->GACode && $_ARCHON->config->GACollectionsURL) ? "onclick='javascript: pageTracker._trackPageview(\"{$_ARCHON->config->GACollectionsURL}\");'" : "";
                   ?>
                <div id='ccardboxlist' style='margin-top:.7em'><span class='ccardlabel'><a href='<?php echo(trim($objCollection->OtherURL)); ?>' <?php echo($onclick); ?>>Download Box / Folder List</a><span style='font-size:80%'>&nbsp;(pdf)</span></span></div>
+               
                   <?php
                }
+                echo ("<div style='clear:both'><pre>");
+//var_dump ($objCollection);
+echo ("</pre></div>");
+
                ?>
          </div> <!--end ccard scope -->
                <?php
             }
+              
+
+
+            
             ?>

@@ -15,6 +15,24 @@ padding:0;
 }
 
 #top {
+min-height:6.5em;
+height:auto !important;
+height: 6.5em;
+}
+
+#headerbar {
+min-height:1.5em;
+height:auto !important;
+height: 1.5em;
+}
+
+#headercenter {
+min-height:2em;
+height:auto !important;
+height: 2em;
+}
+
+#headernav {
 min-height:3em;
 height:auto !important;
 height: 3em;

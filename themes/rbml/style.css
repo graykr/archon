@@ -1,0 +1,2267 @@
+/*
+Stylesheet for 'default' Archon Theme
+
+##########################################################
+
+THIS STYLESHEET HAS FOUR SECTIONS:
+
+	1. GENERAL STYLES (controls text properties)
+	2. THEME STRUCTURES/FORMATTING  (establishes basic structure of the page)
+	3. PUBLIC FILE FORMATTING (controls position and style of elements
+	      defined outside of template files)
+	4. TEMPLATE FILE FORMATTING (controls position and style of elements
+	      defined in template files, these apply to default template set)
+
+The stylesheet assumes that layout will take place in one to four
+'general structure' boxes, referenced by an class below.  These classes may be
+used with either a tabled or tableless design, by referencing
+a <table id=''> or <div id=''> in the following files.
+
+	top    --header.inc.php; faheader.inc.php
+	left   --header.inc.php; faheader.inc.php
+	main   --index.inc.php; files in packages/'packagename'/templates/default
+	                              and packages/'packagename'/
+	bottom --footer.inc.php; fafooter.inc.php
+
+For background reading regarding layout using principles in this stylesheet, see
+http://www.devarticles.com/c/a/Web-Style-Sheets/DIV-Based-Layout-with-CSS/3/
+
+###########################################################
+
+BEGIN GENERAL STYLES FOR ENTIRE DOCUMENT */
+
+@media all {
+
+html {
+overflow:scroll;
+}
+
+body {
+background-color:#FFF;
+color:#022544;
+font:90% "Verdana", "Arial", sans-serif;
+margin:0 0;
+padding:0;
+}
+
+a:link {
+color:#33b;
+}
+
+a:visited {
+color:#999;
+}
+
+a:hover {
+background:#ddd;/*#fbdb7a;*/
+color:#10375D;
+}
+
+a:active {
+color:#fff;
+}
+
+a:focus {
+outline:none;
+background:#ddd;/*#fbdb7a;*/
+color:#10375D;
+box-shadow: .2em .2em .4em #888888;
+}
+
+h1 {
+color:#022544;
+font-size:1.6em;
+text-align:center;
+}
+
+h2 {
+color:#022544;
+font-size:1.3em;
+text-align:center;
+}
+
+h3 {
+color:#022544;
+font-size:80%;
+font-weight:700;
+}
+
+img {
+border:none;
+margin:0;
+padding:0;
+}
+
+.bold {
+font-weight:700;
+}
+
+.center {
+text-align:center;
+}
+
+.message {
+font-weight:700;
+text-align:center;
+color:red;
+font-size:1.1em;
+}
+
+.button {
+background:#ebeeef;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:1px solid #ddd ;
+cursor:pointer;
+font-size:1.2em;
+font-weight:100;
+margin:0 0.6em 0 -0.25em;
+padding-left:1.4em;
+color:#888899;
+height:1.6em;
+min-width:7em;
+}
+
+.small {
+font-size:small;
+}
+
+/* for highlighting search results */
+.highlight0 {
+background-color:#FF6;
+}
+
+.highlight1 {
+background-color:#A0FFFF;
+}
+
+.highlight2 {
+background-color:#9F9;
+}
+
+.highlight3 {
+background-color:#F99;
+}
+
+.highlight4 {
+background-color:#F6F;
+}
+
+.highlight5 {
+background-color:#800;
+}
+
+.highlight6 {
+background-color:#0A0;
+}
+
+.highlight7 {
+background-color:#886800;
+}
+
+.highlight8 {
+background-color:#004699;
+}
+
+.highlight9 {
+background-color:#909;
+}
+
+.bground {
+   -webkit-border-radius:20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.mdround {
+   -webkit-border-radius:10px;
+   -moz-border-radius: 10px;
+   border-radius: 10px;
+}
+
+.smround {
+   -webkit-border-radius:5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+
+#titleheader {
+margin:1em 0 1.5em;
+}
+
+/* END GENERAL STYLES -- BEGIN THEME STRUCTURES/FORMATTING */
+
+
+/*suppresses view of extraneous titles */
+
+/*#titleheader
+{
+   display: none;
+}*/
+
+/*suppresses view of cart images*/
+
+img.cart
+
+{
+    display: none;
+}
+
+/*suppresses view of dl images*/
+
+img.dl
+
+{
+    display: none;
+}
+
+
+/*suppresses view of register links*/
+
+#registerlink, #researchcartinfo
+
+{
+    display: none;
+}
+
+
+#top {
+background-color:#d3d3d3;
+/*background-image:url('images/topgradient.gif');*/
+background-image: url('https://www.library.illinois.edu/rbx/wp-content/uploads/sites/52/2020/01/Fairyland-Banner.jpg');
+background-position:top left;
+background-repeat:repeat-x;
+border-bottom:1px solid;
+font-size:75%;
+height:auto;
+width:auto;
+border-color:#aab;
+margin:0;
+
+/* padding-top:.5em; */
+/* padding-left:.5em; */
+}
+
+#logo a img {
+height:5em;
+margin:.5em;
+}
+
+#top:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+#headerbar {
+height:28px;
+clear:both;
+background-color:#022544;
+}
+
+#headerbar img {
+	height:22px;
+}
+
+#headercenter {
+height:auto;
+clear:both;
+/*height:2em;*/
+}
+
+#headernav {
+height:2.5em;
+background-color:#b8c7c7; 
+/* background-color:#cfd3da; */
+clear:both;
+/*margin-top:-30px;*/
+}
+
+
+
+#main a {
+color: #10375D;
+/*text-decoration:none;*/
+}
+
+#main,#famain {
+	 margin-left:1em;
+	margin-right:1em;
+	 -webkit-box-sizing: border-box;
+	 -moz-box-sizing: border-box;
+	 box-sizing: border-box;
+	}
+
+*, *:before, *:after {
+	  -webkit-box-sizing: inherit;
+	  -moz-box-sizing: inherit;
+	  box-sizing: inherit;
+	 }
+
+/* used in faheader.inc.php */
+
+#left {
+position:absolute;
+/* background-color:#fff8e8;
+background-image: url('images/footergradient.gif');
+background-position:top left;
+background-repeat:repeat-x; */
+background:#eaeaea;
+border:1px solid #E8EEF7;
+font-size:75%;
+left:1.5em;
+margin-top:2em;
+width:20em;
+padding:0 .5em;
+clear:none;
+float:left;
+   -webkit-border-radius: 10px;
+   -moz-border-radius: 10px;
+   border-radius: 10px;
+}
+/* used in faheader.inc.php */
+
+#famain {
+margin-left:17.5em;
+margin-right:2em;
+padding-left:1em;
+}
+
+
+#bottom {
+clear:both;
+text-align:center;
+}
+
+/* used in header.inc.php */
+
+#topnavblock {
+color:#10375d;
+color:#fff;
+height:1.5em;
+float:left;
+margin-left: 10px;
+padding:.2em 0 0 0;
+font-size:1em;
+}
+
+#researchblock {
+float:right;
+height:3em;
+margin:-0.2em 0 0;
+padding:.5em;
+}
+
+#loggedinblock {
+background-color:rgb(211, 211, 211, 0.9);
+padding-left:0.2em;
+padding-bottom:0.2em;
+}
+
+#researchblock #loggedinblock a{
+	color:#022544;
+}
+
+#loggedinblock img{
+height:100%;
+}
+
+#headertitleblock {
+float:left;
+font-size:2em;
+color:#022544;
+margin-left:.5em;
+margin-top:.5em;
+background: hsla(0,0%,100%,.9);
+text-decoration: none;
+padding: 10px;
+display: inline-block;
+font-weight: 700;
+font-family:Adobe Garamond Pro, Garamond, Times New Roman, serif;
+}
+
+
+#topnavblock a, #researchblock a
+{
+color:#fff;
+}
+
+#headertitleblock a
+{
+color:#022544;
+text-decoration:none;
+}
+
+#headertitleblock a:hover {
+/*background:#fff;*/
+/*color:#10375D;*/
+}
+
+#topnavblock a:hover {
+background:none;
+}
+
+#researchblock a:hover {
+background:#fbdb7a;
+}
+
+#logo {
+float: left;
+background:none;
+width:auto;
+padding: 0 5px 0 0;
+height:65px;
+overflow:hidden;
+margin-bottom:2em;
+}
+
+#logo a:hover{
+background:none;
+}
+
+.open-sans-font {
+    font-family: "Open Sans", sans-serif;
+}
+.alice-font {
+    font-family: "Alice", serif;
+}
+
+#searchblock {
+background:#022544;/*#022544;*/
+background-position:bottom right;
+background-repeat:repeat-x;
+border:1px solid #d3d3d3;
+float:right;
+margin-right:1em;
+margin-top:.5em;
+margin-bottom:3em;
+overflow:hidden;
+padding:0.8em 1em;
+width:auto;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+
+#searchblock input {
+border:1px solid #bbe;
+margin:0;
+vertical-align:middle;
+font-size:1.1em;
+}
+
+#searchblock label {
+font-size:0.8em;
+vertical-align:middle;
+padding:0 0 0 0.3em;
+}
+
+#searchblock .button {
+background:#ebeeef;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:1px solid #ebeeef;
+border-left:none;
+cursor:pointer;
+font-size:1.2em;
+font-weight:100;
+margin:0 0.6em 0 -0.25em;
+padding-left:1.4em;
+color:#022544;/*#888899;*/
+max-height:1.5em;
+min-width:1.33em;
+}
+
+#searchblock .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+#searchblock img {
+vertical-align:middle;
+padding:0 0 0 0.3em;
+}
+
+#pdfsearchlink
+{
+color:#022544;
+text-align:center;
+clear:both;
+
+}
+
+#pdfsearchlink a
+{
+color:#022544;
+background: hsla(0,0%,100%,.9);
+padding: 0 .5em .2em .5em;
+}
+
+#browsebyblock {
+/*background:#5274ac;
+border:1px solid #5274ac;
+border-bottom:none;
+border-right:none;*/
+clear:right;
+/* color:#fff; */
+display:block;
+float:left;
+height:auto;
+margin-left:.5em;
+padding:0 0 0 1em;
+width:auto;
+/*   -webkit-border-top-left-radius: 10px;
+   -moz-border-radius-topleft: 10px;
+   border-top-left-radius: 10px;*/
+font-size:80%;
+}
+
+#browsebyblock div {
+vertical-align:bottom;
+}
+
+#browsebyblock a {
+font-weight:bolder;
+text-decoration:none;
+
+}
+
+#browsebyspan {
+display:block;
+float:left;
+height:3em;
+margin:0;
+padding-left:0.5em;
+padding-right:0.5em;
+width:5em;
+line-height:3em;
+/* color:white; */
+font-weight:bold;
+}
+
+.browseLink, .currentBrowseLink {
+border:1px solid #ddd;
+border-bottom:none;
+/*margin-left:.5em;*/
+display:block;
+float:left;
+height:3em;
+padding:0 .5em;
+text-align:center;
+width:12em;
+line-height:3em;
+/*border-top-left-radius:5px;
+border-top-right-radius:5px;*/
+}
+
+.browseLink a, .currentBrowseLink a {
+display:block;
+}
+
+.browseLink {
+/* background:#d3d3d3; */
+background-color: #739394;
+}
+
+.browseLink a {
+color:#022544;
+}
+
+.browseLink:hover {
+/*background-image:url('images/linkarrowdark.gif');
+background-position:bottom center;
+background-repeat:no-repeat;*/
+
+/* background-color:#4d4d4d; */
+background-color:#3d7679;
+}
+
+.browseLink a:link {
+background:none;
+color:#022544;
+}
+
+.browseLink a:visited {
+background:none;
+color:#022544;
+}
+
+.browseLink a:hover {
+background:none;
+color:#022544;
+}
+
+.browseLink a:active {
+background:none;
+color:#022544;
+}
+
+.browseLink:hover a {
+color:white;
+}
+
+.currentBrowseLink {
+background:#fff;
+background-image:url('images/linkarrow.gif');
+background-position:bottom center;
+background-repeat:no-repeat;
+font-weight:bolder;
+}
+
+.currentBrowseLink a:link {
+background:none;
+color:#003c7b;
+}
+
+.currentBrowseLink a:visited {
+background:none;
+color:#003c7b;
+}
+
+.currentBrowseLink a:hover {
+/*background:#003c7b;*/
+/*color:#5274ac;*/
+
+}
+
+.currentBrowseLink a:active {
+background:none;
+color:#003c7b;
+}
+
+#contact-info-line {
+color:white;
+background-color:#022544;
+font-size:90%;
+line-height:1.5;
+padding:0.5em 0 0.5em 0;
+text-align:center;
+font-family:helvetica, arial, sans-serif;
+}
+
+#contact-info-line a {
+color:white;
+}
+
+#breadcrumbblock {
+color:#022544;
+float:left;
+clear:both;
+height:1.5em;
+margin:3px;
+padding:.25em 1em 0 .5em;
+font-size:0.75em;
+}
+
+#breadcrumbblock a {
+color:#10375d;
+font-weight:bold;
+}
+
+#breadcrumbclearblock {
+clear:both;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+#searchresults {
+/*border: 2px solid #10375D;*/
+/*border-radius: 20px;*/
+padding:.8em;
+margin-top:0.5em;
+}
+   
+#searchresults #titleheader {
+margin-top:0.5px;
+}
+
+#custom-message {
+text-align:center;
+margin:.5em 1em -0.5em 1em;
+padding:.5em;
+border:#10375D 1px solid;
+background:#fbdb7a;
+font-weight:bold;
+}
+
+#custom-message-gray {
+text-align:center;
+margin:.5em 1em -0.5em 1em;
+padding:.5em;
+border:#10375D 1px solid;
+background:#e7e7e7;
+}
+
+#custom-message-gray a{
+	color:#022544;
+}
+
+#custom-message a, #custom-message a:visited {
+color:#10375D;
+}
+
+.morelessbutton {
+	float: right;
+	margin-right:2em;
+	margin-top:1em;
+}
+
+
+/* used in index.php*/
+
+.textcontainer {
+width:100%; 
+margin:1em auto; 
+padding:1em; 
+background-color:#F9F9FA; 
+border:#ddd 1px solid; 
+font-size:90%;
+}
+
+.textcontainer h2 {
+	margin-top:.1em;
+	
+}
+
+.textcontainer .button {
+background:#ebeeef;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:1px solid #ddd ;
+/*border-left:none;*/
+cursor:pointer;
+font-size:1.2em;
+font-weight:100;
+margin:0 0.6em 0 -0.25em;
+padding-left:1.4em;
+color:#888899;
+max-height:1.5em;
+min-width:1.33em;
+}
+
+.textcontainer .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+.keyphrase {
+font-style:italic;
+font-weight:bold;
+}
+
+#multisearchoptions {
+font-size:0.8em;
+}
+
+.box1 {
+    width:75%;
+	text-align:center;
+}
+
+.textcontainer.box1{
+background-color:#f2f2f2;/*#EEF1F7;*/ /*#F9F9FA; */
+border:#234143 2px solid; 
+}
+
+.textcontainer.box1 h2 {
+/* color:#234143; */
+}
+
+.textcontainer.box2, .textcontainer.box3, .textcontainer.box4 {
+border:#022544 1px solid;
+}
+
+.box4 {
+	width:40%;
+	text-align:center;
+}
+
+#multisearch {
+font-size:1.25em;
+padding:.25em;
+}
+
+#multisearch#multisearchoptions {
+font-size:1em;
+}
+
+#multisearch .searchinput, #identifiersearch .searchinput, .box4 .searchinput{
+font-size:1em;
+padding:.25em;
+}
+
+.box2 {
+    float:left;
+    width:45%;
+    margin-right:2%;
+}
+
+.box3 {
+    float:left;
+    width:45%;
+}
+
+.about {
+ clear:both;
+}
+
+.textcontainer li {
+padding-bottom:.5em;
+}
+
+/* used in list all page */
+.minimize-info {
+color: #d3d3d3;
+font-size: .75em;
+}
+
+/* used in listing open identifiers */
+.create-button {
+    text-decoration:none;
+   font-size:small;
+   background-color:#fbdb7a;
+   margin-left:12px;
+   padding:.2em;
+}
+
+/* used in footer/bottom */
+#archoninfo {
+color:#aab;
+font-size:x-small;
+margin:0 auto;
+padding:1em;
+text-align:center;
+}
+
+/* Alternative styling option:
+
+#archoninfo {
+color:#aab;
+font-size:x-small;
+margin:0px;
+padding:1em;
+text-align:center;
+   background:#022544;
+}
+   
+#bottom {
+   background:#022544;
+   margin-top:1em;
+   color:#889;
+}
+   
+#bottom #userbox a{
+      color:#889;
+}
+   
+#bottom #contactcontainer {
+      color:whitesmoke;
+}
+#bottom #contactcontainer a {
+      color:whitesmoke;
+}
+
+*/
+
+#archoninfo a {
+color:#889;
+}
+
+#footerhr {
+background-color:#ddd;
+border:none;
+color:#FEF1B5;
+width:70%;
+}
+
+#userlogin {
+
+background:#fff8e8 url('images/footergradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+padding:.2em;
+padding-bottom: 1em;
+}
+
+#userlogincontrols{
+margin:1em;
+}
+
+#userinfo {
+background:#fff8e8 url('images/footergradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+padding:.2em .2em 1em 1em;
+}
+
+#userbox {
+font-size:x-small;
+margin:0 auto;
+width:40em;
+}
+
+#userbox p{
+font-size:larger;
+}
+
+/* used in various research pages */
+.userformbox {
+background-color:#f0efef;
+background-image:url('images/listitem.gif');
+background-position:top right;
+background-repeat:repeat-x;
+border:1px solid #E8EEF7;
+font-size:small;
+margin:0 auto;
+padding:0 .5em 1em .5em;
+max-width:40em;
+}
+
+.userformbox:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+visibility:hidden;
+}
+
+#userformsubmit {
+clear:left;
+text-align:center;
+}
+
+.userformpair {
+clear:left;
+margin:0;
+padding:0.5em;
+text-align:left;
+}
+
+.userformlabel {
+font-weight:700;
+text-align:left;
+font-size:85%;
+margin:0 .5em 0 0;
+}
+
+.userforminput {
+text-align:left;
+margin:0 0 1.4em;
+}
+
+.userformdate {
+font-weight:lighter;
+font-size:95%;
+font-style:italic;
+}
+
+#loginsubmit .button {
+background:#F9F9FA;
+border:2px solid #ddd;
+cursor:pointer;
+font-size:1.2em;
+font-weight:100;
+margin:auto;
+color:#888899;
+height:2em;
+padding-right:1em;
+}
+
+
+#userbox a {
+color:#66a;
+}
+
+.loginpair:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+.loginlabel {
+float:left;
+font-weight:700;
+margin:0 auto;
+text-align:right;
+width:10em;
+}
+
+.logininput {
+clear:right;
+display:inline;
+float:left;
+margin:0 auto 2em;
+text-align:right;
+width:23em;
+}
+
+#loginsubmit {
+clear:both;
+display:block;
+margin-left:3em;
+margin-right:3em;
+margin-top:0;
+}
+
+/*#registerlink {
+clear:both;
+display:block;
+margin:.5em auto;
+padding-left:.5em;
+}*/
+
+#contactcontainer {
+font-size:x-small;
+margin:0 auto;
+padding:1em;
+width:40%;
+}
+
+#contactcontainer a {
+color:#66a;
+}
+
+/* in index.php */
+
+#themeindex{
+padding:1em;
+margin:-1em auto 1em auto;
+/*background:#fff8e8 url('images/contentsgradient.gif') repeat-x top left;*/
+/*border:#ddd 1px solid;*/
+width:95%;
+}
+
+#themeindex.bground {
+	margin-top:1em;
+	border:#ddd 1px solid;
+	width:70%;
+}
+
+#themeindex.bground h2{
+	/* color:#234143; */
+}
+
+dd.index {
+color:#10375D;
+font-size:80%;
+padding-bottom:1.5em;
+padding-top:.5em;
+}
+
+dt.index {
+color:#10375D;
+font-size:80%;
+font-weight:700;
+}
+
+/* faheader.inc.php */
+
+#famain {
+clear:left;
+}
+
+#famain hr {
+background-color:#FEF1B5;
+border:none;
+color:#FEF1B5;
+width:70%;
+}
+
+#famain #ccardprintcontact {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+}
+
+#fanavbox {
+font-size:small;
+vertical-align:top;
+
+}
+
+#fabreadcrumbblock {
+border-bottom:2px solid #fbdb7a;
+color:#889;
+width:auto;
+padding:0 1em 0 0.5em;
+margin-bottom:.5em;
+font-size:75%;
+float:left;
+}
+
+#fabreadcrumbblock a {
+color:#006;
+text-decoration:none;
+}
+
+#fanavbox hr {
+width:80%;
+background-color:#aac;
+border:none;
+height:1px;
+}
+
+#fasearchblock {
+background:#F9F9FA;
+border:2px solid #ddd;
+margin:1em auto;
+padding:.5em 0;
+font-size:75%;
+overflow:hidden;
+width:20em;
+text-align:center;
+}
+
+#fasearchblock input {
+border:2px solid #ddd;
+margin:0 auto;
+vertical-align:middle;
+font-size:1.33em;
+}
+
+#fasearchblock label {
+font-size:0.8em;
+vertical-align:middle;
+padding:0 0 0 0.3em;
+}
+
+#fasearchblock .button {
+background:#ebeeef;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:2px solid #ddd;
+cursor:pointer;
+font-size:1.2em;
+font-weight:100;
+margin:.5em auto 0;
+padding-left:1.8em;
+color:#888899;
+max-height:1.7em;
+min-width:1.33em;
+}
+
+#fasearchblock .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+#fasearchblock img {
+vertical-align:middle;
+padding:0 0 0 0.3em;
+}
+
+/* END THEME STRUCTURES/FORMATTING -- BEGIN PUBLIC FILE FORMATTING */
+
+/* used in search.php */
+.searchTitleAndResults {
+margin-bottom:1em;
+}
+
+.searchTitleAndResults dt {
+padding:0.5em;
+}
+
+#AccessionTitle {
+font-weight:700;
+}
+
+#AccessionResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#BookTitle {
+font-weight:700;
+}
+
+#BookResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#CollectionTitle {
+font-weight:700;
+}
+
+#CollectionResults {
+font-size:90%;
+padding-left:1em;
+text-indent:-1em;
+}
+
+.InnerContentResultsToggle {
+margin:1em 0;
+display:block;
+}
+
+#CollectionContentTitle {
+font-weight:700;
+}
+
+#CollectionContentResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+.CollectionClassEnabledResults {
+padding-bottom:1em;
+}
+
+.CollectionClassEnabledResults dd {
+margin-bottom:2em;
+}
+
+.InnerContentTitleAndResults {
+font-size:85%;
+margin-top:-0.5em;
+}
+
+.InnerCollectionContentResults {
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#DigitalContentTitle {
+font-weight:700;
+}
+
+#DigitalContentResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#SubjectTitle {
+font-weight:700;
+}
+
+#SubjectResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#CreatorTitle {
+font-weight:700;
+}
+
+#CreatorNote {
+
+background:#F9F9FA;/*#fff8e8 url('images/footergradient.gif') repeat-x top left;*/
+border:#ddd 1px solid;
+position:relative;
+padding: 1em;
+margin: 0 auto;
+max-width:70em;
+width:65%;
+}
+
+#CreatorNote hr { 
+width:50%;
+}
+
+.CreatorEntry
+{
+margin-bottom:1em;
+}
+
+.CreatorEntryShowList {
+font-size:90%;
+margin-left:1.5em;
+}
+
+#CreatorResults {
+font-size:100%;
+font-weight: bold;
+margin:2em 0 1em 0;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#CreatorResults {
+font-size:100%;
+font-weight: bold;
+margin:2em 0 1em 0;
+}
+
+
+#CreatorStaff {
+
+clear:left;
+float:left;
+width:25%;
+/*min-width:25em;*/
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+}
+
+
+
+/* For browse by pages */
+.beginningwith {
+/*background:#fff8e8 url('images/browseby.gif') repeat-x top left;*/
+border:#ddd 1px solid;
+max-width:50em;
+z-index:5;
+margin:1em auto;
+padding:1.5em;
+}
+
+/* for a-z navigation */
+.beginningwith .center a{
+border:#234143 1px solid;
+padding:.5em;
+margin-top:1em;
+display:inline-block;
+text-decoration:none;
+background:#ddd;
+font-weight:normal;
+}
+
+#main .beginningwith .center a {
+color:#234143;
+}
+
+.a-z a {
+border:#234143 1px solid;
+padding:.2em;
+margin:.2em;
+display:inline-block;
+text-decoration:none;
+background:#ddd;
+font-weight:normal;
+}
+
+.beginningwith a:hover, .a-z a:hover {
+background:gray;
+}
+
+.beginningwith br{
+display:none;
+}
+
+.listitemhead
+{
+margin:0 auto;
+max-width: 60em;
+text-align:center;
+/*border:red 1px solid; */
+}
+
+
+
+#listitemwrapper, #recordsunderlist, #classificationlist {
+/*background:#fff8e8 url('images/footergradient.gif') repeat-x top left;*/
+border:#ddd 1px solid;
+position:relative;
+padding-top:1em;
+padding-bottom:1em;
+margin: 0 auto;
+max-width:70em;
+}
+
+/*
+.listitemcover {
+background:transparent url('images/listfade.png') repeat-y top right;
+height:auto;
+width:200px;
+z-index:2;
+position:absolute;
+right:0;
+top:0;
+bottom:0;
+}
+*/
+
+.listitem {
+z-index:1;
+margin:0 1em 0 1em;
+padding:0.5em;
+}
+
+.searchlistitem {
+z-index:1;
+margin:0 1em 0 1em;
+padding:0em 0.5em 1em 0.5em;
+}
+
+.listitem a, .searchlistitem a{
+padding:.1em;
+}
+
+.listitem a:hover{
+background:#ddd;
+}
+
+.evenlistitem {
+/*background:#e9e9ef;*/
+}
+
+
+.lastlistitem {
+/*border-bottom:1px #e9e9ef solid; */
+}
+
+.research_add, .research_delete {
+display:none;
+}
+
+/* digitallibrary/digitallibrary */
+#dlsearchblock {
+background:#fff8e8;
+background-position:bottom right;
+background-repeat:repeat-x;
+border:1px solid #ddd;
+/*border-right:1px solid #ddd;
+border-left: 1px solid #ddd;
+border-bottom:1px solid #ddd;*/
+overflow:hidden;
+width:30em;
+font-size:75%;
+/*margin:-1.5em auto 1em;*/
+margin:2em auto .5em;
+padding:0.8em 1em;
+/*   -webkit-border-bottom-right-radius: 10px;
+   -webkit-border-bottom-left-radius: 10px;
+   -moz-border-radius-bottomright: 10px;
+   -moz-border-radius-bottomleft: 10px;
+   border-bottom-right-radius: 10px;
+   border-bottom-left-radius: 10px;*/
+}
+
+#dlsearchblock input {
+border:1px solid #bbe;
+vertical-align:middle;
+font-size:1.33em;
+margin:.3em 0;
+}
+
+#dlsearchblock label {
+font-size:0.8em;
+vertical-align:middle;
+padding-left:0.3em;
+margin:.3em 0;
+}
+
+#dlsearchblock .button {
+background:#F9F9FA;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:1px solid #ddd;
+border-left:none;
+cursor:pointer;
+font-size:1.2em;
+font-weight:100;
+padding-left:1.6em;
+color:#888899;
+max-height:1.5em;
+min-width:1.33em;
+margin:.3em 0.6em .3em -0.25em;
+}
+
+#dlsearchblock .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+#dlsearchblock img {
+vertical-align:middle;
+margin:.3em 0;
+padding:0 0 0 0.3em;
+}
+
+/* END PUBLIC FILE FORMATTING -- BEGIN  TEMPLATE FILE FORMATTING*/
+
+/* used template's classification.php */
+
+#classificationdesc {
+background-color:#F9F9FA;
+border:1px #ddd solid;
+width:55%;
+margin:auto;
+line-height:1.5em;
+min-height:80px;
+padding:.5em 1em;
+}
+
+
+
+/* used in default template's controlcard.inc.php */
+#ccardleft {
+clear:left;
+float:left;
+width:25%;
+margin-right:1%;
+}
+
+#ccardright {
+float:right;
+width:74%;
+}
+
+#ccardpublic {
+clear:left;
+float:left;
+background:white;
+/* background:#EAEAEA; */
+/* background:url('images/contentsgradient.gif') repeat-x top left;*/ 
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+}
+
+#ccardstaff {
+clear:left;
+float:left;
+
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+}
+
+#ccardlocation {
+clear:left;
+float:left;
+
+border:#ddd 1px solid;
+margin-top:4em;
+margin-bottom:1em;
+padding:1em;
+}
+
+#ccardprintcontact {
+float:right;
+font-weight:400;
+margin-top:-2.5em;
+font-size:0.9em;
+border:1px #ddd solid;
+background:white;
+padding:0.5em 0.5em .5em 0.5em;
+}
+
+#ccardscope {
+/* background-color:#eef6f6; */
+background:white;
+border:1px #ddd solid;
+float:left;
+line-height:1.5em;
+min-height:80px;
+padding:.5em 1em;
+}
+
+#alternateccards {
+margin-left:1em;
+}
+
+.ccardlabel {
+font-weight:700;
+}
+
+.ccardstafflabel {
+font-size:1.3em;
+color:red;
+}
+
+
+.ccardcontent {
+clear:left;
+display:block;
+float:left;
+width:100%;
+margin:.5em .5em .5em 0;
+}
+
+.ccardserieslist {
+font-size:90%;
+margin-left:1em;
+text-indent:-0.5em;
+}
+
+.ccardshowlist {
+font-size:90%;
+margin-left:1em;
+padding-top:1em;
+}
+
+.read-more a, .re-collapse a {
+   display: block;
+   border:1px solid;
+   text-align:center;
+   text-decoration:none;
+   font-size:80%;
+   width:20%;
+   margin:auto;
+   font-weight:bold;
+   font-style:italic;
+}
+
+.hide-link {
+	float:right;
+}
+
+#locationtable {
+border-collapse:collapse;
+border:solid 1px #ddd;
+margin-left:1em;
+}
+
+#locationtable th {
+background:#f3f3f3;
+padding:0.3em;
+}
+
+#locationtable tr {
+font-size:90%;
+padding:0.5em;
+}
+
+#locationtable td {
+font-size:90%;
+padding:0.5em;
+text-align:center;
+}
+
+
+
+.oddtablerow {
+background:#f9f9f9;
+}
+
+/* used in default template's accession.inc.php */
+
+
+#accessionleft {
+clear:left;
+float:left;
+width:45%;
+}
+
+
+#accessionpublic {
+clear:left;
+float:left;
+width:100%;
+background:#fff8e8 url('images/contentsgradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+}
+
+
+#accessionstaff{
+clear:left;
+float:left;
+width:100%;
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+
+}
+
+#accessionprintcontact {
+float:right;
+font-weight:700;
+margin-bottom:1em;
+}
+
+#accessionscope {
+background-color:#F9F9FA;
+border:1px #ddd solid;
+float:right;
+width:45%;
+line-height:1.5em;
+min-height:80px;
+padding:.5em 1em;
+
+}
+
+#alternateaccessions {
+margin-left:1em;
+}
+
+.accessionlabel {
+font-weight:700;
+}
+
+.accessionstafflabel {
+
+font-size:1.3em;
+color:red;
+}
+
+.accessioncontent {
+clear:left;
+display:block;
+float:left;
+margin:.5em .5em .5em 0;
+width:100%;
+}
+
+.accessionserieslist {
+font-size:90%;
+margin-left:1em;
+text-indent:-0.5em;
+}
+
+.accessionshowlist {
+font-size:90%;
+margin-left:1em;
+}
+
+#locationtable {
+border-collapse:collapse;
+margin-top:1em;
+}
+
+#accessionnotice {
+background-color:#eee;
+font-size:0.85em;
+padding:0.5em;
+border:1px solid #ddd;
+}
+
+/*used in default template's collection.inc.php */
+
+.faitem {
+margin-bottom:5px;
+}
+
+.faitemcontent {
+font-size:82%;
+margin:3px 15px 5px 0;
+}
+
+#faauthor {
+	margin-bottom:3em;
+}
+
+.indent-text{
+	margin-left:2em;
+}
+
+
+/* Used in default template's digitalcontent.inc.php  */
+#digcontentwrapper{ /*to display info in columns*/
+width:100%;
+}
+
+#digcontentwrapper hr {
+background-color:#FFDB4D;
+border:none;
+color:#FFDB4D;
+width:100%;
+}
+
+
+#digcontentfiles {
+float:left;
+width:30%;
+max-width:402px;
+padding: 8px;
+background:#fff8e8 /* url('images/contentsgradient.gif') repeat-x top left*/;
+border:#ddd 2px solid;
+text-align:center;
+}
+
+#digcontentmetadata {
+border:1px solid #ddd;
+padding:1em;
+background-color:#F9F9FA;
+/*background:#fff url('images/contentsgradient.gif') repeat-x top left; */
+float:left;
+margin-left:.5em;
+width:60%;
+/*line-height:1.2em;*/
+}
+
+.digcontentlabel {
+clear:left;
+display:block;
+float:left;
+font-size:90%;
+font-weight:700;
+width:7em;
+}
+
+.digcontentdata {
+display:block;
+float:left;
+font-size:90%;
+left:.5em;
+margin-bottom:.3em;
+position:relative;
+width:80%;
+}
+
+.digcontentrequest {
+font-size:80%;
+font-weight:700;
+}
+
+img.digcontentfile {
+width:auto;
+max-width:100%;
+text-align:center;
+margin:0 auto;
+border:1px solid #ccc;
+padding:0;
+}
+
+.digcontentfiletitle {
+font-size:80%;
+}
+
+.digcontenttitlebox{
+background:#F9F9FA;
+border:1px solid #ddd;
+margin-top:8px;
+padding:1em;
+text-align:left;
+}
+
+/* used in various research pages */
+.researchformbox {
+background:#fff8e8 url('images/browseby.gif') repeat-x top left;
+border:#ddd 1px solid;
+font-size:small;
+margin:auto;
+padding: 0 .5em 1em .5em;
+max-width:40em;
+}
+
+.researchformbox:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+visibility:hidden;
+}
+
+#researchformsubmit {
+clear:left;
+text-align:center;
+}
+
+.researchformpair {
+clear:left;
+margin:0;
+padding:0.5em;
+text-align:left;
+}
+
+.researchformlabel {
+font-weight:700;
+text-align:left;
+font-size:85%;
+margin:0 .5em 0 0;
+}
+
+
+.researchformbox .button {
+background:#ebeeef;
+border:2px solid #ddd;
+cursor:pointer;
+font-size:1.2em;
+font-weight:100;
+margin: auto 0;
+color:#888899;
+max-height:1.7em;
+min-width:1.33em;
+}
+
+.researchformbox .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+
+
+.researchforminput {
+text-align:left;
+margin:0 0 1.4em;
+}
+
+.researchformdate {
+font-weight:lighter;
+font-size:95%;
+font-style:italic;
+}
+
+#requestimagebox {
+background-color:#ffd98c;
+border:outset;
+font-size:small;
+margin-bottom:1em;
+padding:5px;
+}
+
+#researchcart {
+background-color:#efefef;
+border:1px #ddd solid;
+width:60%;
+margin:1em auto;
+padding:1em;
+}
+
+#researchcartwrapper {
+width:100%;
+}
+
+#researchcartinfo {
+background-color:#efefef;
+border:1px #ddd solid;
+width:80%;
+margin:1em auto;
+padding:1em;
+}
+
+/* used in digitallibrary/thumbnails */
+.thumbnailimg {
+float:left;
+height:13em;
+width:10em;
+background:#fff8e8 url('images/thumbnail.gif') repeat-x top left;
+border:#ddd 2px solid;
+margin:1em;
+padding:0.75em 0 0;
+}
+
+.thumbnailimg:hover {
+background:#FEF1B5;
+}
+
+.thumbnailimg:after {
+clear:left;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+.thumbnailimg .thumbnailimgwrapper {
+height:10em;
+width:10em;
+}
+
+.thumbnailimg img {
+display:block;
+border:2px solid #ddd;
+max-width:100px;
+max-height:130px;
+clear:both;
+margin-left:auto;
+margin-right:auto;
+}
+
+.thumbnailimg .thumbnailcaption {
+display:block;
+text-align:center;
+clear:both;
+font-size:75%;
+margin-left:auto;
+margin-right:auto;
+background:#F9F9FA;
+height:4em;
+border-top:1px solid #ddd;
+border-bottom:1px solid #ddd;
+}
+
+.thumbnailimg a {
+text-decoration:none;
+}
+
+
+#mediumpreviewimg {
+width:300px;
+border:#ddd 1px solid;
+}
+
+#thumbnailnav {
+clear:both;
+border:1px solid #ddd;
+width:30%;
+background:#fff8e8;
+font-weight:bolder;
+color:#33b;
+font-size:80%;
+margin:0 auto;
+padding:0.75em;
+}
+
+#thumbnailnav:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+#thumbnailprevlink {
+float:left;
+}
+
+#thumbnailnextlink {
+float:right;
+}
+
+.paginationnav {
+clear:both;
+border:1px solid #e6e6e6;
+width:30%;
+background:#fafafa;
+font-weight:bolder;
+color:#33b;
+font-size:80%;
+margin:20px auto;
+padding:0.75em;
+}
+
+.paginationnav:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+.paginationprevlink {
+float:left;
+}
+
+.paginationnextlink {
+float:right;
+}
+
+}
+
+.jump_100 li {
+	list-style: none;
+	display:inline-block;
+	padding-left: 1em;
+}
+
+.make-hidden a{
+	font-size:5%;
+}
+
+/*Adjustments for smaller screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
+@media screen and (max-width: 750px) {
+
+	#themeindex.bground{
+		width:auto;
+		padding:.5em;
+	}
+	
+	#logo{
+		margin-bottom:0;
+	}
+	
+	.box1, .box2, .box3, .box5{
+		width:auto;
+	}
+	
+	.box4 {
+		width:70%;
+	}
+	
+	#custom-message {
+		max-height:5em;
+		overflow:scroll;
+	}
+	
+	#searchblock {
+		margin:0;
+		display:none;
+	}
+	
+	#browsebyspan, .browseLink {
+		width:100%;
+	}
+	
+	#browsebyblock {
+		margin:0;
+		padding:0;
+		width:100%;
+	}
+	
+	.currentBrowseLink{
+		background-image:none;
+		background:lightgray;
+		width:100%;
+	}
+	
+	#userbox, #contactcontainer {
+		width:100%;
+	}
+	
+	#themeindex {
+		width:100%;
+		padding:0;
+	}
+	
+	#classificationdesc,#creatornote,#creatorstaff {
+		width:100%;
+	}
+	
+	#ccardleft, #ccardright, #ccardstaff{
+		width:100%;
+	}
+	
+	#ccardscope{
+		width:auto;
+	}
+	
+	#ccardprintcontact{
+		width:auto;
+		margin-top:0;
+	}
+	
+	#accessionlife, #accesionscope {
+		width:100%;
+	}
+	
+	#digcontentfiles, #digcontentmetadata {
+		width:100%;
+	}
+	
+	.ccardshowlist {
+		margin-left:0;
+	}
+	
+	input[type=text], select, textarea{
+		width: 100%;
+	}
+	
+	#headertitleblock{
+		font-size:1.7em;
+		margin-bottom:.2em;
+		margin-right:.2em;
+	}
+	
+	#sitetitleblock{
+		font-size:2.5em;
+		font-weight:bold;
+		margin-bottom:.2em;
+	}
+	h1 {
+		font-size:1.4em;
+	}
+	
+	h2 {
+		font-size:1.2em;
+	}
+	
+	.print-friendly-link{
+		display:none;
+	}
+	
+	#breadcrumbblock{
+		padding-top:0.25em;
+		height:auto;
+	}
+	
+	#left{
+		width:90%;
+		position:relative;
+	}
+	
+	#fanavbox{
+		width:auto;
+	}
+	
+	#famain {
+		margin:0;
+		width:100%;
+	}
+	
+	.indent-text{
+		margin-left:0;
+	}
+	
+	.indent-text a {
+		word-wrap: break-word;
+		word-break: break-word;
+	}
+	
+	#logosearchwrapper{
+		min-width:0;
+	}
+	
+	.pdfsearchlink{
+		display:block;
+	}
+	
+	#pdfsearchbox,#pdfsearchinfo{
+		width:auto;
+	}
+	
+	.request-modal-content {
+		width:70%;
+		
+	}
+	
+	.read-more a{
+		width:auto;
+	}
+		
+}
+
+@media print {
+    #top, #headernav, #userinfo, #ccardprintcontact, #ccardlocation, #ccardstaff, #custom-message,.edit, .hide-link{
+		display:none;
+	}
+	
+	#titleheader {
+		margin: 0 0 .5em 0;
+	}
+	
+	body {
+		font-size:smaller;
+	}
+}

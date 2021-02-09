@@ -26,7 +26,65 @@ isset($_ARCHON) or die();
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
 
+
+/** Gather text to build a request link **/
+
+	$requestTitle = ($objCollection->Title) ? $objCollection->Title : "";
+	$requestDates = ($objCollection->InclusiveDates) ? ", ".$objCollection->InclusiveDates : "";
+	$requestTitle = urlencode($requestTitle . $requestDates);
+
+	$requestIdentifier = ($objCollection->Classification) ? $objCollection->Classification->toString(LINK_NONE, true, false, true, false)."/".$objCollection->getString('CollectionIdentifier') : $objCollection->getString('CollectionIdentifier');
+
+	$requestExtent = ($objCollection->Extent) ? preg_replace('/\.(\d)0/', ".$1", $objCollection->getString('Extent')) . " " . $objCollection->getString('ExtentUnit') : "";
+	$requestExtent .= ($objCollection->AltExtentStatement) ? "; ".$objCollection->AltExtentStatement : "";
+	
+	$requestRestrictions = ($objCollection->AccessRestrictions) ? "Access restrictions: " . strip_tags($objCollection->getString('AccessRestrictions')) : "";
+	
+	if($objCollection->MaterialType){
+		$requestMaterialType = ($_ARCHON->config->RequestMaterialTypeList[$objCollection->MaterialType]) ? $_ARCHON->config->RequestMaterialTypeList[$objCollection->MaterialType] : $objCollection->MaterialType;
+	}
+
+/*For reading room request link */
+if($_ARCHON->config->AddRequestLink and $_ARCHON->config->RequestURL) 
+{
+	$requestBaseLink =	$_ARCHON->config->RequestURL;//defined in config file
+
+	//concatenate the field names (URL parameters) and metadata from the collection to form the request link
+	$requestLink = $requestBaseLink;
+	if($_ARCHON->config->RequestVarTitle){
+		$requestLink .= $_ARCHON->config->RequestVarTitle . $requestTitle;
+	}
+	if($_ARCHON->config->RequestVarIdentifier) {
+		$requestLink .= $_ARCHON->config->RequestVarIdentifier . $requestIdentifier;
+	}
+	if($_ARCHON->config->RequestVarDates) {
+		$requestLink .= $_ARCHON->config->RequestVarDates;
+		$requestLink .= ($objCollection->InclusiveDates) ? $objCollection->InclusiveDates : "";
+	}
+	if($_ARCHON->config->RequestVarExtent) {
+		$requestLink .= $_ARCHON->config->RequestVarExtent . $requestExtent;
+	}
+	
+	if($_ARCHON->config->RequestVarRestrictions) {
+		$requestLink .= $_ARCHON->config->RequestVarRestrictions . $requestRestrictions;
+	}
+	
+	if($_ARCHON->config->RequestVarMaterialType) {
+		$requestLink .= $_ARCHON->config->RequestVarMaterialType . $requestMaterialType;
+	}
+	
+	if($_ARCHON->config->RequestHasConsistentLocation) {
+		if($_ARCHON->config->RequestVarLocation and $_ARCHON->config->RequestDefaultLocation){
+			$requestLink .= $_ARCHON->config->RequestVarLocation . $_ARCHON->config->RequestDefaultLocation;
+		}
+	}
+}
+/** End section for preparation of the request link.*/
+
 ?>
+
+
+
 
 <div id='ccardleft'>
    <div id="ccardpublic" class='mdround'>
@@ -148,7 +206,7 @@ if($objCollection->PrimaryCreator->BiogHist)
                   }
                   elseif (trim($objCollection->PrimaryCreator->CreatorType->CreatorType)=="Corporate Name")
                   {
-                     echo ("Adminstrative History");
+                     echo ("Administrative History");
                   }
                else
                {
@@ -172,7 +230,7 @@ if($objCollection->PrimaryCreator->BiogHist)
       }
 
 
-      if($objCollection->AccessRestrictions)
+      /* if($objCollection->AccessRestrictions)
       {
          ?>
 
@@ -180,7 +238,7 @@ if($objCollection->PrimaryCreator->BiogHist)
          <div class='ccardshowlist' style="display: none;" id="restrictionResults"><?php echo($objCollection->getString('AccessRestrictions')); ?></div>
       </div>
          <?php
-      }
+      } */
 
       if(!empty($objCollection->Subjects))
       {
@@ -218,7 +276,16 @@ if($objCollection->PrimaryCreator->BiogHist)
 
 }
 
-if(!empty($objCollection->Languages))  //show only non-english
+if(!empty($objCollection->Languages))
+{
+   ?>
+         <div class='ccardcontent'><span class='ccardlabel'><a href='#' onclick="toggleDisplay('langs'); return false;"><img id='langsImage' src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/plus.gif' alt='expand icon' /> Languages of Materials</a></span><br/>
+            <div class='ccardshowlist' style='display: none' id='langsResults'><?php echo($_ARCHON->createStringFromLanguageArray($objCollection->Languages, "<br/>\n", LINK_TOTAL)); ?></div>
+         </div>
+   <?php
+}
+
+/* if(!empty($objCollection->Languages))  //show only non-english
 
       {
          $lang1=array_values($objCollection->Languages);
@@ -231,7 +298,7 @@ if(!empty($objCollection->Languages))  //show only non-english
       </div>
       <?php
    }
-}
+} */
 
             if (!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) || !empty($objCollection->PhysicalAccess) || !empty($objCollection->TechnicalAccess) || !empty($objCollection->PhysicalAccessNote) || !empty($objCollection->TechnicalAccessNote) || !empty($objCollection->AcquisitionSource) and $_ARCHON->Security->userHasAdministrativeAccess() || !empty($objCollection->AcquisitionMethod) || !empty($objCollection->AppraisalInformation) || !empty($objCollection->OrigCopiesNote) || !empty($objCollection->OrigCopiesURL) || !empty($objCollection->RelatedMaterials) || !empty($objCollection->RelatedMaterialsURL) || !empty($objCollection->RelatedPublications) || !empty($objCollection->PreferredCitation) || !empty($objCollection->ProcessingInfo) || !empty($objCollection->RevisionHistory))
 //admin info exists
@@ -248,7 +315,7 @@ if(!empty($objCollection->Languages))  //show only non-english
                   {
       ?>
 
-            <div class='ccardcontent'><span class='ccardlabel'>Adiminsrative/Biographical History:</span>
+            <div class='ccardcontent'><span class='ccardlabel'>Administrative/Biographical History:</span>
                   <?php
                   echo($objCollection->getString('BiogHist'));
                   if ($objCollection->BiogHistAuthor)
@@ -460,51 +527,12 @@ if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ))
 else            //user is not authenticated
 
 {
-   if(!empty($objCollection->LocationEntries))
-               {
-                  ?>
-      <div id='ccardstaff' class='mdround'><span class='ccardlabel'>Available for use at:</span><br/><br/>
-
-
-         <table id='locationtable' border='1' style='margin-left:0'>
-            <tr>
-
-               <th style='width:400px'>Service Location</th>
-               <th style='width:100px'>Boxes</th>
-            </tr>
-
-
-
-                  <?php
-                  foreach ($objCollection->LocationEntries as $loc)
-                  {
-                     echo("<tr>".$loc->LocationID);
-
-                     if (($loc->LocationID>171 && $loc->LocationID<191) || $loc->LocationID==200)
-                     {
-                        echo("<td>Archives Research Center, 1707 S. Orchard St.</td>");
-                     }
-                     
-                     elseif ($loc->LocationID>194 && $loc->LocationID<198)
-                     {
-                        echo("<td>19 Library, 1408 W. Gregory Drive</td>");
-                     }
-
-                     else
-                     {
-                        echo("<td>Offsite: 24 hours notice required</td>");
-                     }
-               echo ("<td>". $loc->Content . "</td></tr>");
-
-            }
-            echo ('</table>');
-         }
-
-         else
-         {
-            echo("<div id='ccardstaff'><span class='ccardlabel'>Service Location:</span><br/>Please <a href='http://www.library.uiuc.edu/arhives/email-ahx.php'>contact the Archives</a> for assistance. </span>");
-
-         }
+	
+	        echo("<div id='ccardstaff' class='mdround'>");
+			include("packages/collections/templates/ala/openlocationtable.inc.php");
+			echo("</div>");
+			
+   
          ?>
 
       </div> <!--end ccardstaffdiv -->
@@ -514,7 +542,88 @@ else            //user is not authenticated
 
       echo("</div>");	//ending left div
 
-      echo ("<div id='ccardprintcontact' class='smround'> <a href='?p=research/research&amp;f=email&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'><img src='". $_ARCHON->PublicInterface->ImagePath . "/email.png'/> </a> <a href='http://www.library.uiuc.edu/archives/email-ahx.php'>Email us about these ");
+      echo ("<div id='ccardprintcontact' class='smround'>");
+
+/**add request button, or launch a modal with the location table if variable locations */
+		if($requestLink) {
+			if($_ARCHON->config->RequestHasConsistentLocation){
+				echo("<a href='" . $requestLink . "' target='_blank'>");
+			} else {
+				echo("<a href='#' id='requestModalLink'>");
+			}
+			echo("<img src='" . $_ARCHON->PublicInterface->ImagePath . "/box.png' alt='Request' style='padding-right:2px'/>");
+			echo($_ARCHON->config->RequestLinkText ? $_ARCHON->config->RequestLinkText : "Submit request");
+			echo("</a> | ");
+		}
+		if($requestLink && !$_ARCHON->config->RequestHasConsistentLocation) {
+			?>
+			<!-- The Modal to show request locations -->
+			<div id="requestModal" class="request-modal" style="display:none">
+
+			  <!-- Modal content -->
+			  <div class="request-modal-content">
+				<span class="request-modal-close">&times;</span>
+				  <?php
+					if(file_exists("packages/collections/templates/ala/openlocationtable.inc.php")){
+						include("packages/collections/templates/ala/openlocationtable.inc.php");
+					} else {
+						echo("Please see location table below at left.");
+					}
+					?>
+			  </div>
+
+			</div>
+
+			<script>
+			// adapted from https://www.w3schools.com/howto/howto_css_modals.asp
+			// Get the modal
+			var modal = document.getElementById("requestModal");
+
+			// Get the button that opens the modal
+			var btn = document.getElementById("requestModalLink");
+
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("request-modal-close")[0];
+
+			// When the user clicks the button, open the modal 
+			btn.onclick = function() {
+			  modal.style.display = "block";
+			}
+
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+			  modal.style.display = "none";
+			}
+
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+			  if (event.target == modal) {
+				modal.style.display = "none";
+			  }
+			}
+			</script>
+<?php
+		}
+		
+
+/**end section with the request button*/	  
+	  
+	  
+	  $emailsubject="Inquiry: ALA Archives";
+	  if($objCollection->Classification) {
+			$emailsubject .= " (RS ".$objCollection->Classification->toString(LINK_NONE, true, false, true, false);
+			$emailsubject .= "/".$objCollection->getString('CollectionIdentifier').")";
+		}
+	  
+	  //echo("<a href='?p=research/research&amp;f=email&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'>");
+	  echo("<a href='mailto:ala-archives@library.illinois.edu?subject=". $emailsubject ."'>");
+	  
+	  echo("<img src='". $_ARCHON->PublicInterface->ImagePath . "/email.png'/> </a>");
+	  
+	  //echo("<a href='http://www.library.uiuc.edu/archives/email-ahx.php'>");
+	  echo("<a href='mailto:ala-archives@library.illinois.edu?subject=". $emailsubject ."'>");
+	  
+	  echo("Email us about these ");
 
       if ($objCollection->MaterialType=='Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
       {
@@ -595,6 +704,16 @@ echo("</a> | <a href='?p=collections/controlcard&amp;id=". $objCollection->ID. "
       </div>
          <?php
       }
+
+		if($objCollection->AccessRestrictions)
+			  {
+				 ?>
+
+			  <div class='ccardcontent'><span class='ccardlabel'>Access Restrictions<br/></span>
+				 <div id="restrictionResults"><?php echo($objCollection->getString('AccessRestrictions')); ?></div>
+			  </div>
+				 <?php
+			  }
 
 
          if(!empty($objCollection->OtherURL))

@@ -19,6 +19,35 @@ if($_ARCHON->Script == 'packages/collections/pub/findingaid.php')
 
 
 </div>
+
+
+<?php
+if(defined('PACKAGE_COLLECTIONS'))
+{
+	if($_ARCHON->QueryString && $_ARCHON->Script == 'packages/core/pub/search.php')
+   {
+      //add search box for inventories
+	  echo("
+	  <div class='bground textcontainer box4 pdfsearch'>");
+	  echo("<h2>PDF/Deep Search Option</h2>");
+	  echo("
+<p style='text-align:center'>For additional results, you can use Google to try searching box and folder lists (uploaded as PDF files) as well:</p>
+<div style='text-align:center'>				
+    <form name='form1' action='https://www.google.com/search' class='search'>
+    <input type='hidden' name='hq' value='inurl:www.library.illinois.edu/ihx/inventories'>
+	<input type='text' size='25' name='q' class='searchinput' style='border:solid 1px #ddd' placeholder='Search box and folder lists'>
+	<input type='submit' value='Find' class='button'></form>
+</div>
+<p>You can also expand your search to archival collections held in units throughout the University of Illinois Library 
+using the <a href='?f=searchmultiple'>multiple repository search page</a>.");
+	echo("
+</div>	");
+   }
+   
+}
+?>
+
+
 <div id="bottom">
     <br/>
     <hr id="footerhr" />
@@ -34,7 +63,7 @@ if($_ARCHON->Security->isAuthenticated())
 <?php
 if($_ARCHON->Security->userHasAdministrativeAccess())
 {
-    echo("<a href='?p=admin' rel='external'>Admin</a>&nbsp;");
+    echo("<a href='http://apache-ns.library.illinois.edu/ihx/archon?p=admin' rel='external'>Admin</a>&nbsp;");
 }
 else
 {
@@ -43,6 +72,15 @@ else
 }
 ?>
             <a href='<?php echo(encode($logoutURI, ENCODE_HTML) . $Logout); ?>'>Log Out</a>
+			
+<?php
+	if($_ARCHON->Security->userHasAdministrativeAccess())
+	{
+		echo("<p><a href='?p=core/index&f=listall'>Generate list of all collections (admin)</a></p>");
+		echo("<p><a href='?p=core/index&f=openidentifiers'>Find open collection identifiers (admin)</a></p>");
+	}
+?>
+			
         </div>
 <?php
 }
@@ -84,8 +122,9 @@ if(defined('PACKAGE_COLLECTIONS'))
     {
         echo("<div id='repositorylink'><a href='{$_ARCHON->Repository->getString('URL')}'>{$_ARCHON->Repository->getString('Name')}</a></div>\n");
     }
-    echo("<div id='emaillink'>Contact Us: <a href='mailto:ihlc@library.uiuc.edu'>ihlc@library.uiuc.edu</a></div>\n");
-    echo("</div>");
+    echo("<div id='emaillink'>Contact Us: <a href='mailto:ihlc@library.illinois.edu'>ihlc@library.illinois.edu</a></div>\n");
+    echo("<div id='privacy'><p><a href='?p=core/index&f=privacy'>Privacy Policy</a></p></div>");
+	echo("</div>");
 }
 
 ?>

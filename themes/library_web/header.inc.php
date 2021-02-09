@@ -62,15 +62,17 @@ else
 }
 
 $_ARCHON->PublicInterface->addNavigation('Holdings', 'index.php', true);
-$_ARCHON->PublicInterface->addNavigation('University Archives', 'http://www.library.uiuc.edu/archives', true);
+$_ARCHON->PublicInterface->addNavigation('University Archives', 'https://archives.library.illinois.edu', true);
 
 header('Content-type: text/html; charset=UTF-8');
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta name="og:site_name" content="University of Illinois Archives Holdings Database"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title><?php echo(strip_tags($_ARCHON->PublicInterface->Title)); ?></title>
       <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/cluetip/jquery.cluetip.css" />
@@ -149,13 +151,13 @@ header('Content-type: text/html; charset=UTF-8');
 
          <div id="logosearchwrapper">
 
-		 <div id="sitetitleblock"><a href="https://archives.library.illinois.edu">University of Illnois Archives</a> &ndash;> <a href="index.php">Holdings Database</a></div>
+		 <div id="sitetitleblock"><a href="https://archives.library.illinois.edu">University of Illinois Archives</a> &ndash;> <a href="index.php">Holdings Database</a></div>
 			<div id="searchblock">
                <form action="index.php" accept-charset="UTF-8" method="get" onsubmit="if(!this.q.value) { alert('Please enter search terms.'); return false; } else { return true; }">
                   <div>
                      <input type="hidden" name="p" value="core/search" />
                      <input type="text" size="25" maxlength="150" name="q" id="q" title="input box for search field" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="100" />
-                     <input type="submit" value="Search" tabindex="300" class='button' title="Search" /> <a class='bold' style='color:white' href='?p=core/index&amp;f=pdfsearch'>Search PDF lists</a>
+                     <input type="submit" value="Search" tabindex="300" class='button' title="Search" /> <a class='bold pdfsearchlink' href='?p=core/index&amp;f=pdfsearch'>Search PDF lists</a>
                      <?php
                      if(defined('PACKAGE_COLLECTIONS') && CONFIG_COLLECTIONS_SEARCH_BOX_LISTS)
                      {

@@ -59,11 +59,17 @@ color:purple;
 a:hover {
 background:#6699c9;
 color:#0055A5;
-color:#000;
 }
 
 a:active {
 color:#fff;
+}
+
+a:focus {
+outline:none;
+background:#0055A5;
+color:#ffffff;
+box-shadow: .2em .2em .4em #888888;
 }
 
 h1 {
@@ -369,13 +375,27 @@ width:330px;
 text-align:center;
 }
 
+a.pdfsearchlink {
+	color:white;
+}
+
 
 #main {
 margin-left:5em;
 margin-right:5em;
-background-color:
 }
 
+#main {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+  }
 
 #breadcrumbblock {
 height:1em;
@@ -781,6 +801,13 @@ color:#FEF1B5;
 width:70%;
 }
 
+#famain #ccardprintcontact {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	margin-top:0;
+}
+
 #fanavbox {
 font-size:small;
 vertical-align:top;
@@ -844,7 +871,7 @@ font-size:1.33em;
 font-weight:100;
 margin:.5em auto 0;
 padding-left:1.8em;
-color:#888899;
+color:#3D3D3D;/*#888899;*/
 max-height:1.7em;
 min-width:1.33em;
 }
@@ -860,6 +887,10 @@ color:#889;
 #fasearchblock img {
 vertical-align:middle;
 padding:0 0 0 0.3em;
+}
+
+.indent-text{
+	margin-left:2em;
 }
 
 /* END THEME STRUCTURES/FORMATTING -- BEGIN PUBLIC FILE FORMATTING */
@@ -1287,7 +1318,7 @@ width:100%;
 background:#fff url('images/contentsgradient.gif') repeat-x top left;
 border:#ddd 1px solid;
 margin-bottom:1em;
-padding:1em;f
+padding:1em;
 }
 
 
@@ -1730,4 +1761,173 @@ color:#888;
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+/*Adjustments for smaller screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
+@media screen and (max-width: 750px) {
+
+	#main{
+		margin-right:.5em;
+		margin-left:.5em;
+	}
+	
+	#searchblock {
+		margin:0;
+	}
+	
+	#browsebyspan, .browseLink {
+		width:100%;
+	}
+	
+	#browsebyblock {
+		margin:0;
+		padding:0;
+		width:100%;
+	}
+	
+	.currentBrowseLink{
+		background-image:none;
+		background:lightgray;
+		width:100%;
+	}
+	
+	.browseLink, .currentBrowseLink{
+		margin-top:0;
+	}
+	
+	#userbox, #contactcontainer {
+		width:100%;
+	}
+	
+	#themeindex {
+		width:100%;
+		padding:0;
+	}
+	
+	#classificationdesc,#creatornote,#creatorstaff {
+		width:100%;
+	}
+	
+	#ccardleft, #ccardright, #ccardstaff{
+		width:100%;
+	}
+	
+	#ccardscope{
+		width:auto;
+	}
+	
+	#ccardprintcontact{
+		width:auto;
+	}
+	
+	#accessionlife, #accesionscope {
+		width:100%;
+	}
+	
+	#digcontentfiles, #digcontentmetadata {
+		width:100%;
+	}
+	
+	.ccardshowlist {
+		margin-left:0;
+	}
+	
+	input[type=text], select, textarea{
+		width: auto;
+	}
+	
+	#headertitleblock{
+		font-size:1.7em;
+		margin-bottom:.2em;
+		margin-right:.2em;
+	}
+	
+	#sitetitleblock{
+		font-size:2.5em;
+		font-weight:bold;
+		margin-bottom:.2em;
+	}
+	h1 {
+		font-size:1.4em;
+	}
+	
+	h2 {
+		font-size:1.2em;
+	}
+	
+	.print-friendly-link{
+		display:none;
+	}
+	
+	#breadcrumbblock{
+		padding-top:0.25em;
+	}
+	
+	#logosearchwrapper{
+		min-width:0;
+	}
+	
+	.pdfsearchlink{
+		display:block;
+	}
+	
+	#pdfsearchbox,#pdfsearchinfo{
+		width:auto;
+	}
+	
+	.request-modal-content {
+		width:70%;
+		
+	}
+	
+	#dlsearchblock{
+		width:auto;
+	}
+
+	#left{
+		width:90%;
+		position:relative;
+	}
+	
+	#fanavbox{
+		width:auto;
+	}
+	
+	#famain {
+		margin:0;
+		width:100%;
+	}
+	
+	.indent-text{
+		margin-left:0;
+	}
+	
+	.indent-text a {
+		word-wrap: break-word;
+		word-break: break-word;
+	}
+		
+}
+/*Adjustments for tablet-sized screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
+@media sscreen and (min-width: 751px) and (max-width: 850px) {
+
+	#main,#famain {
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+	}
+
+	*, *:before, *:after {
+	  -webkit-box-sizing: inherit;
+	  -moz-box-sizing: inherit;
+	  box-sizing: inherit;
+	  }
+	  
+	  #ccardprintcontact{
+		  width:55%;
+	  }
+	  
+	  #ccardpublic,#ccardstaff{
+		  min-width:0;
+	  }
 }
