@@ -1508,6 +1508,11 @@ img.digcontentfile {
     visibility: hidden;
 }
 
+/* used in collection.inc.php to remove inline styling so indents can be adjusted for smaller screens */
+.indent-text{
+	margin-left:2em;
+}
+
 /*************************************/
 /* Styling used for the request link */
 /*************************************/
@@ -1557,3 +1562,176 @@ img.digcontentfile {
   cursor: pointer;
 }
 
+/***********************************/
+/* Adjustments for smaller screens */
+/***********************************/
+
+/*Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
+@media screen and (max-width: 750px) {
+
+	#main{
+		margin-right:.5em;
+		margin-left:.5em;
+	}
+	
+	#searchblock {
+		margin:0;
+	}
+	
+	#browsebyspan, .browseLink {
+		width:100%;
+	}
+	
+	#browsebyblock {
+		margin:0;
+		padding:0;
+		width:100%;
+	}
+	
+	.currentBrowseLink{
+		background-image:none;
+		background:lightgray;
+		width:100%;
+	}
+	
+	.browseLink, .currentBrowseLink{
+		margin-top:0;
+	}
+	
+	#userbox, #contactcontainer {
+		width:100%;
+	}
+	
+	#themeindex {
+		width:100%;
+		padding:0;
+	}
+	
+	#classificationdesc,#creatornote,#creatorstaff {
+		width:100%;
+	}
+	
+	#ccardleft, #ccardright, #ccardstaff{
+		width:100%;
+	}
+	
+	#ccardscope{
+		width:auto;
+	}
+	
+	#ccardprintcontact{
+		width:auto;
+	}
+	
+	#accessionlife, #accesionscope {
+		width:100%;
+	}
+	
+	#digcontentfiles, #digcontentmetadata {
+		width:100%;
+	}
+	
+	.ccardshowlist {
+		margin-left:0;
+	}
+	
+	input[type=text], select, textarea{
+		width: auto;
+	}
+	
+	#headertitleblock{
+		font-size:1.7em;
+		margin-bottom:.2em;
+		margin-right:.2em;
+	}
+	
+	#sitetitleblock{
+		font-size:2.5em;
+		font-weight:bold;
+		margin-bottom:.2em;
+	}
+	h1 {
+		font-size:1.4em;
+	}
+	
+	h2 {
+		font-size:1.2em;
+	}
+	
+	.print-friendly-link{
+		display:none;
+	}
+	
+	#breadcrumbblock{
+		padding-top:0.25em;
+	}
+	
+	#logosearchwrapper{
+		min-width:0;
+	}
+	
+	.pdfsearchlink{
+		display:block;
+	}
+	
+	#pdfsearchbox,#pdfsearchinfo{
+		width:auto;
+	}
+	
+	.request-modal-content {
+		width:70%;
+		
+	}
+	
+	#dlsearchblock{
+		width:auto;
+	}
+
+	#left{
+		width:90%;
+		position:relative;
+	}
+	
+	#fanavbox{
+		width:auto;
+	}
+	
+	#famain {
+		margin:0;
+		width:100%;
+	}
+	
+	.indent-text{
+		margin-left:0;
+	}
+	
+	.indent-text a {
+		word-wrap: break-word;
+		word-break: break-word;
+	}
+		
+}
+
+/*Adjustments for tablet-sized screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
+@media sscreen and (min-width: 751px) and (max-width: 850px) {
+
+	#main,#famain {
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+	}
+
+	*, *:before, *:after {
+	  -webkit-box-sizing: inherit;
+	  -moz-box-sizing: inherit;
+	  box-sizing: inherit;
+	  }
+	  
+	  #ccardprintcontact{
+		  width:55%;
+	  }
+	  
+	  #ccardpublic,#ccardstaff{
+		  min-width:0;
+	  }
+}
