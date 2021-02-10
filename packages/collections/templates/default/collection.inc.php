@@ -27,6 +27,9 @@ isset($_ARCHON) or die();
 $repositoryid = $objCollection->RepositoryID;
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
+
+//gather data for request link
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
 ?>
 
 <?php if($objCollection->FindingAidAuthor)
@@ -34,6 +37,10 @@ echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "<
 
 
 <div id='ccardprintcontact' class='smround'>
+<?php
+//generate request link if enabled
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
+?>
    <a href='?p=collections/findingaid&amp;id=<?php echo($objCollection->ID); ?>&amp;templateset=print&amp;disabletheme=1'>
       <img src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/printer.png' alt='Printer-friendly' />
    </a>
