@@ -29,47 +29,7 @@ $repositoryid = $objCollection->RepositoryID;
 
 echo("<h1 id='titleheader'>" . $_ARCHON->PublicInterface->Title . "</h1>\n");
 
-
-/** Gather text to build a request link **/
-
-	$requestTitle = ($objCollection->Title) ? $objCollection->Title : "";
-	$requestDates = ($objCollection->InclusiveDates) ? ", ".$objCollection->InclusiveDates : "";
-	$requestTitle = urlencode($requestTitle . $requestDates);
-
-	$requestIdentifier = ($objCollection->Classification) ? $objCollection->Classification->toString(LINK_NONE, true, false, true, false)."/".$objCollection->getString('CollectionIdentifier') : $objCollection->getString('CollectionIdentifier');
-
-	$requestExtent = ($objCollection->Extent) ? preg_replace('/\.(\d)0/', ".$1", $objCollection->getString('Extent')) . " " . $objCollection->getString('ExtentUnit') : "";
-	$requestExtent .= ($objCollection->AltExtentStatement) ? "; ".$objCollection->AltExtentStatement : "";
-
-/*For reading room request link */
-if($_ARCHON->config->AddRequestLink and $_ARCHON->config->RequestURL) 
-{
-	$requestBaseLink =	$_ARCHON->config->RequestURL;//defined in config file
-
-	//concatenate the field names (URL parameters) and metadata from the collection to form the request link
-	$requestLink = $requestBaseLink;
-	if($_ARCHON->config->RequestVarTitle){
-		$requestLink .= $_ARCHON->config->RequestVarTitle . $requestTitle;
-	}
-	if($_ARCHON->config->RequestVarIdentifier) {
-		$requestLink .= $_ARCHON->config->RequestVarIdentifier . $requestIdentifier;
-	}
-	if($_ARCHON->config->RequestVarDates) {
-		$requestLink .= $_ARCHON->config->RequestVarDates;
-		$requestLink .= ($objCollection->InclusiveDates) ? $objCollection->InclusiveDates : "";
-	}
-	if($_ARCHON->config->RequestVarExtent) {
-		$requestLink .= $_ARCHON->config->RequestVarExtent . $requestExtent;
-	}
-	
-	if($_ARCHON->config->RequestHasConsistentLocation) {
-		if($_ARCHON->config->RequestVarLocation and $_ARCHON->config->RequestDefaultLocation){
-			$requestLink .= $_ARCHON->config->RequestVarLocation . $_ARCHON->config->RequestDefaultLocation;
-		}
-	}
-	
-}
-/** End section for preparation of the request link.*/
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
 
 ?>
 
@@ -518,21 +478,13 @@ echo("</div>"); //end ccardleft
 
 echo ("<div id='ccardprintcontact' class='smround'>");
 
-//add request button
-if($requestLink) {
-	echo("<a href='" . $requestLink . "' target='_blank'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/box.png' alt='Request' style='padding-right:2px'/></a><a href='" . $requestLink . "' target='_blank'>");
-	if($_ARCHON->config->RequestLinkText) {
-		echo($_ARCHON->config->RequestLinkText);
-	} else {
-		echo("Submit request");
-	}
-	echo("</a>");
+//generate request link if enabled
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
 
-	echo(" | ");
-}
-//end section with the request button
-	
+//printer friendly
 echo("<a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/printer.png' alt='Printer-friendly' /></a> <a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'>Printer-friendly</a> | "); 
+
+//contact form
 echo("<a href='https://forms.illinois.edu/sec/7016277' target='_blank'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='Email Us' /></a> <a href='https://forms.illinois.edu/sec/7016277' target='_blank'>Email Us</a></div>");
 
 echo("<div id='ccardright'>        <!--begin div ccardright -->");
