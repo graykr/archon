@@ -31,7 +31,6 @@ echo("<h1 id='titleheader'>" . $_ARCHON->PublicInterface->Title . "</h1>\n");
 
 //gather data for request link
 include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
-
 ?>
 
 <div id='ccardleft'>        <!--begin div ccardleft -->

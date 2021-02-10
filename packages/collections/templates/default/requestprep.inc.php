@@ -17,39 +17,42 @@
 	}
 
 /*Build reading room request link */
-if($_ARCHON->config->AddRequestLink and $_ARCHON->config->RequestURL and !$_ARCHON->config->ExcludeRequestLink[$objCollection->RepositoryID]) 
+if($_ARCHON->config->AddRequestLink and $_ARCHON->config->RequestURL)
 {
-	$requestBaseLink =	$_ARCHON->config->RequestURL;//defined in config file
+	if(!isset($_ARCHON->config->ExcludeRequestLink) || !$_ARCHON->config->ExcludeRequestLink[$objCollection->RepositoryID])
+	{
+		$requestBaseLink =	$_ARCHON->config->RequestURL;//defined in config file
 
-	//concatenate the field names (URL parameters) and metadata from the collection to form the request link
-	$requestLink = $requestBaseLink;
-	if($_ARCHON->config->RequestVarTitle){
-		$requestLink .= $_ARCHON->config->RequestVarTitle . $requestTitle;
-	}
-	if($_ARCHON->config->RequestVarIdentifier) {
-		$requestLink .= $_ARCHON->config->RequestVarIdentifier . $requestIdentifier;
-	}
-	if($_ARCHON->config->RequestVarDates) {
-		$requestLink .= $_ARCHON->config->RequestVarDates;
-		$requestLink .= ($objCollection->InclusiveDates) ? $objCollection->InclusiveDates : "";
-	}
-	if($_ARCHON->config->RequestVarExtent) {
-		$requestLink .= $_ARCHON->config->RequestVarExtent . $requestExtent;
-	}
-	
-	if($_ARCHON->config->RequestVarRestrictions) {
-		$requestLink .= $_ARCHON->config->RequestVarRestrictions . $requestRestrictions;
-	}
-	
-	if($_ARCHON->config->RequestVarMaterialType) {
-		$requestLink .= $_ARCHON->config->RequestVarMaterialType . $requestMaterialType;
-	}
-	
-	if($_ARCHON->config->RequestHasConsistentLocation) {
-		if($_ARCHON->config->RequestVarLocation and $_ARCHON->config->RequestDefaultLocation){
-			$requestLink .= $_ARCHON->config->RequestVarLocation . $_ARCHON->config->RequestDefaultLocation;
+		//concatenate the field names (URL parameters) and metadata from the collection to form the request link
+		$requestLink = $requestBaseLink;
+		if($_ARCHON->config->RequestVarTitle){
+			$requestLink .= $_ARCHON->config->RequestVarTitle . $requestTitle;
 		}
-	}
+		if($_ARCHON->config->RequestVarIdentifier) {
+			$requestLink .= $_ARCHON->config->RequestVarIdentifier . $requestIdentifier;
+		}
+		if($_ARCHON->config->RequestVarDates) {
+			$requestLink .= $_ARCHON->config->RequestVarDates;
+			$requestLink .= ($objCollection->InclusiveDates) ? $objCollection->InclusiveDates : "";
+		}
+		if($_ARCHON->config->RequestVarExtent) {
+			$requestLink .= $_ARCHON->config->RequestVarExtent . $requestExtent;
+		}
+		
+		if($_ARCHON->config->RequestVarRestrictions) {
+			$requestLink .= $_ARCHON->config->RequestVarRestrictions . $requestRestrictions;
+		}
+		
+		if($_ARCHON->config->RequestVarMaterialType) {
+			$requestLink .= $_ARCHON->config->RequestVarMaterialType . $requestMaterialType;
+		}
+		
+		if($_ARCHON->config->RequestHasConsistentLocation) {
+			if($_ARCHON->config->RequestVarLocation and $_ARCHON->config->RequestDefaultLocation){
+				$requestLink .= $_ARCHON->config->RequestVarLocation . $_ARCHON->config->RequestDefaultLocation;
+			}
+		}
+    }
 }
 
 ?>

@@ -1,5 +1,4 @@
 <?php
-
 /** Add request link, or launch a modal with the location table if variable locations */
 		if($requestLink) {
 			if($_ARCHON->config->RequestHasConsistentLocation){
