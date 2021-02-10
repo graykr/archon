@@ -1,6 +1,5 @@
 <?php
-
-/**add request button, or launch a modal with the location table if variable locations */
+/** Add request link, or launch a modal with the location table if variable locations */
 		if($requestLink) {
 			if($_ARCHON->config->RequestHasConsistentLocation){
 				echo("<a href='" . $requestLink . "' target='_blank'>");
@@ -11,13 +10,11 @@
 			echo($_ARCHON->config->RequestLinkText ? $_ARCHON->config->RequestLinkText : "Submit request");
 			echo("</a> | ");
 		}
-		
-?>
 
-<!-- The Modal to show request locations -->
+/* Modal to show request locations; note that additional CSS is needed in the style sheet for the modal to function	*/
+?>
 <div id="requestModal" class="request-modal" style="display:none">
 
-  <!-- Modal content -->
   <div class="request-modal-content">
     <span class="request-modal-close">&times;</span>
       <?php
