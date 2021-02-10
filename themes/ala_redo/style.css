@@ -1721,6 +1721,12 @@ font-weight:700;
 color:#888;
 }
 
+/* used to let the alphabetical browse lists (A to Z) wrap to the next line if needed */
+.beginningwith .center a {
+	display:inline-block;
+	line-height:2em;
+}
+
 /* Modal for request from location table, adapted from https://www.w3schools.com/howto/howto_css_modals.asp */
 /* The Modal (background) */
 .request-modal {

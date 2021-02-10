@@ -1662,9 +1662,10 @@ img.digcontentfile {
 		width:auto;
 	}
 
+/* used to let the alphabetical browse lists (A to Z) wrap to the next line if needed */
 	.beginningwith .center a {
 		display:inline-block;
-		padding:1em .2em 1em .2em;
+		line-height:2em;
 	}	
 }
 /*Adjustments for tablet-sized screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/

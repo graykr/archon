@@ -1516,7 +1516,7 @@ img.digcontentfile {
 /* used to let the alphabetical browse lists (A to Z) wrap to the next line if needed */
 .beginningwith .center a {
 	display:inline-block;
-	padding:1em .2em 1em .2em;
+	line-height:2em;
 }
 
 /*************************************/
