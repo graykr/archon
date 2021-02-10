@@ -1513,6 +1513,12 @@ img.digcontentfile {
 	margin-left:2em;
 }
 
+/* used to let the alphabetical browse lists (A to Z) wrap to the next line if needed */
+.beginningwith .center a {
+	display:inline-block;
+	padding:1em .2em 1em .2em;
+}
+
 /*************************************/
 /* Styling used for the request link */
 /*************************************/
@@ -1586,6 +1592,7 @@ img.digcontentfile {
 		margin:0;
 		padding:0;
 		width:100%;
+		height:auto;
 	}
 	
 	.currentBrowseLink{
@@ -1596,6 +1603,10 @@ img.digcontentfile {
 	
 	.browseLink, .currentBrowseLink{
 		margin-top:0;
+	}
+	
+	#breadcrumbblock {
+		height:auto;
 	}
 	
 	#userbox, #contactcontainer {
