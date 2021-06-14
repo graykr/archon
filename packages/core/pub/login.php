@@ -13,7 +13,7 @@ if ($_ARCHON->config->ForceHTTPS && !$_ARCHON->Security->Session->isSecureConnec
    die('<html><body onLoad="location.href=\'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '\';"></body></html>');
 }
 
-$go = $_REQUEST['go'] ? $_REQUEST['go'] : '';
+$go = $_REQUEST['go'] ? htmlspecialchars($_REQUEST['go']) : '';
 $go = str_replace('f=logout', '', $go);
 
 if($_ARCHON->Security->isAuthenticated())
