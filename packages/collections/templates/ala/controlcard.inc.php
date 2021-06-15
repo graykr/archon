@@ -26,7 +26,10 @@ isset($_ARCHON) or die();
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
 
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
+
 ?>
+
 
 <div id='ccardleft'>
    <div id="ccardpublic" class='mdround'>
@@ -148,7 +151,7 @@ if($objCollection->PrimaryCreator->BiogHist)
                   }
                   elseif (trim($objCollection->PrimaryCreator->CreatorType->CreatorType)=="Corporate Name")
                   {
-                     echo ("Adminstrative History");
+                     echo ("Administrative History");
                   }
                else
                {
@@ -172,7 +175,7 @@ if($objCollection->PrimaryCreator->BiogHist)
       }
 
 
-      if($objCollection->AccessRestrictions)
+      /* if($objCollection->AccessRestrictions)
       {
          ?>
 
@@ -180,7 +183,7 @@ if($objCollection->PrimaryCreator->BiogHist)
          <div class='ccardshowlist' style="display: none;" id="restrictionResults"><?php echo($objCollection->getString('AccessRestrictions')); ?></div>
       </div>
          <?php
-      }
+      } */
 
       if(!empty($objCollection->Subjects))
       {
@@ -218,7 +221,16 @@ if($objCollection->PrimaryCreator->BiogHist)
 
 }
 
-if(!empty($objCollection->Languages))  //show only non-english
+if(!empty($objCollection->Languages))
+{
+   ?>
+         <div class='ccardcontent'><span class='ccardlabel'><a href='#' onclick="toggleDisplay('langs'); return false;"><img id='langsImage' src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/plus.gif' alt='expand icon' /> Languages of Materials</a></span><br/>
+            <div class='ccardshowlist' style='display: none' id='langsResults'><?php echo($_ARCHON->createStringFromLanguageArray($objCollection->Languages, "<br/>\n", LINK_TOTAL)); ?></div>
+         </div>
+   <?php
+}
+
+/* if(!empty($objCollection->Languages))  //show only non-english
 
       {
          $lang1=array_values($objCollection->Languages);
@@ -231,7 +243,7 @@ if(!empty($objCollection->Languages))  //show only non-english
       </div>
       <?php
    }
-}
+} */
 
             if (!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) || !empty($objCollection->PhysicalAccess) || !empty($objCollection->TechnicalAccess) || !empty($objCollection->PhysicalAccessNote) || !empty($objCollection->TechnicalAccessNote) || !empty($objCollection->AcquisitionSource) and $_ARCHON->Security->userHasAdministrativeAccess() || !empty($objCollection->AcquisitionMethod) || !empty($objCollection->AppraisalInformation) || !empty($objCollection->OrigCopiesNote) || !empty($objCollection->OrigCopiesURL) || !empty($objCollection->RelatedMaterials) || !empty($objCollection->RelatedMaterialsURL) || !empty($objCollection->RelatedPublications) || !empty($objCollection->PreferredCitation) || !empty($objCollection->ProcessingInfo) || !empty($objCollection->RevisionHistory))
 //admin info exists
@@ -248,7 +260,7 @@ if(!empty($objCollection->Languages))  //show only non-english
                   {
       ?>
 
-            <div class='ccardcontent'><span class='ccardlabel'>Adiminsrative/Biographical History:</span>
+            <div class='ccardcontent'><span class='ccardlabel'>Administrative/Biographical History:</span>
                   <?php
                   echo($objCollection->getString('BiogHist'));
                   if ($objCollection->BiogHistAuthor)
@@ -460,61 +472,36 @@ if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ))
 else            //user is not authenticated
 
 {
-   if(!empty($objCollection->LocationEntries))
-               {
-                  ?>
-      <div id='ccardstaff' class='mdround'><span class='ccardlabel'>Available for use at:</span><br/><br/>
+	
+	        echo("<div id='ccardstaff' class='mdround'>");
+			include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/openlocationtable.inc.php");
+			echo("</div>");
 
-
-         <table id='locationtable' border='1' style='margin-left:0'>
-            <tr>
-
-               <th style='width:400px'>Service Location</th>
-               <th style='width:100px'>Boxes</th>
-            </tr>
-
-
-
-                  <?php
-                  foreach ($objCollection->LocationEntries as $loc)
-                  {
-                     echo("<tr>".$loc->LocationID);
-
-                     if (($loc->LocationID>171 && $loc->LocationID<191) || $loc->LocationID==200)
-                     {
-                        echo("<td>Archives Research Center, 1707 S. Orchard St.</td>");
-                     }
-                     
-                     elseif ($loc->LocationID>194 && $loc->LocationID<198)
-                     {
-                        echo("<td>19 Library, 1408 W. Gregory Drive</td>");
-                     }
-
-                     else
-                     {
-                        echo("<td>Offsite: 24 hours notice required</td>");
-                     }
-               echo ("<td>". $loc->Content . "</td></tr>");
-
-            }
-            echo ('</table>');
-         }
-
-         else
-         {
-            echo("<div id='ccardstaff'><span class='ccardlabel'>Service Location:</span><br/>Please <a href='http://www.library.uiuc.edu/arhives/email-ahx.php'>contact the Archives</a> for assistance. </span>");
-
-         }
-         ?>
-
-      </div> <!--end ccardstaffdiv -->
-         <?php
       }
 
 
       echo("</div>");	//ending left div
 
-      echo ("<div id='ccardprintcontact' class='smround'> <a href='?p=research/research&amp;f=email&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'><img src='". $_ARCHON->PublicInterface->ImagePath . "/email.png'/> </a> <a href='http://www.library.uiuc.edu/archives/email-ahx.php'>Email us about these ");
+      echo ("<div id='ccardprintcontact' class='smround'>");
+
+/**add request button, or launch a modal with the location table if variable locations */
+		include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");	  
+	  
+	  $emailsubject="Inquiry: ALA Archives";
+	  if($objCollection->Classification) {
+			$emailsubject .= " (RS ".$objCollection->Classification->toString(LINK_NONE, true, false, true, false);
+			$emailsubject .= "/".$objCollection->getString('CollectionIdentifier').")";
+		}
+	  
+	  //echo("<a href='?p=research/research&amp;f=email&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'>");
+	  echo("<a href='mailto:ala-archives@library.illinois.edu?subject=". $emailsubject ."'>");
+	  
+	  echo("<img src='". $_ARCHON->PublicInterface->ImagePath . "/email.png'/> </a>");
+	  
+	  //echo("<a href='http://www.library.uiuc.edu/archives/email-ahx.php'>");
+	  echo("<a href='mailto:ala-archives@library.illinois.edu?subject=". $emailsubject ."'>");
+	  
+	  echo("Email us about these ");
 
       if ($objCollection->MaterialType=='Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
       {
@@ -595,6 +582,16 @@ echo("</a> | <a href='?p=collections/controlcard&amp;id=". $objCollection->ID. "
       </div>
          <?php
       }
+
+		if($objCollection->AccessRestrictions)
+			  {
+				 ?>
+
+			  <div class='ccardcontent'><span class='ccardlabel'>Access Restrictions<br/></span>
+				 <div id="restrictionResults"><?php echo($objCollection->getString('AccessRestrictions')); ?></div>
+			  </div>
+				 <?php
+			  }
 
 
          if(!empty($objCollection->OtherURL))

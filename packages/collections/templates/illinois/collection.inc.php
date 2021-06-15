@@ -33,7 +33,7 @@ echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "<
 
 <span style='float: right;font-weight:bold'>[<?php echo("<a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;disabletheme=1'>"); ?>Printer Friendly</a>] | [<?php echo("<a href='?p=collections/research&amp;f=email&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'"); ?>>Contact us about this collection</a>]</span>
 <h2 style='text-align:left'><a name="overview"></a>Collection Overview</h2>
-<div style="margin-left:40px">
+<div class="indent-text">
    <?php if($objCollection->Title)
    { ?><p><span class='bold'>Title:</span> <?php echo($objCollection->toString());
 } ?></p>
@@ -124,11 +124,11 @@ if(!empty($arrOtherCreators))
 
 </div>
 <?php if($objCollection->Abstract)
-{ ?><h2 style='text-align:left'><a name="abstract"></a>Abstract</h2><div style="margin-left:40px"><p><?php echo($objCollection->getString('Abstract')); ?></p></div><?php } ?>
+{ ?><h2 style='text-align:left'><a name="abstract"></a>Abstract</h2><div class="indent-text"><p><?php echo($objCollection->getString('Abstract')); ?></p></div><?php } ?>
 <?php if($objCollection->Scope)
-{ ?><h2 style='text-align:left'><a name="scopecontent"></a>Scope and Contents of the Materials</h2><div style="margin-left:40px"><p><?php echo($objCollection->getString('Scope')); ?></p></div><?php } ?>
+{ ?><h2 style='text-align:left'><a name="scopecontent"></a>Scope and Contents of the Materials</h2><div class="indent-text"><p><?php echo($objCollection->getString('Scope')); ?></p></div><?php } ?>
 <?php if($objCollection->BiogHist)
-{ ?><h2 style='text-align:left'><a name="collectionhist"></a>Collection Historical Note</h2><div style="margin-left:40px"><?php echo($objCollection->getString('BiogHist')); ?></div><?php } ?>
+{ ?><h2 style='text-align:left'><a name="collectionhist"></a>Collection Historical Note</h2><div class="indent-text"><?php echo($objCollection->getString('BiogHist')); ?></div><?php } ?>
 <?php
 if($objCollection->PrimaryCreator->BiogHist)
 {
@@ -146,7 +146,7 @@ if($objCollection->PrimaryCreator->BiogHist)
       echo ("Biographical Note");
    }
    ?>
-   </h2><div style="margin-left:40px"><p>
+   </h2><div class="indent-text"><p>
          <?php
          echo($objCollection->PrimaryCreator->getString('BiogHist'));
          ?>
@@ -157,14 +157,14 @@ if($objCollection->PrimaryCreator->BiogHist)
 
 
 <?php if(!empty($arrSubjects))
-{ ?><h2 style='text-align:left'><a name="subjects"></a>Subject/Index Terms</h2><div style="margin-left:40px"><p><?php echo($_ARCHON->createStringFromSubjectArray($arrSubjects, "<br/>", LINK_TOTAL)); ?></p></div><?php } ?>
+{ ?><h2 style='text-align:left'><a name="subjects"></a>Subject/Index Terms</h2><div class="indent-text"><p><?php echo($_ARCHON->createStringFromSubjectArray($arrSubjects, "<br/>", LINK_TOTAL)); ?></p></div><?php } ?>
 
 <?php
 if(!empty($objCollection->AccessRestrictions) || !empty($objCollection->UseRestrictions) || !empty($objCollection->PhysicalAccessNote) || !empty($objCollection->TechnicalAccessNote) || !empty($objCollection->AcquisitionSource) || !empty($objCollection->AcquisitionMethod) || !empty($objCollection->AppraisalInformation) || !empty($objCollection->OrigCopiesNote) || !empty($objCollection->OrigCopiesURL) || !empty($objCollection->RelatedMaterials) || !empty($objCollection->RelatedMaterialsURL) || !empty($objCollection->RelatedPublications) || !empty($objCollection->PreferredCitation) || !empty($objCollection->ProcessingInfo) || !empty($objCollection->RevisionHistory))
 //admin info exists
 {
    ?>
-   <h2 style='text-align:left'><a name='admininfo'></a>Administrative Information</h2><div style="margin-left:40px">
+   <h2 style='text-align:left'><a name='admininfo'></a>Administrative Information</h2><div class="indent-text">
       <?php
       if($objCollection->Repository)
       {

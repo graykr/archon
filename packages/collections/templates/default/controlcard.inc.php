@@ -28,8 +28,9 @@ isset($_ARCHON) or die();
 $repositoryid = $objCollection->RepositoryID;
 
 echo("<h1 id='titleheader'>" . $_ARCHON->PublicInterface->Title . "</h1>\n");
-//var_dump($objCollection);
-//return;
+
+//gather data for request link
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
 ?>
 
 <div id='ccardleft'>        <!--begin div ccardleft -->
@@ -425,8 +426,8 @@ if(!empty($objCollection->AcquisitionDate) || !empty($objCollection->AccrualInfo
 
 
 
-         if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ))
-         {
+if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ))
+{
          ?>
          <div id='ccardstaff' class='mdround'>
             <div class='ccardstafflabel'>Staff Information</div>
@@ -468,14 +469,32 @@ if(!empty($objCollection->AcquisitionDate) || !empty($objCollection->AccrualInfo
                <a href='?p=collections/controlcard&amp;id=<?php echo($objCollection->ID); ?>&amp;templateset=kardexcontrolcard&amp;disabletheme=1'>5 by 8 Kardex</a><br/>
                <a href='?p=collections/controlcard&amp;id=<?php echo($objCollection->ID); ?>&amp;templateset=draftcontrolcard&amp;disabletheme=1'>Review copy/draft</a>
             </div>
-         </div>
+		</div>   <!--end ccardstaffdiv -->
 
    <?php
 }
+else //user is not authenticated
+{
+	if($_ARCHON->config->OpenLocationTable){
+		echo("<div id='ccardstaff' class='mdround'>");
+		include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/openlocationtable.inc.php");
+		echo("</div>");
+	}
+}
+      echo("</div>");	//ending left div
 
-echo("</div>"); //end ccardleft
+echo ("<div id='ccardprintcontact' class='smround'>"); 
 
-echo ("<div id='ccardprintcontact' class='smround'> <a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/printer.png' alt='Printer-friendly' /></a> <a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'>Printer-friendly</a> | <a href='?p=collections/research&amp;f=email&amp;repositoryid=$repositoryid&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='Email Us' /> </a><a href='?p=collections/research&amp;f=email&amp;repositoryid=$repositoryid&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'>Email Us</a></div>");
+//generate request link if enabled
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
+
+//printer friendly link
+echo("<a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/printer.png' alt='Printer-friendly' /></a> <a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'>Printer-friendly</a> | ");
+
+//email us link
+echo("<a href='?p=collections/research&amp;f=email&amp;repositoryid=$repositoryid&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='Email Us' /> </a><a href='?p=collections/research&amp;f=email&amp;repositoryid=$repositoryid&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'>Email Us</a>");
+
+echo("</div>");//end ccardprintcontact div
 
 if($objCollection->Scope || !empty($objCollection->Content) || ($objCollection->DigitalContent || $containsImages) || !empty($objCollection->OtherURL))
 {

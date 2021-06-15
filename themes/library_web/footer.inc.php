@@ -84,7 +84,7 @@ if($_ARCHON->Script == 'packages/collections/pub/findingaid.php')
       }
 
 
-      echo("<div id='emaillink'>Contact Us: <a href='http://www.library.uiuc.edu/archives/email-ahx.php'>Email Form</a></div>\n");
+      echo("<div id='emaillink'>Contact Us: <a href='https://archives.library.illinois.edu/email-ahx.php'>Email Form</a></div>\n");
       echo("</div>");
    }
 

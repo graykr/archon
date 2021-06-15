@@ -175,5 +175,23 @@
 //   $_ARCHON->config->CachePermissions = 0755;
 
 
+// ***********************************************
+// * Search handling for identifiers             *
+// ***********************************************
+//
+//    If TRUE, will only return an exact match.
+//
+//    IF FALSE, will return an exact match if
+//       found and else will return a partial
+//       match. Note it will only return a single
+//       partial match, not all possible matches.
+//
+// ***********************************************
 
+$_ARCHON->config->SearchExactIdentifier=false;
+
+ // ***********************************************
+// * Request link configuration *
+// ***********************************************
+include("config_request.inc.php");
 ?>

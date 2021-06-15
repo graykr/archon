@@ -1,0 +1,1939 @@
+/*
+Stylesheet for 'default' Archon Theme
+
+##########################################################
+
+THIS STYLESHEET HAS FOUR SECTIONS:
+
+	1. GENERAL STYLES (controls text properties)
+	2. THEME STRUCTURES/FORMATTING  (establishes basic structure of the page)
+	3. PUBLIC FILE FORMATTING (controls position and style of elements
+	      defined outside of template files)
+	4. TEMPLATE FILE FORMATTING (controls position and style of elements
+	      defined in template files, these apply to default template set)
+
+The stylesheet assumes that layout will take place in one to four
+'general structure' boxes, referenced by an class below.  These classes may be
+used with either a tabled or tableless design, by referencing
+a <table id=''> or <div id=''> in the following files.
+
+	top    --header.inc.php; faheader.inc.php
+	left   --header.inc.php; faheader.inc.php
+	main   --index.inc.php; files in packages/'packagename'/templates/default
+	                              and packages/'packagename'/
+	bottom --footer.inc.php; fafooter.inc.php
+
+For background reading regarding layout using principles in this stylesheet, see
+http://www.devarticles.com/c/a/Web-Style-Sheets/DIV-Based-Layout-with-CSS/3/
+
+###########################################################
+
+
+
+BEGIN GENERAL STYLES FOR ENTIRE DOCUMENT */
+
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+
+html {
+overflow:scroll;
+}
+
+body {
+background-color:#FFF;
+color:#3D3D3D;
+font:1em 'Open Sans',Arial,sans-serif;
+margin:0 0;
+padding:0;
+}
+
+a:link {
+color:#33b;
+}
+
+a:visited {
+color:purple;
+}
+
+a:hover {
+background:#6699c9;
+color:#0055A5;
+}
+
+a:active {
+color:#fff;
+}
+
+a:focus {
+outline:none;
+background:#0055A5;
+color:#ffffff;
+box-shadow: .2em .2em .4em #888888;
+}
+
+h1 {
+color:#0055A5;
+font-size:1.6em;
+text-align:center;
+}
+
+h2 {
+color:#0055A5;
+font-size:1.3em;
+text-align:center;
+}
+
+h3 {
+color:#0055A5;
+font-size:80%;
+font-weight:700;
+}
+
+img {
+border:none;
+margin:0;
+padding:0;
+}
+
+.bold {
+font-weight:700;
+}
+
+.center {
+text-align:center;
+}
+
+.message {
+font-weight:700;
+text-align:center;
+color:#000;
+font-size:1.1em;
+}
+
+.button {
+background:#ebeeef;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:1px solid #ddd ;
+cursor:pointer;
+font-size:1.33em;
+font-weight:100;
+margin:0 0.6em 0 -0.25em;
+padding-left:1.4em;
+color:#888899;
+height:1.6em;
+min-width:7em;
+}
+
+.small {
+font-size:small;
+}
+
+/* for highlighting search results */
+.highlight0 {
+background-color:#FF6;
+}
+
+.highlight1 {
+background-color:#A0FFFF;
+}
+
+.highlight2 {
+background-color:#9F9;
+}
+
+.highlight3 {
+background-color:#F99;
+}
+
+.highlight4 {
+background-color:#F6F;
+}
+
+.highlight5 {
+background-color:#800;
+}
+
+.highlight6 {
+background-color:#0A0;
+}
+
+.highlight7 {
+background-color:#886800;
+}
+
+.highlight8 {
+background-color:#004699;
+}
+
+.highlight9 {
+background-color:#909;
+}
+
+.bground {
+   -webkit-border-radius:20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.mdround {
+   -webkit-border-radius:10px;
+   -moz-border-radius: 10px;
+   border-radius: 10px;
+}
+
+.smround {
+   -webkit-border-radius:5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+
+#titleheader {
+margin:1em 0 1.5em;
+}
+
+/* END GENERAL STYLES -- BEGIN THEME STRUCTURES/FORMATTING */
+
+
+/*suppresses view of extraneous titles */
+
+/*#titleheader
+{
+   display: none;
+}*/
+
+/*suppresses view of cart images*/
+
+img.cart
+
+{
+    display: none;
+}
+
+/*fully suppress the research cart functionality by hiding the links, not just the image*/
+.research_add{
+	display:none;
+}
+#viewcartlink{
+	display:none;
+}
+
+/*suppresses view of dl images*/
+
+img.dl
+
+{
+  /*  display: none; */
+}
+
+/*suppresses view of register links*/
+
+#registerlink, #researchcartinfo
+
+{
+    display: none;
+}
+
+#top {
+background-color:#E8EEF7;
+background-image:url('images/topgradient.gif');
+background-position:top left;
+background-repeat:repeat-x;
+font-size:75%;
+height:auto;
+width:auto;
+margin:0;
+padding:0;
+}
+
+#top:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+#headerrowone {
+height:auto;
+clear:both;
+}
+
+#headerrowtwo {
+height:auto;
+clear:both;
+height:2em;
+}
+
+#headerrowthree {
+height:auto;
+clear:both;
+margin-top:-30px;
+}
+
+#topnavblock {
+color:#0055A5;
+color:#fff;
+height:1.5em;
+float:left;
+margin-left: 10px;
+padding:.2em 0 0 0;
+font-size:1em;
+}
+
+#headertitleblock {
+float:left;
+font-size:2em;
+color:#fff;
+margin-left:10px;
+margin-top: 4px;
+width:35em;
+}
+
+#headertitleblock a
+{
+color:#fff;
+text-decoration:none;
+}
+
+
+#headertitleblock a:hover {
+background:#c63434;
+color:#000;
+}
+
+#logo {
+margin-top:25px;
+margin-left:15px;
+margin-right:15px;
+float:left;
+clear: none;
+}
+
+#browsebyblock {
+vertical-align:bottom;
+border-bottom:none;
+border-right:none;
+color:#B80101;
+display:block;
+float:left;
+height:auto;
+margin:55px 0 0 0;
+padding:0 0 0 0;
+   -webkit-border-top-right-radius: 10px;
+   -moz-border-radius-topright: 10px;
+   border-top-right-radius: 10px;
+   -webkit-border-top-left-radius: 10px;
+   -moz-border-radius-topleft: 10px;
+   border-top-left-radius: 10px;
+}
+
+#researchblock {
+float:right;
+height:1.5em;
+margin:5px 0 0 0;
+padding:0.2em 2em 0.2em 0;
+clear:right;
+}
+
+#searchblock {
+float:right;
+width:330px;
+background:#B80101;
+background-position:bottom right;
+background-repeat:repeat-x;
+border:1px solid #B80101;
+clear:right;
+overflow:hidden;
+margin-top:7px;
+margin-right:20px;
+padding:0.8em 0 0.8em 1em;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+
+#searchblock a:link,
+#searchblock a:visited,
+#searchblock a:hover {
+color:white;
+text-decoration:none;
+}
+
+#searchblock input[type="text"] {
+width:225px;
+}
+
+#pdflink
+{
+color:#fff;
+width:330px;
+text-align:center;
+}
+
+a.pdfsearchlink {
+	color:white;
+}
+
+
+#main {
+margin-left:5em;
+margin-right:5em;
+}
+
+#main {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+  }
+
+#breadcrumbblock {
+height:1em;
+font-size:.8em;
+float:left;
+margin-left:2em;
+margin-bottom:10px;
+padding:1em 0 0 0;
+clear:both;
+}
+
+#content {
+clear:both;
+
+}
+
+/* used in faheader.inc.php */
+
+#left {
+
+position:absolute;
+background-color:#fff;
+background-image: url('images/footergradient.gif');
+background-position:top left;
+background-repeat:repeat-x;
+border:1px solid #E8EEF7;
+font-size:75%;
+left:1.5em;
+margin-top:2em;
+width:20em;
+padding:0 .5em;
+clear:none;
+float:left;
+   -webkit-border-radius: 10px;
+   -moz-border-radius: 10px;
+   border-radius: 10px;
+}
+
+#famain {
+margin-left:17.5em;
+margin-right:2em;
+padding-left:1em;
+}
+
+#bottom {
+clear:both;
+text-align:center;
+}
+
+/* specific styles follow */
+
+#researchblock a {
+color:#0055a5;
+}
+
+#researchblock a:hover {
+color:black;
+}
+
+#logo a:hover{
+background:none;
+}
+
+#browsebyblock {
+vertical-align:bottom;
+}
+
+#browsebyblock a {
+color: white;
+text-decoration:none;
+}
+
+#browsebyspan {
+display:block;
+height:3em;
+margin:0;
+padding:0;
+width:6em;
+line-height:3em;
+
+}
+
+.browseLink, .currentBrowseLink {
+margin-top:10px;
+color:white;
+display:block;
+float:left;
+height:3em;
+padding:0 .5em;
+text-align:center;
+width:10em;
+line-height:3em;
+border-top: 1px solid #fff;
+border-right: 1px solid #fff;
+border-left: 1px solid #fff;
+border-top-left-radius:10px;
+border-top-right-radius:10px;
+}
+
+.browselink, .browselink:link{
+ color:#FFFFFF;
+}
+
+.browselink, .browselink:visited{
+ color:#FFFFFF;
+}
+
+.browseLink {
+background:#B80101;
+color:#ffffff;
+}
+
+.browseLink, .browseLink:visited
+{
+color:#fff !important;
+}
+
+.currentBrowseLink {
+background:#6699c9;
+}
+
+.currentBrowseLink:visited {
+color:#FFF;
+}
+
+.browseLinkleft, .browseLinkmiddle
+{
+margin-right:3px;
+}
+
+.browseLink:hover, .currentBrowseLink:hover, .browseLink:active, .currentBrowseLink:active{
+background: #6699c9;
+border-bottom-color:#6699c9;
+color:black !important;
+}
+
+.browseLinkright {
+}
+
+#searchblock {
+padding-top:10px;
+vertical-align: bottom;
+}
+
+#searchblock input {
+border:1px solid #bbe;
+margin:0;
+vertical-align:middle;
+font-size:1.1em;
+}
+
+#searchblock label {
+font-size:1em;
+vertical-align:middle;
+padding:0 0 0 0.3em;
+}
+
+#searchblock .button {
+background:#ebeeef;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:0px solid #ebeeef;
+border-left:none;
+cursor:pointer;
+font-size:1.3em;
+margin:0 0.6em 0 4px;
+padding-left:1.4em;
+color:#888899;
+max-height:1.3em;
+min-width:1.33em;
+border-radius:5px;
+}
+
+#searchblock .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+#searchblock img {
+vertical-align:middle;
+padding:0 0 0 0.3em;
+}
+
+#pdflink a {
+margin: 0 auto;
+}
+
+
+#topnavblock a {
+color:#fff;
+}
+
+#topnavblock a:hover, #breadcrumbblock a:hover	 {
+color:#000;
+}
+
+#breadcrumbblock a:visited {
+color:#33b;
+}
+
+
+/* used in footer/bottom */
+#archoninfo {
+color:#aab;
+font-size:x-small;
+margin:0 auto;
+padding:1em;
+text-align:center;
+}
+
+#archoninfo a {
+color:#889;
+}
+
+#footerhr {
+background-color:#ddd;
+border:none;
+color:#FEF1B5;
+width:70%;
+}
+
+#userlogin {
+
+background:#fff url('images/footergradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+padding:.2em;
+padding-bottom: 1em;
+}
+
+#userlogincontrols{
+margin:1em;
+}
+
+#userinfo {
+background:#fff url('images/footergradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+padding:.2em .2em 1em 1em;
+}
+
+#userbox {
+font-size:x-small;
+margin:0 auto;
+width:40em;
+}
+
+#loginsubmit .button {
+background:#F9F9FA;
+border:2px solid #ddd;
+cursor:pointer;
+font-size:1.33em;
+font-weight:100;
+margin:auto;
+color:#888899;
+height:2em;
+padding-right:1em;
+}
+
+
+#userbox a {
+color:#66a;
+}
+
+/* used in various research pages */
+.userformbox {
+background-color:#f0efef;
+background-image:url('images/listitem.gif');
+background-position:top right;
+background-repeat:repeat-x;
+border:1px solid #E8EEF7;
+font-size:small;
+margin:0 auto;
+padding:0 .5em 1em .5em;
+max-width:40em;
+}
+
+.userformbox:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+visibility:hidden;
+}
+
+#userformsubmit {
+clear:left;
+text-align:center;
+}
+
+.userformpair {
+clear:left;
+margin:0;
+padding:0.5em;
+text-align:left;
+}
+
+.userformlabel {
+font-weight:700;
+text-align:left;
+font-size:85%;
+margin:0 .5em 0 0;
+}
+
+.userforminput {
+text-align:left;
+margin:0 0 1.4em;
+}
+
+.userformdate {
+font-weight:lighter;
+font-size:95%;
+font-style:italic;
+}
+
+
+.loginpair:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+.loginlabel {
+float:left;
+font-weight:700;
+margin:0 auto;
+text-align:right;
+width:10em;
+}
+
+.logininput {
+clear:right;
+display:inline;
+float:left;
+margin:0 auto 2em;
+text-align:right;
+width:23em;
+}
+
+#loginsubmit {
+clear:both;
+display:block;
+margin-left:3em;
+margin-right:3em;
+margin-top:0;
+}
+
+/*#registerlink {
+clear:both;
+display:block;
+margin:.5em auto;
+padding-left:.5em;
+}*/
+
+#contactcontainer {
+font-size:x-small;
+margin:0 auto;
+padding:1em;
+width:40%;
+}
+
+#contactcontainer a {
+color:#66a;
+}
+
+/* in index.php */
+
+#themeindex{
+padding:1em;
+margin:1em auto 1em auto;
+background:#eaeff7 url('images/contentsgradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+width:95%;
+}
+
+dd.index {
+color:#0055A5;
+font-size:80%;
+padding-bottom:1.5em;
+padding-top:.5em;
+}
+
+dt.index {
+color:#0055A5;
+font-size:80%;
+font-weight:700;
+}
+
+/* faheader.inc.php */
+
+
+#famain hr {
+background-color:#FEF1B5;
+border:none;
+color:#FEF1B5;
+width:70%;
+}
+
+#famain #ccardprintcontact {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	margin-top:0;
+}
+
+#fanavbox {
+font-size:small;
+vertical-align:top;
+
+}
+
+#fabreadcrumbblock {
+border-bottom:2px solid #c63434;
+color:#889;
+width:auto;
+padding:0 1em 0 0.5em;
+margin-bottom:.5em;
+font-size:75%;
+float:left;
+}
+
+#fabreadcrumbblock a {
+color:#006;
+text-decoration:none;
+}
+
+#fanavbox hr {
+width:80%;
+background-color:#aac;
+border:none;
+height:1px;
+}
+
+#fasearchblock {
+background:#F9F9FA;
+border:2px solid #ddd;
+margin:1em auto;
+padding:.5em 0;
+font-size:75%;
+overflow:hidden;
+width:20em;
+text-align:center;
+}
+
+#fasearchblock input {
+border:2px solid #ddd;
+margin:0 auto;
+vertical-align:middle;
+font-size:1.33em;
+}
+
+#fasearchblock label {
+font-size:0.8em;
+vertical-align:middle;
+padding:0 0 0 0.3em;
+}
+
+#fasearchblock .button {
+background:#ebeeef;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:2px solid #ddd;
+cursor:pointer;
+font-size:1.33em;
+font-weight:100;
+margin:.5em auto 0;
+padding-left:1.8em;
+color:#3D3D3D;/*#888899;*/
+max-height:1.7em;
+min-width:1.33em;
+}
+
+#fasearchblock .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+#fasearchblock img {
+vertical-align:middle;
+padding:0 0 0 0.3em;
+}
+
+.indent-text{
+	margin-left:2em;
+}
+
+/* END THEME STRUCTURES/FORMATTING -- BEGIN PUBLIC FILE FORMATTING */
+
+/* used in search.php */
+.searchTitleAndResults {
+margin-bottom:1em;
+}
+
+#AccessionTitle {
+font-weight:700;
+}
+
+#AccessionResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+
+#BookTitle {
+font-weight:700;
+}
+
+#BookResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#CollectionTitle {
+font-weight:700;
+}
+
+#CollectionResults {
+font-size:90%;
+padding-left:1em;
+text-indent:-1em;
+}
+
+.InnerContentResultsToggle {
+margin:1em 0;
+display:block;
+}
+
+#CollectionContentTitle {
+font-weight:700;
+}
+
+#CollectionContentResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+.CollectionClassEnabledResults {
+padding-bottom:1em;
+}
+
+.CollectionClassEnabledResults dd {
+margin-bottom:2em;
+}
+
+.InnerContentTitleAndResults {
+font-size:85%;
+margin-top:-0.5em;
+}
+
+.InnerCollectionContentResults {
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+
+#DigitalContentTitle {
+font-weight:700;
+}
+
+#DigitalContentResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#SubjectTitle {
+font-weight:700;
+}
+
+#SubjectResults {
+font-size:90%;
+margin-left:1.5em;
+padding-left:1em;
+text-indent:-1em;
+}
+
+#CreatorTitle {
+font-weight:700;
+}
+
+
+#CreatorNote {
+
+background:#fff url('images/footergradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+position:relative;
+padding: 1em;
+margin: 0 auto;
+max-width:70em;
+}
+
+#CreatorNote hr { 
+width:50%;
+}
+
+.CreatorEntry
+{
+margin-bottom:1em;
+}
+
+
+.CreatorEntryShowList {
+font-size:90%;
+margin-left:1.5em;
+}
+
+#CreatorResults {
+font-size:100%;
+font-weight: bold;
+margin:2em 0 1em 0;
+padding-left:1em;
+text-indent:-1em;
+}
+
+
+
+#CreatorStaff {
+
+
+clear:left;
+float:left;
+width:30%;
+min-width:25em;
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+}
+
+/* For browse by pages */
+.beginningwith {
+background:#eaeff7 url('images/contentsgradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+max-width:50em;
+z-index:5;
+margin:1em auto;
+padding:1.5em;
+}
+
+
+.listitemhead
+
+{
+margin-top:1em;
+margin-bottom:auto;
+margin-left:auto;
+margin-right:auto;
+max-width: 60em;
+text-align:center;
+/*border:#000 1px solid; */
+}
+
+
+
+#listitemwrapper, #recordsunderlist, #classificationlist {
+background:#eaeff7 url('images/contentsgradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+position:relative;
+padding-top:1em;
+padding-bottom:1em;
+margin: 0 auto;
+max-width:70em;
+}
+
+/*
+.listitemcover {
+background:transparent url('images/listfade.png') repeat-y top right;
+height:auto;
+width:200px;
+z-index:2;
+position:absolute;
+right:0;
+top:0;
+bottom:0;
+}
+*/
+
+.listitem {
+z-index:1;
+margin:0 0 0 1em;
+padding:.1em 0.5em 0 0.5em;
+}
+
+
+.searchlistitem {
+z-index:1;
+margin:0 0 0 1em;
+padding:0em 0.5em 1em 0.5em;
+}
+
+evenlistitem {
+background:#fff;
+}
+
+
+.lastlistitem {
+/*border-bottom:1px #e9e9ef solid; */
+}
+
+/* digitallibrary/digitallibrary */
+#dlsearchblock {
+background:#fff;
+background-position:bottom right;
+background-repeat:repeat-x;
+border:1px solid #ddd;
+overflow:hidden;
+width:30em;
+font-size:75%;
+margin:-1.5em auto 1em;
+padding:1em .8em 1em;
+border-top-right-radius: 10px;
+border-top-left-radius: 10px;
+border-bottom-right-radius: 10px;
+border-bottom-left-radius: 10px;
+}
+
+#dlsearchblock input {
+border:1px solid #bbe;
+vertical-align:middle;
+font-size:1.33em;
+margin:.3em 0;
+}
+
+#dlsearchblock label {
+font-size:0.8em;
+vertical-align:middle;
+padding-left:0.3em;
+margin:.3em 0;
+}
+
+#dlsearchblock .button {
+background:#F9F9FA;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+border:1px solid #ddd;
+border-left:none;
+cursor:pointer;
+font-size:1.33em;
+font-weight:100;
+padding-left:1.6em;
+color:#888899;
+max-height:1.5em;
+min-width:1.33em;
+margin:.3em 0.6em .3em -0.25em;
+}
+
+#dlsearchblock .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+#dlsearchblock img {
+vertical-align:middle;
+margin:.3em 0;
+padding:0 0 0 0.3em;
+}
+
+/* END PUBLIC FILE FORMATTING -- BEGIN  TEMPLATE FILE FORMATTING*/
+
+/* used template's classification.php */
+
+#classificationdesc {
+background-color:#F9F9FA;
+border:1px #ddd solid;
+width:45%;
+margin:auto;
+line-height:1.5em;
+min-height:10px;
+padding:.5em 1em;
+text-align:center;
+}
+
+
+
+/* used in default template's controlcard.inc.php */
+#ccardleft {
+clear:left;
+float:left;
+width:35%;
+}
+
+
+#ccardpublic {
+clear:left;
+float:left;
+width:100%;
+background:#fff url('images/footergradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+}
+
+#ccardstaff {
+clear:left;
+float:left;
+width:100%;
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+}
+
+#ccardprintcontact {
+float:right;
+font-weight:400;
+margin-top:-2.5em;
+font-size:0.9em;
+border:1px #ddd solid;
+background:#F9F9FA;
+padding:0.5em 0.5em .5em 0.5em;
+}
+
+#ccardscope {
+background-color:#F9F9FA;
+border:1px #ddd solid;
+float:right;
+width:50%;
+line-height:1.5em;
+min-height:80px;
+padding:.5em 1em;
+}
+
+#alternateccards {
+margin-left:1em;
+}
+
+.ccardlabel {
+font-weight:700;
+}
+
+.ccardstafflabel {
+font-size:1.3em;
+color:#000;
+}
+
+
+.ccardcontent {
+clear:left;
+display:block;
+float:left;
+width:100%;
+margin:.5em .5em .5em 0;
+}
+
+.ccardserieslist {
+font-size:90%;
+margin-left:1em;
+text-indent:-0.5em;
+}
+
+.ccardshowlist {
+font-size:90%;
+margin-left:1em;
+padding-top:1em;
+}
+
+#locationtable {
+border-collapse:collapse;
+border:solid 1px #ddd;
+margin-left:1em;
+}
+
+#locationtable th {
+background:#f3f3f3;
+padding:0.3em;
+}
+
+#locationtable tr {
+font-size:90%;
+padding:0.5em;
+}
+
+#locationtable td {
+font-size:90%;
+padding:0.5em;
+text-align:center;
+}
+
+
+
+.oddtablerow {
+background:#f9f9f9;
+}
+
+/* used in default template's accession.inc.php */
+
+
+#accessionleft {
+clear:left;
+float:left;
+width:45%;
+}
+
+
+#accessionpublic {
+clear:left;
+float:left;
+width:100%;
+background:#fff url('images/contentsgradient.gif') repeat-x top left;
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+}
+
+
+#accessionstaff{
+clear:left;
+float:left;
+width:100%;
+border:#ddd 1px solid;
+margin-bottom:1em;
+padding:1em;
+
+}
+
+#accessionprintcontact {
+float:right;
+font-weight:700;
+margin-bottom:1em;
+}
+
+#accessionscope {
+background-color:#F9F9FA;
+border:1px #ddd solid;
+float:right;
+width:45%;
+line-height:1.5em;
+min-height:80px;
+padding:.5em 1em;
+
+}
+
+#alternateaccessions {
+margin-left:1em;
+}
+
+.accessionlabel {
+font-weight:700;
+}
+
+.accessionstafflabel {
+
+font-size:1.3em;
+color:#000;
+}
+
+.accessioncontent {
+clear:left;
+display:block;
+float:left;
+margin:.5em .5em .5em 0;
+width:100%;
+}
+
+.accessionserieslist {
+font-size:90%;
+margin-left:1em;
+text-indent:-0.5em;
+}
+
+.accessionshowlist {
+font-size:90%;
+margin-left:1em;
+}
+
+#locationtable {
+border-collapse:collapse;
+margin-top:1em;
+}
+
+#accessionnotice {
+background-color:#eee;
+font-size:0.85em;
+padding:0.5em;
+border:1px solid #ddd;
+}
+
+/*used in default template's collection.inc.php */
+
+.faitem {
+margin-bottom:5px;
+}
+
+.faitemcontent {
+font-size:82%;
+margin:3px 15px 5px;
+}
+
+/* Used in default template's digitalcontent.inc.php  */
+#digcontentwrapper{ /*to display info in columns*/
+width:100%;
+}
+
+#digcontentwrapper hr {
+background-color:#FFDB4D;
+border:none;
+color:#FFDB4D;
+width:100%;
+}
+
+
+#digcontentfiles {
+float:left;
+width:30%;
+max-width:402px;
+padding: 8px;
+background:#fff /* url('images/contentsgradient.gif') repeat-x top left*/;
+border:#ddd 2px solid;
+text-align:center;
+}
+
+#digcontentmetadata {
+border:1px solid #ddd;
+padding:1em;
+background-color:#F9F9FA;
+/*background:#fff url('images/contentsgradient.gif') repeat-x top left; */
+float:left;
+margin-left:.5em;
+width:60%;
+/*line-height:1.2em;*/
+}
+
+.digcontentlabel {
+clear:left;
+display:block;
+float:left;
+font-size:90%;
+font-weight:700;
+width:7em;
+}
+
+.digcontentdata {
+display:block;
+float:left;
+font-size:90%;
+left:.5em;
+margin-bottom:.3em;
+position:relative;
+width:80%;
+}
+
+.digcontentrequest {
+font-size:80%;
+font-weight:700;
+}
+
+img.digcontentfile {
+width:auto;
+max-width:100%;
+text-align:center;
+margin:0 auto;
+border:1px solid #ccc;
+padding:0;
+}
+
+.digcontentfiletitle {
+font-size:80%;
+}
+
+.digcontenttitlebox{
+background:#F9F9FA;
+border:1px solid #ddd;
+margin-top:8px;
+padding:1em;
+text-align:left;
+}
+
+/* used in various research pages */
+.researchformbox {
+background:#fff url('images/browseby.gif') repeat-x top left;
+border:#ddd 1px solid;
+font-size:small;
+margin:auto;
+padding: 0 .5em 1em .5em;
+max-width:40em;
+}
+
+.researchformbox:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+visibility:hidden;
+}
+
+#researchformsubmit {
+clear:left;
+text-align:center;
+}
+
+.researchformpair {
+clear:left;
+margin:0;
+padding:0.5em;
+text-align:left;
+}
+
+.researchformlabel {
+font-weight:700;
+text-align:left;
+font-size:85%;
+margin:0 .5em 0 0;
+}
+
+
+.researchformbox .button {
+background:#ebeeef;
+border:2px solid #ddd;
+cursor:pointer;
+font-size:1.33em;
+font-weight:100;
+margin: auto 0;
+color:#888899;
+max-height:1.7em;
+min-width:1.33em;
+}
+
+.researchformbox .button:hover {
+background:#FEF1B5;
+background-image:url('images/magglass.png');
+background-position:5% 50%;
+background-repeat:no-repeat;
+color:#889;
+}
+
+
+
+.researchforminput {
+text-align:left;
+margin:0 0 1.4em;
+}
+
+.researchformdate {
+font-weight:lighter;
+font-size:95%;
+font-style:italic;
+}
+
+#requestimagebox {
+background-color:#ffd98c;
+border:outset;
+font-size:small;
+margin-bottom:1em;
+padding:5px;
+}
+
+#researchcart {
+background-color:#efefef;
+border:1px #ddd solid;
+width:60%;
+margin:1em auto;
+padding:1em;
+}
+
+#researchcartwrapper {
+width:100%;
+}
+
+#researchcartinfo {
+background-color:#efefef;
+border:1px #ddd solid;
+width:80%;
+margin:1em auto;
+padding:1em;
+}
+
+/* used in digitallibrary/thumbnails */
+.thumbnailimg {
+float:left;
+height:13em;
+width:10em;
+background:#fff url('images/thumbnail.gif') repeat-x top left;
+border:#ddd 2px solid;
+margin:1em;
+padding:0.75em 0 0;
+}
+
+.thumbnailimg:hover {
+background:#FEF1B5;
+}
+
+.thumbnailimg:after {
+clear:left;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+.thumbnailimg .thumbnailimgwrapper {
+height:10em;
+width:10em;
+}
+
+.thumbnailimg img {
+display:block;
+border:2px solid #ddd;
+max-width:100px;
+max-height:130px;
+clear:both;
+margin-left:auto;
+margin-right:auto;
+}
+
+.thumbnailimg .thumbnailcaption {
+display:block;
+text-align:center;
+clear:both;
+font-size:75%;
+margin-left:auto;
+margin-right:auto;
+background:#F9F9FA;
+height:4em;
+border-top:1px solid #ddd;
+border-bottom:1px solid #ddd;
+}
+
+.thumbnailimg a {
+text-decoration:none;
+}
+
+
+#mediumpreviewimg {
+width:300px;
+border:#ddd 1px solid;
+}
+
+#thumbnailnav {
+clear:both;
+border:1px solid #ddd;
+width:30%;
+background:#fff;
+font-weight:bolder;
+color:#33b;
+font-size:80%;
+margin:0 auto;
+padding:0.75em;
+}
+
+#thumbnailnav:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+#thumbnailprevlink {
+float:left;
+}
+
+#thumbnailnextlink {
+float:right;
+}
+
+.paginationnav {
+clear:both;
+border:1px solid #e6e6e6;
+width:30%;
+background:#fafafa;
+font-weight:bolder;
+color:#33b;
+font-size:80%;
+margin:20px auto;
+padding:0.75em;
+}
+
+.paginationnav:after {
+clear:both;
+content:".";
+display:block;
+font-size:0;
+height:0;
+overflow:hidden;
+visibility:hidden;
+}
+
+.paginationprevlink {
+float:left;
+}
+
+.paginationnextlink {
+float:right;
+}
+
+.removefromcart {
+font-size: .8em;
+margin-left: 10px;
+text-decoration: none;
+}
+.removefromcart:link{
+color: #888;
+}
+
+.cartrepository {
+font-weight:700;
+color:#888;
+}
+
+/* used to let the alphabetical browse lists (A to Z) wrap to the next line if needed */
+.beginningwith .center a {
+	display:inline-block;
+	line-height:2em;
+}
+
+/* Modal for request from location table, adapted from https://www.w3schools.com/howto/howto_css_modals.asp */
+/* The Modal (background) */
+.request-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.request-modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+/* The Close Button */
+.request-modal-close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.request-modal-close:hover,
+.request-modal-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*Adjustments for smaller screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
+@media screen and (max-width: 750px) {
+
+	#main{
+		margin-right:.5em;
+		margin-left:.5em;
+	}
+	
+	#searchblock {
+		margin:0;
+	}
+	
+	#browsebyspan, .browseLink {
+		width:100%;
+	}
+	
+	#browsebyblock {
+		margin:0;
+		padding:0;
+		width:100%;
+	}
+	
+	.currentBrowseLink{
+		background-image:none;
+		background:lightgray;
+		width:100%;
+	}
+	
+	.browseLink, .currentBrowseLink{
+		margin-top:0;
+	}
+	
+	#userbox, #contactcontainer {
+		width:100%;
+	}
+	
+	#themeindex {
+		width:100%;
+		padding:0;
+	}
+	
+	#classificationdesc,#creatornote,#creatorstaff {
+		width:100%;
+	}
+	
+	#ccardleft, #ccardright, #ccardstaff{
+		width:100%;
+	}
+	
+	#ccardscope{
+		width:auto;
+	}
+	
+	#ccardprintcontact{
+		width:auto;
+	}
+	
+	#accessionlife, #accesionscope {
+		width:100%;
+	}
+	
+	#digcontentfiles, #digcontentmetadata {
+		width:100%;
+	}
+	
+	.ccardshowlist {
+		margin-left:0;
+	}
+	
+	input[type=text], select, textarea{
+		width: auto;
+	}
+	
+	#headertitleblock{
+		font-size:1.7em;
+		margin-bottom:.2em;
+		margin-right:.2em;
+	}
+	
+	#sitetitleblock{
+		font-size:2.5em;
+		font-weight:bold;
+		margin-bottom:.2em;
+	}
+	h1 {
+		font-size:1.4em;
+	}
+	
+	h2 {
+		font-size:1.2em;
+	}
+	
+	.print-friendly-link{
+		display:none;
+	}
+	
+	#breadcrumbblock{
+		padding-top:0.25em;
+	}
+	
+	#logosearchwrapper{
+		min-width:0;
+	}
+	
+	.pdfsearchlink{
+		display:block;
+	}
+	
+	#pdfsearchbox,#pdfsearchinfo{
+		width:auto;
+	}
+	
+	.request-modal-content {
+		width:70%;
+		
+	}
+	
+	#dlsearchblock{
+		width:auto;
+	}
+
+	#left{
+		width:90%;
+		position:relative;
+	}
+	
+	#fanavbox{
+		width:auto;
+	}
+	
+	#famain {
+		margin:0;
+		width:100%;
+	}
+	
+	.indent-text{
+		margin-left:0;
+	}
+	
+	.indent-text a {
+		word-wrap: break-word;
+		word-break: break-word;
+	}
+		
+}
+/*Adjustments for tablet-sized screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
+@media sscreen and (min-width: 751px) and (max-width: 850px) {
+
+	#main,#famain {
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+	}
+
+	*, *:before, *:after {
+	  -webkit-box-sizing: inherit;
+	  -moz-box-sizing: inherit;
+	  box-sizing: inherit;
+	  }
+	  
+	  #ccardprintcontact{
+		  width:55%;
+	  }
+	  
+	  #ccardpublic,#ccardstaff{
+		  min-width:0;
+	  }
+}

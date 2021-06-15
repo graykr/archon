@@ -33,6 +33,12 @@ else
 }
 ?>
       <a href='<?php echo(encode($logoutURI, ENCODE_HTML) . $Logout); ?>'>Log Out</a>
+	  <?php
+	if($_ARCHON->Security->userHasAdministrativeAccess())
+	{
+		echo("<p><a href='?p=core/index&f=listall'>Generate list of all collections (admin)</a></p>");
+	}
+?>
     </div>
 <?php
 }
@@ -74,7 +80,7 @@ if(defined('PACKAGE_COLLECTIONS'))
     {
         echo("<div id='repositorylink'><a href='{$_ARCHON->Repository->getString('URL')}'>{$_ARCHON->Repository->getString('Name')}</a></div>\n");
     }
-    echo("<div id='emaillink'>Contact Us: <a href='mailto:ihlc@library.uiuc.edu'>ihlc@library.uiuc.edu</a></div>\n");
+    echo("<div id='emaillink'>Contact Us: <a href='mailto:ihlc@library.illinois.edu'>ihlc@library.illinois.edu</a></div>\n");
     echo("</div>");
 }
 

@@ -27,6 +27,9 @@ isset($_ARCHON) or die();
 $repositoryid = $objCollection->RepositoryID;
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
+
+//gather data for request link
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
 ?>
 
 <?php if($objCollection->FindingAidAuthor)
@@ -34,6 +37,10 @@ echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "<
 
 
 <div id='ccardprintcontact' class='smround'>
+<?php
+//generate request link if enabled
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
+?>
    <a href='?p=collections/findingaid&amp;id=<?php echo($objCollection->ID); ?>&amp;templateset=print&amp;disabletheme=1'>
       <img src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/printer.png' alt='Printer-friendly' />
    </a>
@@ -49,7 +56,7 @@ echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "<
 </div>
 
 <h2 style='text-align:left'><a name="overview"></a>Collection Overview</h2>
-<div style="margin-left:40px">
+<div class="indent-text"">
    <?php if($objCollection->Title)
    { ?><p><span class='bold'>Title:</span> <?php echo($objCollection->toString());
 } ?></p>
@@ -142,11 +149,11 @@ if(!empty($objCollection->Subjects))
 
 </div>
 <?php if($objCollection->Abstract)
-{ ?><h2 style='text-align:left'><a name="abstract"></a>Abstract</h2><div style="margin-left:40px"><?php echo($objCollection->getString('Abstract')); ?></div><?php } ?>
+{ ?><h2 style='text-align:left'><a name="abstract"></a>Abstract</h2><div class="indent-text""><?php echo($objCollection->getString('Abstract')); ?></div><?php } ?>
 <?php if($objCollection->Scope)
-{ ?><h2 style='text-align:left'><a name="scopecontent"></a>Scope and Contents of the Materials</h2><div style="margin-left:40px"><?php echo($objCollection->getString('Scope')); ?></div><?php } ?>
+{ ?><h2 style='text-align:left'><a name="scopecontent"></a>Scope and Contents of the Materials</h2><div class="indent-text""><?php echo($objCollection->getString('Scope')); ?></div><?php } ?>
 <?php if($objCollection->BiogHist)
-{ ?><h2 style='text-align:left'><a name="collectionhist"></a>Collection Historical Note</h2><div style="margin-left:40px"><?php echo($objCollection->getString('BiogHist')); ?></div><?php } ?>
+{ ?><h2 style='text-align:left'><a name="collectionhist"></a>Collection Historical Note</h2><div class="indent-text""><?php echo($objCollection->getString('BiogHist')); ?></div><?php } ?>
 <?php
 if($objCollection->PrimaryCreator->BiogHist)
 {
@@ -164,7 +171,7 @@ if($objCollection->PrimaryCreator->BiogHist)
       echo ("Biographical Note");
    }
    ?>
-   </h2><div style="margin-left:40px">
+   </h2><div class="indent-text"">
    <?php
    echo($objCollection->PrimaryCreator->getString('BiogHist'));
    ?>
@@ -173,14 +180,14 @@ if($objCollection->PrimaryCreator->BiogHist)
 }
 ?>
 <?php if(!empty($arrSubjects))
-{ ?><h2 style='text-align:left'><a name="subjects"></a>Subject/Index Terms</h2><div style="margin-left:40px"><p><?php echo($_ARCHON->createStringFromSubjectArray($arrSubjects, "<br/>", LINK_TOTAL)); ?></p></div><?php } ?>
+{ ?><h2 style='text-align:left'><a name="subjects"></a>Subject/Index Terms</h2><div class="indent-text""><p><?php echo($_ARCHON->createStringFromSubjectArray($arrSubjects, "<br/>", LINK_TOTAL)); ?></p></div><?php } ?>
 
 <?php
 if(!empty($objCollection->AccessRestrictions) || !empty($objCollection->UseRestrictions) || !empty($objCollection->PhysicalAccessNote) || !empty($objCollection->TechnicalAccessNote) || !empty($objCollection->AcquisitionSource) || !empty($objCollection->AcquisitionMethod) || !empty($objCollection->AppraisalInformation) || !empty($objCollection->OrigCopiesNote) || !empty($objCollection->OrigCopiesURL) || !empty($objCollection->RelatedMaterials) || !empty($objCollection->RelatedMaterialsURL) || !empty($objCollection->RelatedPublications) || !empty($objCollection->PreferredCitation) || !empty($objCollection->ProcessingInfo) || !empty($objCollection->RevisionHistory))
 //admin info exists
 {
    ?>
-   <h2 style='text-align:left'><a name='admininfo'></a>Administrative Information</h2><div style="margin-left:40px">            
+   <h2 style='text-align:left'><a name='admininfo'></a>Administrative Information</h2><div class="indent-text"">            
          <?php
          if($objCollection->Repository)
          {
