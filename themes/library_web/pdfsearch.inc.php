@@ -11,8 +11,8 @@ isset($_ARCHON) or die();
 <div id='pdfsearchbox' class="bground">
 <h2 style='margin-top:.1em'><label for="q">PDF/Deep Search</label></h2>
 <div style='text-align:center'>				
-    <form name="form1" action="http://www.google.com/search" class="search">
-    <input type="hidden" name="hq" value="inurl:archives.library.illinois.edu/uasfa" />
+    <form name="form1" action="https://www.google.com/search" class="search">
+    <input type="hidden" name="hq" value="site:files.archon.library.illinois.edu/uasfa/ OR site:archives.library.illinois.edu/uasfa/" />
     <input type="hidden" name="safe" value="off" />
     <input type="hidden" name="filter" value="0" />
 	<input id="q" type="text" size="25" name="q" class="searchinput" style='border:solid 1px #ddd'>
