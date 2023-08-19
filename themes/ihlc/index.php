@@ -47,6 +47,14 @@ elseif ($_REQUEST['f'] == 'listall')
 {
 	require("identifiersearch.inc.php");
 	return;
+}elseif ($_REQUEST['f'] == 'chstm-list')
+{
+	require("chstm-list.inc.php");
+	return;
+}elseif ($_REQUEST['f'] == 'chstm-table')
+{
+	require("chstm-table.inc.php");
+	return;
 }
 //notice
 if($_ARCHON->config->AlertNoticeIHLC) {

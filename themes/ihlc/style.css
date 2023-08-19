@@ -2068,6 +2068,26 @@ float:right;
 	font-size:5%;
 }
 
+/*for list subjects and locations pages*/
+#list-subjects, #list-styled {
+	border-collapse: collapse;
+	width: 100%;
+  }
+  
+  #list-subjects td, #list-subjects th, #list-styled td, #list-styled th{
+	border: 1px solid #ddd;
+	padding: 8px;
+  }
+  
+  #list-subjects tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #list-subjects th, #list-styled th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #022544;
+	color: white;
+  }
 
 
 /*Adjustments for smaller screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/

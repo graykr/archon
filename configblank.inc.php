@@ -190,6 +190,13 @@
 
 $_ARCHON->config->SearchExactIdentifier=false;
 
+// ***********************************************
+// * Subject heading IDs for CHSTM list *
+// ***********************************************
+// Note: Referenced from the theme
+
+$_ARCHON->config->CHSTMSubjectList = array();
+
  // ***********************************************
 // * Request link configuration *
 // ***********************************************
