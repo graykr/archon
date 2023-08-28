@@ -53,7 +53,7 @@ abstract class AObject
 
       $String = $this->$Variable;
 
-      if($_ARCHON->db->ServerType == 'MSSQL')
+      if($_ARCHON->db->ServerType == 'MSSQL'AND !$_ARCHON->config->DatabaseEncodingUTF8)
       {
          $String = encoding_convert_encoding($String, 'UTF-8', 'ISO-8859-1');
       }

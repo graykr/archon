@@ -751,9 +751,6 @@ abstract class Core_Archon
          return;
       }
 
-      // Sanitize for XSS.
-      $Error = htmlspecialchars($Error);
-
       $this->Error = $this->Error ? "{$this->Error}; $Error" : $Error;
    }
 
@@ -3792,7 +3789,7 @@ abstract class Core_Archon
                {
                   $arrTypes[] = 'text';
 
-                  if($_ARCHON->db->ServerType == 'MSSQL')
+                  if($_ARCHON->db->ServerType == 'MSSQL' AND !$_ARCHON->config->DatabaseEncodingUTF8)
                   {
                      $Object->$varName = encoding_convert_encoding($Object->$varName, 'ISO-8859-1');
                   }

@@ -19,7 +19,7 @@ $session= $_SERVER['HTTP_SESSION'];
 				}
 	 	array_walk($arrDigitalContentFiles, 'Normalize');
 	 	$arrDigitalContentFiles = objectToArray($arrDigitalContentFiles); 
-		if ($_ARCHON->db->ServerType == 'MSSQL') {array_walk_recursive($arrDigitalContentFiles, 'myutf8_encode');}  //fix unicode for MSSQL migrations; function will incorrectly transform mysql unicode
+		if ($_ARCHON->db->ServerType == 'MSSQL'AND !$_ARCHON->config->DatabaseEncodingUTF8) {array_walk_recursive($arrDigitalContentFiles, 'myutf8_encode');}  //fix unicode for MSSQL migrations; function will incorrectly transform mysql unicode
         echo json_encode(array_values($arrDigitalContentFiles));
 		
         }else{
