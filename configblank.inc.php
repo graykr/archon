@@ -146,7 +146,39 @@
 
 
 
+  // ********************************************
+   // * $_ARCHON->db->VersionTDS                        *
+   // ********************************************
+   //
+   //   - Explanation:
+   //       Enter the TDS version in use.
+   //   - If nothing is entered, Archon will default
+   //       to 70.
+   //
+
+  // $_ARCHON->db->VersionTDS = '70';
+
+
 // ***********************************************
+// * Database Encoding Conversion Settings       *
+// ***********************************************
+// Only used for MSSQL servers.
+//
+// Set to false to have the php convert from
+// Latin-1 to UTF-8 (previous behavior in Archon).
+//
+// Set to true to turn this conversion off if
+// the database is already in UTF-8 or if the
+// text is getting converted elsewhere already.
+//
+// Note: If you have trouble with Archon converting
+// special characters to multiple other characters
+// you may want to try setting this to true to 
+// see if double encoding is the culprit.
+
+   //$_ARCHON->config->DatabaseEncodingUTF8=false;
+
+//  ***********************************************
 // * Google Analytics Configuration              *
 // ***********************************************
 
