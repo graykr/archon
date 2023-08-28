@@ -59,7 +59,11 @@ if (!$_ARCHON->db->ServerType)
 if ($_ARCHON->db->ServerType == 'MSSQL')
 {
    // these are necessary to prevent freetds from truncating large fields
-   putenv("TDSVER=70");
+   if($_ARCHON->db->VersionTDS){
+      putenv("TDSVER={$_ARCHON->db->VersionTDS}");
+   } else {
+      putenv("TDSVER=70");
+   }
 
    ini_set("mssql.textsize", 2147483647);
    ini_set("mssql.textlimit", 2147483647);
