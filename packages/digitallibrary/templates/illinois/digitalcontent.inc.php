@@ -115,8 +115,6 @@ if (!empty($objDigitalContent->Files))
    echo ("</div>\n");
 }
 
-
-
 echo("<div id='digcontentmetadata' class='mdround'>\n");
 
 if ($_ARCHON->Security->verifyPermissions(MODULE_DIGITALLIBRARY, READ) && !$objDigitalContent->Browsable)
@@ -128,22 +126,15 @@ if ($_ARCHON->Security->verifyPermissions(MODULE_DIGITALLIBRARY, READ) && !$objD
 
 if ($objDigitalContent->ContentURL && empty($objDigitalContent->Files))
 {
-?>&nbsp;  <!--forces IE to behave -->
-
-   <div class='digcontentlabel'>Available:</div>
-   <div class='digcontentdata' style='font-weight:bold'>
+?>
    <?php
    if ($objDigitalContent->HyperlinkURL)
    {
-      echo("<a href='{$objDigitalContent->getString('ContentURL')}'>{$objDigitalContent->getString('ContentURL')}</a>");
+      echo('<div class="digital-files-button">');
+      echo("<a href='{$objDigitalContent->getString('ContentURL')}'><button>Access files</button></a>");
+      echo('</div>');
    }
-   else
-   {
-      echo($objDigitalContent->getString('ContentURL'));
-   }
-   ?>
-</div>
-<?php
+
 }
 
 if ($objDigitalContent->Title)
@@ -164,6 +155,24 @@ if ($objDigitalContent->Date)
 <?php
 }
 
+if ($objDigitalContent->ContentURL && empty($objDigitalContent->Files))
+{
+?>
+<div class='digcontentlabel'>Access link:</div>
+<div class='digcontentdata' style='font-weight:normal'>
+<?php
+if ($objDigitalContent->HyperlinkURL)
+{
+   echo("<a href='{$objDigitalContent->getString('ContentURL')}'>{$objDigitalContent->getString('ContentURL')}</a>");
+}
+else
+{
+   echo($objDigitalContent->getString('ContentURL'));
+}
+?>
+</div>
+<?php
+}
 
 if ($objDigitalContent->Scope)
 {
@@ -173,6 +182,7 @@ if ($objDigitalContent->Scope)
 
 <?php
 }
+
 
 if ($objDigitalContent->PhysicalDescription)
 {
