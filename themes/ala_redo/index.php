@@ -12,12 +12,72 @@ if($_REQUEST['f'] == 'pdfsearch')
 {
     require("pdfsearch.inc.php");
     return;
+}elseif($_REQUEST['f'] == 'barcodelookup')
+{
+	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("barcodelookup.inc.php");
+		return;
+	}
+}elseif ($_REQUEST['f'] == 'listall-locations')
+{
+	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("listall-locations.inc.php");
+		return;
+	}
+}elseif ($_REQUEST['f'] == 'listall-locations-a-o')
+{
+	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("listall-locations.inc.php");
+		return;
+	}
+}elseif ($_REQUEST['f'] == 'listall-locations-p-z')
+{
+	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("listall-locations.inc.php");
+		return;
+	}
 }
 
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
 
 ?>
+
+<div class="bground textcontainer box1"><h2>Search Descriptions of Archival Record Series</h2>
+		<p>Search our archival record series descriptions for keywords, such as names, places, formats, or topics here. </p>
+		<div id ="multisearch">
+		 <form method="get" id="multisearchbox" action='index.php' accept-charset="UTF-8" onsubmit="if(!this.q.value) { alert('Please enter search terms.'); return false; } else { return true; }">
+		 
+		 <input type="hidden" id="hiddenquery" name="p" value="core/search"/>
+		 
+		 <input type="text" size="40" maxlength="150" name="q" id="q" class="searchinput" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="100" autofocus/>
+		 
+		 <input type="submit" value="Find" tabindex="300" class='button' title="Search" />
+
+		<br/>
+		
+		<div id="multisearchoptions">
+		<input type="radio" class="radio_option" id="opt1" name="multisearch" onclick="document.getElementById('multisearchbox').action='index.php'; document.getElementById('hiddenquery').name='p'; document.getElementById('hiddenquery').value='core/search';" checked="checked"/> <label for="opt1">Search all record series and creator summaries in this database</label>
+		<br />- or -<br />
+		<input type="radio" name="multisearch" id="opt2" onclick="document.getElementById('multisearchbox').action='https://www.google.com/search'; document.getElementById('hiddenquery').name='hq'; document.getElementById('hiddenquery').value='site:files.archon.library.illinois.edu/alasfa/ OR site:archives.library.illinois.edu/alasfa/';"/><label for="opt2">Use Google to search detailed folder and box lists for records series</label>
+		
+		</div>
+		</form></div>
+		</div>
+		
+	</div>
 
 <div id='themeindex' class='bground'>
 <dl>
@@ -42,3 +102,20 @@ echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "<
   </dd>
 </dl>
 </div>
+
+<?php
+/*add search by barcode for logged in users */
+if($_ARCHON->Security->userHasAdministrativeAccess()) {
+?>
+	<div class="bground textcontainer box4"><label for='barcode'><h2>Look Up by Barcode</h2></label>
+		<form id="barcodelookup" action="index.php" accept-charset="UTF-8" method="get" onsubmit="if(!this.barcode.value) { alert('Please enter barcode value.'); return false; } else { return true; }">
+			<div>
+				<input type="hidden" name="f" value="barcodelookup" />
+				<input class="searchinput" type="text" size="15" maxlength="20" name="barcode" id="barcode" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="0" />
+				<input type="submit" value="Lookup" tabindex="0" class='button' title="Lookup" /> 
+			</div>
+		</form>
+	</div>
+<?php
+}
+?>

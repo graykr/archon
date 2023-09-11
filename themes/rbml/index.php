@@ -21,6 +21,23 @@ if ($_REQUEST['f'] == 'listall')
 	require("listall.inc.php");
 	return;
 }
+elseif ($_REQUEST['f'] == 'listall-locations')
+{
+if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("listall-locations.inc.php");
+		return;
+	}
+}
+elseif($_REQUEST['f'] == 'barcodelookup')
+{
+		
+	require("barcodelookup.inc.php");
+	return;
+
+}
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
 
@@ -72,3 +89,18 @@ echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "<
   </dd>
 </dl>
 </div>
+<?php
+if($_ARCHON->Security->userHasAdministrativeAccess()) {
+?>
+	<div class="bground textcontainer box4"><label for='barcode'><h2>Look Up by Barcode</h2></label>
+		<form id="barcodelookup" action="index.php" accept-charset="UTF-8" method="get" onsubmit="if(!this.barcode.value) { alert('Please enter barcode value.'); return false; } else { return true; }">
+			<div>
+				<input type="hidden" name="f" value="barcodelookup" />
+				<input class="searchinput" type="text" size="15" maxlength="20" name="barcode" id="barcode" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="0" />
+				<input type="submit" value="Lookup" tabindex="0" class='button' title="Lookup" /> 
+			</div>
+		</form>
+	</div>
+<?php
+}
+?>
