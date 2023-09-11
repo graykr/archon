@@ -68,7 +68,7 @@ header('Content-type: text/html; charset=UTF-8');
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title><?php echo(strip_tags($_ARCHON->PublicInterface->Title)); ?></title>
-      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css" />
+      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css?v=20230315" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/cluetip/jquery.cluetip.css" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/jgrowl/jquery.jgrowl.css" />
       <link rel="icon" type="image/ico" href="<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/favicon.ico"/>
@@ -173,7 +173,7 @@ header('Content-type: text/html; charset=UTF-8');
                      {
                         echo("<a href='#' onclick='$(window).scrollTo(\"#archoninfo\"); if($(\"#userlogin\").is(\":visible\")) $(\"#loginlink\").html(\"Log In\"); else $(\"#loginlink\").html(\"Hide\"); $(\"#userlogin\").slideToggle(\"normal\"); $(\"#ArchonLoginField\").focus(); return false;'>Log In</a>");
                      }
-
+                     
                      if(!$_ARCHON->Security->userHasAdministrativeAccess())
                      {
                         $emailpage = defined('PACKAGE_COLLECTIONS') ? "collections/research" : "core/contact";
@@ -337,10 +337,34 @@ header('Content-type: text/html; charset=UTF-8');
                         </div>
                      </form>
             <?php
-                     if(defined('PACKAGE_COLLECTIONS'))
-                     {
-                        echo("<hr/><p class='center' style='font-weight:bold'><a href='?p=collections/research&amp;f=email&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'>Contact us about this collection</a></p>");
+                  if(defined('PACKAGE_COLLECTIONS'))
+                  {
+                     echo("<hr/><p class='center' style='font-weight:bold'>");
+                     $emailmailto = "ala-archives@library.illinois.edu";
+                     $emailsubject="Inquiry: ALA Archives";
+                     $emailReferralPage = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+                     $emailbody="%0D---Please type your message above this line---%0DReferral page: ".$emailReferralPage;
+                     if($objCollection->Classification) {
+                        $emailsubject .= " (RS ".$objCollection->Classification->toString(LINK_NONE, true, false, true, false);
+                        $emailsubject .= "/".$objCollection->getString('CollectionIdentifier').")";
                      }
+                     echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");     
+                     echo("Email us about these ");
+                      if ($objCollection->MaterialType=='Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
+                      {
+                         echo ('records');
+                      }
+                     elseif ($objCollection->MaterialType=='Publications')
+                     {
+                        echo ('publications');
+                     }
+                     else
+                     {
+                      echo ('papers');
+                     }
+                     echo("</a>");
+                     echo("</p>");
+                  }
             ?>
 
          </div>
