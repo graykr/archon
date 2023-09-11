@@ -1286,6 +1286,36 @@ abstract class Collections_Archon
    }
 
    /**
+    * Returns LocationEntryID value
+    * when passed the string value
+    * for a shelf value.
+    *
+    * Only useful where shelf values are unique
+    *
+    * @param string $String
+    * @return integer
+    */
+    function getLocationEntryIDFromShelf($String)
+    {
+       // Case insensitve, but exact match
+       $this->mdb2->setLimit(1);
+       $prep = $this->mdb2->prepare('SELECT ID FROM tblCollections_CollectionLocationIndex WHERE Shelf LIKE ?', 'text', MDB2_PREPARE_RESULT);
+       $result = $prep->execute($String);
+       if(pear_isError($result))
+       {
+          trigger_error($result->getMessage(), E_USER_ERROR);
+       }
+ 
+       $row = $result->fetchRow();
+       $result->free();
+       $prep->free();
+ 
+       $row['ID'] = $row['ID'] ? $row['ID'] : 0;
+ 
+       return $row['ID'];
+    }
+
+   /**
     * Returns EADElementID value
     * when passed the string value
     * for an EAD element type.
