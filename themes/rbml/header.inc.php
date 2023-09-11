@@ -73,7 +73,7 @@ $_ARCHON->PublicInterface->addNavigation('RBML', 'https://library.illinois.edu/r
       <meta name="og:site_name" content="Rare Book & Manuscript Library Manuscript Collections Database"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title><?php echo(strip_tags($_ARCHON->PublicInterface->Title)); ?></title>
-      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css" />
+      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css?v=20230314" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/cluetip/jquery.cluetip.css" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/jgrowl/jquery.jgrowl.css" />
 
@@ -120,8 +120,38 @@ $_ARCHON->PublicInterface->addNavigation('RBML', 'https://library.illinois.edu/r
          $(document).ready(function() {<?php echo($_ARCHON->PublicInterface->Header->OnLoad); ?>});
          $(window).unload(function() {<?php echo($_ARCHON->PublicInterface->Header->OnUnload); ?>});
          /* ]]> */
+      
       </script>
-	  
+	        <?php 
+      //script to handle filters within the sidebar location table
+      ?>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      var $k =jQuery.noConflict();
+      $k(document).ready(function(){
+      $k("#ccardstaff .locationFilter").on("keyup", function() {
+         var value = $k(this).val().toLowerCase();
+         $k("#ccardstaff .locationTableBody tr").filter(function() {
+            var $t = $(this).children().last();
+            $k(this).toggle($k($t).text().toLowerCase().indexOf(value) > -1)
+            });
+         });
+      $k("#ccardstaff .staffBoxFilter").on("keyup", function() {
+         var value = $k(this).val().toLowerCase();
+         $k("#ccardstaff .locationTableBody tr").filter(function() {
+            var $h = $(this).children().first();
+            $k(this).toggle($k($h).text().toLowerCase().indexOf(value) > -1)
+            });
+         });
+      $k("#ccardstaff .staffLocationFilter").on("keyup", function() {
+         var value = $k(this).val().toLowerCase();
+         $k("#ccardstaff .locationTableBody tr").filter(function() {
+            $k(this).toggle($k(this).text().toLowerCase().indexOf(value) > -1)
+            });
+         });
+      });
+      </script>
+
       <?php
       if($_ARCHON->PublicInterface->Header->Message && $_ARCHON->PublicInterface->Header->Message != $_ARCHON->Error)
       {

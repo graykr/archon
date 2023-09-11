@@ -95,7 +95,7 @@ require('commonheader.inc.php');
             <?php if(!empty($objCollection->Content))
                   {
  ?> <p><a href="#boxfolder" tabindex="800">Detailed Description</a></p><?php
-                  }
+                  
 
                   foreach($objCollection->Content as $ID => $objContent)
                   {
@@ -121,9 +121,43 @@ require('commonheader.inc.php');
                      </div>
                   </form>
 <?php
+                  }//end if statement for if collection content is not empty
+
+                  if($objCollection->OtherURL){
+
+                     if(strtolower(substr($objCollection->getString('OtherURL'),-3))=="pdf"){
+                        echo( '<p><a href="#pdf-fa" tabindex="800">PDF Box/Folder List</a></p>');
+                     }
+
+                  }
+
                   if(defined('PACKAGE_COLLECTIONS'))
                   {
-                     echo("<hr/><p class='center' style='font-weight:bold'><a href='?p=collections/research&amp;f=email&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'>Contact us about this collection</a></p>");
+                     echo("<hr/><p class='center' style='font-weight:bold'>");
+                     $emailmailto = "ala-archives@library.illinois.edu";
+                     $emailsubject="Inquiry: ALA Archives";
+                     $emailReferralPage = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+                     $emailbody="%0D---Please type your message above this line---%0DReferral page: ".$emailReferralPage;
+                     if($objCollection->Classification) {
+                        $emailsubject .= " (RS ".$objCollection->Classification->toString(LINK_NONE, true, false, true, false);
+                        $emailsubject .= "/".$objCollection->getString('CollectionIdentifier').")";
+                     }
+                     echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");     
+                     echo("Email us about these ");
+                      if ($objCollection->MaterialType=='Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
+                      {
+                         echo ('records');
+                      }
+                     elseif ($objCollection->MaterialType=='Publications')
+                     {
+                        echo ('publications');
+                     }
+                     else
+                     {
+                      echo ('papers');
+                     }
+                     echo("</a>");
+                     echo("</p>");
                   }
 ?>
 
