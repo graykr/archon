@@ -73,7 +73,8 @@ if(defined('PACKAGE_COLLECTIONS'))
     {
         echo("<div id='repositorylink'><a href='{$_ARCHON->Repository->getString('URL')}'>{$_ARCHON->Repository->getString('Name')}</a></div>\n");
     }
-    echo("<div id='emaillink'>Contact Us: <a href='http://www.library.uiuc.edu/archives/email-ahx.php'>Email Form</a></div>\n");
+    $referralPageFooter = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+    echo("<div id='emaillink'>Contact Us: <a href='http://www.library.uiuc.edu/archives/email-ahx.php?this_page={$referralPageFooter}'>Email Form</a></div>\n");
     echo("</div>");
 }
 

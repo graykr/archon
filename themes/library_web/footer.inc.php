@@ -84,7 +84,8 @@ if($_ARCHON->Script == 'packages/collections/pub/findingaid.php')
       }
 
 
-      echo("<div id='emaillink'>Contact Us: <a href='https://archives.library.illinois.edu/email-ahx.php'>Email Form</a></div>\n");
+      $referralPageFooter = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+    echo("<div id='emaillink'>Contact Us: <a href='http://www.library.uiuc.edu/archives/email-ahx.php?this_page={$referralPageFooter}'>Email Form</a></div>\n");
       echo("</div>");
    }
 
