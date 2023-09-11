@@ -28,38 +28,7 @@ $repositoryid = $objCollection->RepositoryID;
 
 echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "</h1>\n");
 
-/** Gather text to build a request link **/
-if($_ARCHON->config->AddRequestLink and $_ARCHON->config->RequestURL) 
-{
-	$requestTitle = ($objCollection->Title) ? $objCollection->Title : "";
-	$requestTitle .= ($objCollection->InclusiveDates) ? ", ".$objCollection->InclusiveDates : "";
-
-	$requestIdentifier = ($objCollection->Classification) ? $objCollection->Classification->toString(LINK_NONE, true, false, true, false)."/".$objCollection->getString('CollectionIdentifier') : $objCollection->getString('CollectionIdentifier');
-
-	//Note: The request button only can generate a request at the collection level. Researchers will need to fill in box and folder information themeselves. These fields can either be passed through as empty strings or with notes in all caps so the researcher sees them and replaces these placeholders with what exactly they want to request.
-	$requestBox = "";//"PLEASE INDICATE BOX IF APPLICABLE";
-	$requestFolderNo = "";//"PLEASE INDICATE FOLDER NUMBER IF APPLICABLE";
-	$requestFolderTitle = "";//"PLEASE INDICATE FOLDER TITLE IF APPLICABLE";	
-
-	$requestExtent = ($objCollection->Extent) ? preg_replace('/\.(\d)0/', ".$1", $objCollection->getString('Extent')) . " " . $objCollection->getString('ExtentUnit') : "";
-	$requestExtent .= ($objCollection->AltExtentStatement) ? "; ".$objCollection->AltExtentStatement : "";
-
-	$requestBaseLink =	$_ARCHON->config->RequestURL;//defined in config file
-
-	//these are the field names in the form from the request system (may want to move these also to the config file)
-	$requestVarTitle = "&ItemTitle=";
-	$requestVarIdentifier = "&CallNumber=";
-	$requestVarBox = "&ItemVolume=";
-	$requestVarFolderNo = "&ItemIssue=";
-	$requestVarFolderTitle = "&ItemSubTitle=";
-	$requestVarExtent = "&ItemPublisher="."[use hidden field for real version] ";//use ItemPages or some other field for extent
-
-	//concatenate the field names (URL parameters) and metadata from the collection to form the request link
-	$requestLink = $requestBaseLink . $requestVarTitle.$requestTitle . $requestVarIdentifier.$requestIdentifier;
-	$requestLink .= $requestVarBox.$requestBox . $requestVarFolderNo.$requestFolderNo . $requestVarFolderTitle.$requestFolderTitle;
-	$requestLink .= $requestVarExtent . $requestExtent;//comment this line out if the extent is not needed
-}
-/** End section for preparation of the request link.*/
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
 
 ?>
 
@@ -70,35 +39,33 @@ if($_ARCHON->config->AddRequestLink and $_ARCHON->config->RequestURL)
 <div id='ccardprintcontact' class='smround'>
 
 <?php
-//add request button
-//add request button
-if($requestLink) {
-	echo("<a href='" . $requestLink . "' target='_blank'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/box.png' alt='Request' style='padding-right:2px'/></a><a href='" . $requestLink . "' target='_blank'>");
-	if($_ARCHON->config->AddRequestText) {
-		echo($_ARCHON->config->AddRequestText);
-	} else {
-		echo("Submit request");
-	}
-	echo("</a>");
-
-	echo(" | ");
-}
-//end section with the request button
-?>
+/**add request button, or launch a modal with the location table if variable locations */
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");	
+   ?>
 
    <span class='print-friendly-link'><a href='?p=collections/findingaid&amp;id=<?php echo($objCollection->ID); ?>&amp;templateset=print&amp;disabletheme=1'>
       <img src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/printer.png' alt='Printer-friendly' />
    </a>
    <a href='?p=collections/findingaid&amp;id=<?php echo($objCollection->ID); ?>&amp;templateset=print&amp;disabletheme=1'>
       Printer-friendly
-   </a> |</span>
-   <a href='?p=collections/research&amp;f=email&amp;repositoryid=<?php echo($repositoryid); ?>&amp;referer=<?php echo(urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'])); ?>'>
-      <img src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/email.png' alt='Email Us' />
-   </a>
-   <a href='?p=collections/research&amp;f=email&amp;repositoryid=<?php echo($repositoryid); ?>&amp;referer=<?php echo(urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'])); ?>'>
-      Contact Us About This Collection
-   </a>
-</div>
+   </a> 
+   <?php
+echo(" | </span>");
+
+$emailmailto = "ihlc@library.illinois.edu";
+$emailsubject="Inquiry: IHLC Manuscript Collection Finding Aid";
+$emailReferralPage = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+$emailbody="%0D---Please type your message above this line---%0DReferral page: ".$emailReferralPage;
+
+if($objCollection->CollectionIdentifier) {
+	$emailsubject .= " (ID ".$objCollection->getString('CollectionIdentifier').")";
+}
+echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");
+echo("<img src='". $_ARCHON->PublicInterface->ImagePath . "/email.png'/> </a>");
+echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");
+echo("Contact Us About This Collection</a>");
+echo("</div>");
+?>
 
 <h2 style='text-align:left'><a name="overview"></a>Collection Overview</h2>
 <div class="indent-text">
@@ -107,8 +74,11 @@ if($requestLink) {
 } ?></p>
    <?php if($objCollection->PredominantDates)
    { ?><p><span class="bold">Predominant Dates:</span><?php echo($objCollection->PredominantDates); ?></p><?php } ?>
-      <?php if($objCollection->Classification)
-      { ?><p><span class='bold'>ID:</span> <?php echo($objCollection->Classification->toString(LINK_NONE, true, false, true, false)); ?>/<?php echo($objCollection->getString('CollectionIdentifier')); ?></p><?php } ?>
+   <?php if($objCollection->Classification) { ?>
+      <p><span class='bold'>ID:</span> <?php echo($objCollection->Classification->toString(LINK_NONE, true, false, true, false)); ?>/<?php echo($objCollection->getString('CollectionIdentifier')); ?></p><?php 
+      } elseif($objCollection->CollectionIdentifier){
+         ?><p><span class='bold'>Collection identifier:</span> <?php echo($objCollection->getString('CollectionIdentifier')); ?></p><?php
+   } ?>
    <?php if(!empty($objCollection->PrimaryCreator))
    { ?><p><span class='bold'>Primary Creator:</span> <?php echo($objCollection->PrimaryCreator->toString(LINK_TOTAL)); ?></p><?php }
    
@@ -393,7 +363,7 @@ if(!empty($objCollection->AccessRestrictions) || !empty($objCollection->UseRestr
          <?php echo($objCollection->getString('RevisionHistory')); ?>
          </p>
          <?php
-      }
+      }}
       if($objCollection->OtherNote)
       {
          ?>
@@ -405,74 +375,135 @@ if(!empty($objCollection->AccessRestrictions) || !empty($objCollection->UseRestr
       if($objCollection->OtherURL)
       {
          ?>
-         <p><span class='bold'>Other URL:</span> <a href="<?php echo ($objCollection->OtherURL); ?>">
+         <h2 style='text-align:left'><a name='pdf-fa'></a>Box/Folder List</h2>
+         <p><span class='bold'>URL:</span> <a href="<?php echo ($objCollection->OtherURL); ?>">
          <?php echo($objCollection->getString('OtherURL')); ?>
             </a></p>
-      <?php
+            <?php
+            if(strtolower(substr($objCollection->getString('OtherURL'),-3))=="pdf"){
+               $pdfURL = $objCollection->OtherURL;
+               
+			   if(strpos($pdfURL, "//www.library")>0){
+                  $pdfURL = str_replace("//www.library", "//library",$pdfURL);
+               }
+			   
+               if(strpos($pdfURL, "library.illinois.edu/ihx/inventories")>0){
+                  $pdfURL = str_replace("library.illinois.edu/ihx/inventories", "archives-centos8.library.illinois.edu/ihx/inventories",$pdfURL);
+               }
+               if(strpos($pdfURL, "http://")===0){
+                  $pdfURL = str_replace("http://", "https://",$pdfURL);
+               }
+               
+            ?>
+               <p id="display-pdf"><span class='bold'>PDF finding aid
+               <?php 
+               if($objCollection->Title) {
+                  echo(" for "); 
+                  echo($objCollection->getString('Title'));
+               }
+               if($objCollection->Classification)
+               {
+                  echo(" (");
+                  echo($objCollection->Classification->toString(LINK_NONE, true, false, true, false));
+                  echo("/");
+                  echo($objCollection->CollectionIdentifier);
+                  echo(")");
+               }
+               ?>
+               </span></p>
+               <iframe src="<?php echo $pdfURL?>" width="100%" height="800vh">
+               </iframe>
+            <?php 
+            } elseif($objCollection->getString('OtherURL')=="http://hdl.handle.net/2027/uc1.b4265910" OR $objCollection->getString('OtherURL')=="https://archive.org/details/guidetoheinricha00univ" OR $objCollection->getString('OtherURL')=="https://hdl.handle.net/2027/uiuo.ark:/13960/t9086670x"){
+				?>
+				<p id="display-pdf"><span class='bold'>Digitized published finding aid
+               <?php 
+               if($objCollection->Title) {
+                  echo(" for "); 
+                  echo($objCollection->getString('Title'));
+               }
+               if($objCollection->Classification)
+               {
+                  echo(" (");
+                  echo($objCollection->Classification->toString(LINK_NONE, true, false, true, false));
+                  echo("/");
+                  echo($objCollection->CollectionIdentifier);
+                  echo(")");
+               }
+               echo("</span></p>");
+			   if($objCollection->getString('OtherURL')=="http://hdl.handle.net/2027/uc1.b4265910"){
+				   $embedLink = "https://hdl.handle.net/2027/uc1.b4265910?urlappend=%3Bui=embed";
+			   } elseif($objCollection->getString('OtherURL')=="https://archive.org/details/guidetoheinricha00univ" OR $objCollection->getString('OtherURL')=="https://hdl.handle.net/2027/uiuo.ark:/13960/t9086670x"){
+				   $embedLink = "https://hdl.handle.net/2027/uiuo.ark:/13960/t9086670x?urlappend=%3Bui=embed";
+			   }
+			   ?>
+               <iframe src="<?php echo $embedLink.$embedOptions;?>" width="100%" height="800vh">
+               </iframe>
+			   <?php
+			}
    }
    ?>
    </div>
 
    <?php
-} else {
-	echo("no admin info");
-}
+
 ?>
 
 <?php if(!empty($objCollection->Content))
-{ ?> <hr style="width: 70%" class='center' /> <h2 style='text-align:left'><a name="boxfolder"></a>Box and Folder Listing</h2> <?php /*} is this causing the error?*/ ?>
-<?php
-if(!$_ARCHON->PublicInterface->DisableTheme)
-{
-   $_ARCHON->PublicInterface->DisableTheme = true;
-
-   $arrLinks = array();
-   foreach($arrRootContent as $ID => $objContent)
+{ ?> <hr style="width: 70%" class='center' /> <h2 style='text-align:left'><a name="boxfolder"></a>Box and Folder Listing</h2> 
+   <?php
+   if(!$_ARCHON->PublicInterface->DisableTheme)
    {
-      if($ID != $in_RootContentID && $objContent->enabled())
+      $_ARCHON->PublicInterface->DisableTheme = true;
+
+      $arrLinks = array();
+      foreach($arrRootContent as $ID => $objContent)
       {
-         $strLink = "[<a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;q=$_ARCHON->QueryStringURL&amp;rootcontentid=$ID#id$ID'>" . $objContent->toString() . "</a>]";
+         if($ID != $in_RootContentID && $objContent->enabled())
+         {
+            $strLink = "[<a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;q=$_ARCHON->QueryStringURL&amp;rootcontentid=$ID#id$ID'>" . $objContent->toString() . "</a>]";
+         }
+         else
+         {
+            $strLink = '[' . $objContent->toString() . ']';
+         }
+
+         $arrLinks[] = $strLink;
+      }
+
+      $strDivision = reset($arrRootContent)->LevelContainer ? reset($arrRootContent)->LevelContainer->getString('LevelContainer') : '';
+      $strFindingAidLinks = "<br/><span class='bold'>Browse by $strDivision:</span><br/><br/>\n";
+      $strFindingAidLinks .= implode(",<br/>\n", $arrLinks);
+
+      if($in_RootContentID)
+      {
+         $strFindingAidLinks .= ",<br/>\n" . "[<a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;q=$_ARCHON->QueryStringURL'>" . All . "</a>]<br/>\n";
       }
       else
       {
-         $strLink = '[' . $objContent->toString() . ']';
+         $strFindingAidLinks .= ",<br/>\n[All]<br/>\n";
       }
 
-      $arrLinks[] = $strLink;
-   }
 
-   $strDivision = reset($arrRootContent)->LevelContainer ? reset($arrRootContent)->LevelContainer->getString('LevelContainer') : '';
-   $strFindingAidLinks = "<br/><span class='bold'>Browse by $strDivision:</span><br/><br/>\n";
-   $strFindingAidLinks .= implode(",<br/>\n", $arrLinks);
-
-   if($in_RootContentID)
-   {
-      $strFindingAidLinks .= ",<br/>\n" . "[<a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;q=$_ARCHON->QueryStringURL'>" . All . "</a>]<br/>\n";
+      $_ARCHON->PublicInterface->DisableTheme = false;
    }
    else
    {
-      $strFindingAidLinks .= ",<br/>\n[All]<br/>\n";
+      $strFindingAidLinks = '';
    }
 
+   echo($strFindingAidLinks . "<br/>\n");
 
-   $_ARCHON->PublicInterface->DisableTheme = false;
-}
-else
-{
-   $strFindingAidLinks = '';
-}
+   $contentCount = $objCollection->countContent();
+   if($contentCount > 0)
+   {
+      echo("<dl>#CONTENT#</dl>");
+   }
 
-echo($strFindingAidLinks . "<br/>\n");
+   if($contentCount > 20)
+   {
+      echo($strFindingAidLinks . "\n");
+   }
 
-$contentCount = $objCollection->countContent();
-if($contentCount > 0)
-{
-   echo("<dl>#CONTENT#</dl>");
 }
-
-if($contentCount > 20)
-{
-   echo($strFindingAidLinks . "\n");
-}
-}//end if for collection content
 ?>

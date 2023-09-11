@@ -426,34 +426,24 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
                if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ))
                {
                   echo("<div id='ccardstaff' class='mdround'><div class='ccardstafflabel'>Staff Information</div>");
+                  //use the staff location summary table if it isn't a repository excluded from the request link system
+                  //use the staff location table if the repository is excluded from the request link system
                   if(!empty($objCollection->LocationEntries))
                   {
-                     ?>
-               <div class='ccardcontent'><br/><span class='ccardlabel'>Storage Locations:</span></div>
-               <table id='locationtable' border='1'>
-                  <tr>
-                     <th>Content</th>
-                     <th>Location</th>
-                     <th>Range</th>
-                     <th>Section</th>
-                     <th>Shelf</th>
-                     <th>Extent</th>
-                  </tr>
-                  <tr>
-                     <td>
-      <?php echo($_ARCHON->createStringFromLocationEntryArray($objCollection->LocationEntries, '&nbsp;</td></tr><tr><td>', LINK_EACH, false, '&nbsp;</td><td>')); ?>
-                     </td>
-                  </tr>
-               </table>
-      <?php
-   }
-   else
-   {
-      ?>
-               <p>No locations are listed for this record series.</p>
-      <?php
-   }
-   ?>
+                     if(!$_ARCHON->config->ExcludeRequestLink[$objCollection->RepositoryID]){
+                        include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/locationsummarystaff.inc.php");
+                        echo('<a href="#stafflocationtable">View full location list</a>');
+                     } else {
+                        include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/stafflocationtable.inc.php");
+                     }
+                  }
+                  else
+                  {
+                  ?>
+                           <p>No locations are listed for this record series.</p>
+                  <?php
+                  }
+               ?>
             <div class="ccardcontents"><br/><span class='ccardlabel'>Show this record as:</span><br/><br/>
                <a href='?p=collections/ead&amp;id=<?php echo($objCollection->ID); ?>&amp;templateset=ead&amp;disabletheme=1&amp;output=<?php echo(formatFileName($objCollection->getString('SortTitle', 0, false, false))); ?>'>EAD</a><br/>
                <a href='?p=collections/marc&amp;id=<?php echo($objCollection->ID); ?>'>MARC</a><br/>
@@ -467,8 +457,17 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
          else            //user is not authenticated
          {
             echo("<div id='ccardstaff' class='mdround'>");
-			include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/openlocationtable.inc.php");
-			echo("</div>");
+			//include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/openlocationtable.inc.php");
+         
+         //use the location summary if it isn't a repository excluded from the request link system
+         //use the open location table (which also includes a summary) if the repository is excluded from the request link system or if it is a staff only request link
+         if(!$_ARCHON->config->ExcludeRequestLink[$objCollection->RepositoryID] AND !$_ARCHON->config->StaffOnlyRequestLink){
+            include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/locationsummary.inc.php");
+         } else {
+            include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/openlocationtable.inc.php");
+         }
+
+         echo("</div>");
    
    ?>
 
@@ -482,16 +481,38 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
 	echo("<div id='ccardprintcontact' class='smround'>");
    
    /**add request button, or launch a modal with the location table if variable locations */
-			include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
+   //if it is a staff-only link, show this only if someone is logged in (note that repository restriction is addressed in the code for the modal and link itself)
+			if(!$_ARCHON->config->StaffOnlyRequestLink){
+            include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
+         } elseif($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ)){
+            include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
+         }
 
-			if ($objCollection->RepositoryID == 2)
-			{
-				echo("<a href='mailto:sousa@illinois.edu?subject=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='email' /> Email us about these ");
-			}
-			else 
-			{
-				echo ("<a href='https://archives.library.illinois.edu/email-ahx.php?this_page=https://archives.library.illinois.edu". urlencode($_SERVER['REQUEST_URI'])."'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='email' /> Email us about these ");
-			}
+         if ($objCollection->RepositoryID == 2)
+         {
+            $emailmailto = "sousa@illinois.edu";
+            $emailsubject="Reference inquiry for Sousa Archives";
+            $emailbody="%0D---Please type your message above this line---%0DThis email was sent from: https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+         }
+         else 
+         {
+            $emailmailto = "illiarch@illinois.edu";
+            $emailsubject="Inquiry: University Archives";
+            $emailReferralPage = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+            $emailbody="%0D---Please type your message above this line---%0DReferral page: ".$emailReferralPage;
+         }
+         if($objCollection->Classification) {
+            $emailsubject .= " (RS ".$objCollection->Classification->toString(LINK_NONE, true, false, true, false);
+            $emailsubject .= "/".$objCollection->getString('CollectionIdentifier').")";
+         }
+         if ($objCollection->RepositoryID == 2) {
+            echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='email' /> ");
+         } else {
+            echo("<a href='https://archives.library.illinois.edu/email-ahx.php?this_page=".$emailReferralPage."' target='_blank'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='email' /> ");
+         }
+
+         echo("Email us about these ");
+
 					
 			if($objCollection->MaterialType == 'Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
 			{
@@ -517,7 +538,13 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
          if($objCollection->Scope)
          {
             ?>
-               <div class='ccardcontent expandable' style='padding-left:.2em'><span class='ccardlabel'>Description:</span> <?php echo (utf8_encode($objCollection->getString('Scope'))); ?></div>
+               <div class='ccardcontent expandable' style='padding-left:.2em'><span class='ccardlabel'>Description:</span> <?php 
+               if($_ARCHON->config->DatabaseEncodingUTF8){
+                  echo ($objCollection->getString('Scope')); 
+               }else {
+                  echo (utf8_encode($objCollection->getString('Scope')));
+               }
+                  ?></div>
             <?php
          }
 				 
@@ -538,7 +565,7 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
          {
             ?>
 
-               <div class='ccardcontent' style='padding-left:.2em'><span class='ccardlabel'><a href='#' onclick="toggleDisplay('digitalcontent'); return false;"><img id='digitalcontentImage' src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/plus.gif' alt='expand icon' /> On-line Images / Records</a></span><br/>
+               <div class='ccardcontent' style='padding-left:.2em'><span class='ccardlabel'><a href='#' onclick="toggleDisplay('digitalcontent'); return false;"><img id='digitalcontentImage' src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/plus.gif' alt='expand icon' /> Online Images / Records</a></span><br/>
                   <div class='ccardshowlist' style="display: none;" id="digitalcontentResults">
             <?php
             if($containsImages)
@@ -547,7 +574,7 @@ if(!empty($objCollection->BiogHist) || !empty($objCollection->UseRestrictions) |
             }
             if($objCollection->DigitalContent)
             {
-               echo("<br/><span class='bold'>Documents and Files:</span><br/></br>&nbsp;" . $_ARCHON->createStringFromDigitalContentArray($objCollection->DigitalContent, "<br/>\n&nbsp;", LINK_TOTAL));
+               echo("<br/><span class='bold'>Documents and Files:</span><br/></br>&nbsp;" . $_ARCHON->createStringFromDigitalContentArray($objCollection->DigitalContent, "<br/>\n&nbsp;", LINK_TOTAL, false));
             }
             ?>
                   </div>
@@ -602,9 +629,32 @@ echo ("</pre></div>");
                ?>
          </div> <!--end ccard scope -->
                <?php
+                  if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ) AND !$_ARCHON->config->ExcludeRequestLink[$objCollection->RepositoryID]){
+                     ?>
+                     <div style='clear:both;margin-left:1em;'>
+                     <p><strong>Additional Data Tables for Staff Use (hidden if not logged in)</strong></p><p>Copy these tables to Excel as needed to create bulk upload files.</strong></p>
+                     <a href='#' onclick="toggleDisplay('locationupdate'); return false;"><img id='locationupdateImage' src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/plus.gif' alt='expand icon' /> <caption>Bulk update table for location entries</caption></a><br/>
+                     <div style="display: none;" id="locationupdateResults">
+                     <?php
+                     include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/locationupdatetable.inc.php");
+                     echo("</div>");
+                     if($requestLink) {
+                        ?>
+                        <br />
+                        <a href='#' onclick="toggleDisplay('bulkrequest'); return false;"><img id='bulkrequestImage' src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/plus.gif' alt='expand icon' /> <caption>Bulk request table, staff upload to Aeon (delete rows not needed)</caption></a><br/>
+                        <div style="display: none;" id="bulkrequestResults">
+                        <?php
+                        include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestbulktable.inc.php");
+                        echo("</div>");
+                     }
+                     echo("</div>");
+                     
+                     if(!$_ARCHON->config->ExcludeRequestLink[$objCollection->RepositoryID]){     
+                        echo("<div id='stafflocationtable' style='margin:1em;border-top:1px solid black'>");
+                        echo("<p><strong>Filter full list of storage locations below:</strong></p>");
+                        include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/stafflocationtable.inc.php");
+                     }
             }
-              
-
-
-            
+         }
             ?>
+            

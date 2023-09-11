@@ -59,13 +59,15 @@ filterBox.addEventListener('input', filterBoxes);
 function filterBoxes(e) {
 	var filterValue = (e.target.value).toLowerCase();
     $k("#requestModal .locationTableBody tr").filter(function() {
-        var $t = $(this).children().last();
+        var $t = $k(this).children().last();
 		$k(this).toggle($k($t).text().toLowerCase().indexOf(filterValue) > -1)
     });
     }
 
 const filterSelect = document.querySelector('#requestModal #locations');
-filterSelect.addEventListener('input',filterSelection);
+if (filterSelect){
+	filterSelect.addEventListener('input',filterSelection);
+}
 
 function filterSelection(f) {
 	var selectValue = $k('#requestModal #locations option:selected').text().toLowerCase();

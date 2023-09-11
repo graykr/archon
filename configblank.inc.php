@@ -144,9 +144,7 @@
 
    $_ARCHON->db->DatabaseName = 'Archon';
 
-
-
-  // ********************************************
+   // ********************************************
    // * $_ARCHON->db->VersionTDS                        *
    // ********************************************
    //
@@ -178,7 +176,7 @@
 
    //$_ARCHON->config->DatabaseEncodingUTF8=false;
 
-//  ***********************************************
+// ***********************************************
 // * Google Analytics Configuration              *
 // ***********************************************
 
@@ -199,38 +197,27 @@
    
 // ***********************************************
 // * File Cache Configuration                    *
-// * Requires existence of directory             *
-// * packages/digitallibrary/files
 // ***********************************************
 
 //   $_ARCHON->config->CacheFiles = true;
 //   $_ARCHON->config->CachePermissions = 0755;
 
-
-// ***********************************************
-// * Search handling for identifiers             *
-// ***********************************************
-//
-//    If TRUE, will only return an exact match.
-//
-//    IF FALSE, will return an exact match if
-//       found and else will return a partial
-//       match. Note it will only return a single
-//       partial match, not all possible matches.
-//
-// ***********************************************
-
-$_ARCHON->config->SearchExactIdentifier=false;
-
-// ***********************************************
+ // ***********************************************
 // * Subject heading IDs for CHSTM list *
 // ***********************************************
-// Note: Referenced from the theme
-
 $_ARCHON->config->CHSTMSubjectList = array();
 
- // ***********************************************
-// * Request link configuration *
+ // **********************************************
+// * Restrict login by IP range *
 // ***********************************************
-include("config_request.inc.php");
+// Note: Assumes that the account feature is used only by 
+// staff with access to the IP ranges specified. 
+//
+// Anyone not on the IP ranges specified will see the
+// restriction notice specified after attempting to login.
+
+$_ARCHON->config->RestrictAdminByIpRange = false;
+$_ARCHON->config->IpRestrictionNotice ="";
+$_ARCHON->config->AllowedAdminIpRanges = array();
+
 ?>
