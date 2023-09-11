@@ -197,7 +197,7 @@ img {
 #main {
    margin-left:1em;
    margin-right:1em;
-   padding-top:75px;
+   /*padding-top:75px;*/
 }
 
 /* used in faheader.inc.php */
@@ -211,7 +211,7 @@ img {
    border:1px solid #E8EEF7;
    font-size:75%;
    left:1.5em;
-   margin-top:10em;
+   /*margin-top:10em;*/
    width:20em;
    padding:0 .5em;
    clear:none;
@@ -227,7 +227,7 @@ img {
    margin-left:17.5em;
    margin-right:2em;
    padding-left:1em;
-   margin-top:8em;
+   /*margin-top:8em;*/
 }
 
 #bottom {
@@ -267,6 +267,7 @@ img {
    overflow:hidden;
    padding:0;
    width:auto;
+   top:0px;
 }
 
 #searchWord {
@@ -464,7 +465,7 @@ img.edit {
 
 
 
-#breadcrumbblock {
+/*#breadcrumbblock {
    color:#ffffff;
    position: relative;
    top: 56px;
@@ -475,7 +476,15 @@ img.edit {
    padding:.25em 1em 0 .5em;
    font-size: 12px;
    z-index: 99999;
-}
+}*/
+#breadcrumbblock {
+   color: black;
+   float: left;
+   height: 1.5em;
+   margin-top: 75px;
+   padding: 15px 1em 0 .5em;
+   font-size: 0.75em;
+   }
 
 #breadcrumbblock img {
    height:9px;
@@ -1493,6 +1502,31 @@ img.digcontentfile {
     visibility: hidden;
 }
 
+/*button to link to access files if applicable*/
+.digital-files-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.digital-files-button button {
+	color: white;
+	font-weight: bold;
+	background: #BE1E2D;/*#1D58A7;*/
+	border: 2px solid darkred;/*#90AED5;*/
+	border-radius: 5px;
+	padding: 7px;
+	width:10em;
+	margin-bottom:10px;/*30px if left*/
+  }
+  .digital-files-button button:hover {
+	cursor:pointer;
+	background: black;
+  }
+  .digital-files-button a:hover {
+	background:transparent;
+  }
+
 /*Adjustments for smaller screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
 @media screen and (max-width: 750px) {
 
@@ -1615,7 +1649,7 @@ img.digcontentfile {
 	}
 	
 	#breadcrumbblock{
-		top:.5em;
+      top:.5em;
 	}
 	
 	#logosearchwrapper{
