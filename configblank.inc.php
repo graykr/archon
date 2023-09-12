@@ -207,7 +207,18 @@
 // ***********************************************
 $_ARCHON->config->CHSTMSubjectList = array();
 
- // **********************************************
+ // ***********************************************
+// * Expand shelf field in admin for barcode *
+// ***********************************************
+// Set to true in order to:
+//   - Expand shelf field width to 15 (to accomodate a barcode)
+//   - Expand section field width to 5 (to also fit shelf information)
+//
+// Note: Variable referenced from packages/collections/admin/collections.php
+
+$_ARCHON->config->ShelfFieldAsBarcode = false; 
+
+// **********************************************
 // * Restrict login by IP range *
 // ***********************************************
 // Note: Assumes that the account feature is used only by 
