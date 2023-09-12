@@ -27,7 +27,7 @@ header('Content-type: text/html; charset=UTF-8');
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <title><?php echo($_ARCHON->ProductName); ?> <?php echo($_ARCHON->Version); ?> Administrative Interface</title>
       <link rel="stylesheet" href="adminthemes/<?php echo($_ARCHON->AdministrativeInterface->Theme); ?>/ui-theme/jquery-ui.css" type="text/css" media="screen" />
-      <link rel="stylesheet" type="text/css" href="adminthemes/<?php echo($_ARCHON->AdministrativeInterface->Theme); ?>/style.css" />
+      <link rel="stylesheet" type="text/css" href="adminthemes/<?php echo($_ARCHON->AdministrativeInterface->Theme); ?>/style.css?v=20230109" />
       <link href="adminthemes/<?php echo($_ARCHON->AdministrativeInterface->Theme); ?>/dynatree/ui.dynatree.css" rel="stylesheet" type="text/css" />
       <link href="adminthemes/<?php echo($_ARCHON->AdministrativeInterface->Theme); ?>/dynatree/contextmenu/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
       <link href="adminthemes/<?php echo($_ARCHON->AdministrativeInterface->Theme); ?>/jgrowl/jquery.jgrowl.css" rel="stylesheet" type="text/css" />
