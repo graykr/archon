@@ -10,7 +10,7 @@ isset($_ARCHON) or die();
 
 @set_time_limit(60);
 
-if(is_int($_REQUEST['rootcontentid'])){
+if(is_numeric($_REQUEST['rootcontentid'])){
    $in_RootContentID = $_REQUEST['rootcontentid'];
 } else{
    $in_RootContentID = 0;
