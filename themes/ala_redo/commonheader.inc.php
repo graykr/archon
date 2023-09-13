@@ -15,7 +15,7 @@ $_ARCHON->PublicInterface->addNavigation('The American Library Association Archi
       <meta name="og:site_name" content="American Library Association Archives Holdings Database"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title><?php echo(strip_tags($_ARCHON->PublicInterface->Title)); ?></title>
-      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css" />
+      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css?v=20230315" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/cluetip/jquery.cluetip.css" />
       <link rel="icon" type="image/ico" href="<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/favicon.ico"/>
       <!--[if lte IE 7]>
@@ -60,6 +60,50 @@ $_ARCHON->PublicInterface->addNavigation('The American Library Association Archi
          $(window).unload(function() {<?php echo($_ARCHON->PublicInterface->Header->OnUnload); ?>});
          /* ]]> */
       </script>
+
+      <?php 
+      //script to handle filters within the sidebar location table
+      ?>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      var $k =jQuery.noConflict();
+      $k(document).ready(function(){
+      $k("#ccardstaff .locationFilter").on("keyup", function() {
+         var value = $k(this).val().toLowerCase();
+         $k("#ccardstaff .locationTableBody tr").filter(function() {
+            var $t = $(this).children().last();
+            $k(this).toggle($k($t).text().toLowerCase().indexOf(value) > -1)
+            });
+         });
+      $k("#ccardstaff .staffBoxFilter").on("keyup", function() {
+         var value = $k(this).val().toLowerCase();
+         $k("#ccardstaff .locationTableBody tr").filter(function() {
+            var $h = $(this).children().first();
+            $k(this).toggle($k($h).text().toLowerCase().indexOf(value) > -1)
+            });
+         });
+      $k("#ccardstaff .staffLocationFilter").on("keyup", function() {
+         var value = $k(this).val().toLowerCase();
+         $k("#ccardstaff .locationTableBody tr").filter(function() {
+            $k(this).toggle($k(this).text().toLowerCase().indexOf(value) > -1)
+            });
+         });
+         $k("#stafflocationtable .staffBoxFilter").on("keyup", function() {
+            var value = $k(this).val().toLowerCase();
+            $k("#stafflocationtable .locationTableBody tr").filter(function() {
+               var $h = $(this).children().first();
+               $k(this).toggle($k($h).text().toLowerCase().indexOf(value) > -1)
+               });
+         });
+         $k("#stafflocationtable .staffLocationFilter").on("keyup", function() {
+            var value = $k(this).val().toLowerCase();
+            $k("#stafflocationtable .locationTableBody tr").filter(function() {
+               $k(this).toggle($k(this).text().toLowerCase().indexOf(value) > -1)
+               });
+         });
+      });
+      </script>
+
       <?php if($_ARCHON->PublicInterface->Header->Message && $_ARCHON->PublicInterface->Header->Message != $_ARCHON->Error)
       {
          $message = $_ARCHON->PublicInterface->Header->Message;

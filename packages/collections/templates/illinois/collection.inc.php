@@ -31,7 +31,50 @@ echo("<h1 id='titleheader'>" . strip_tags($_ARCHON->PublicInterface->Title) . "<
 { ?><p style="font-weight:bold" class="center">By <?php echo($objCollection->getString('FindingAidAuthor')); ?></p> <?php } ?>
 
 
-<span style='float: right;font-weight:bold'>[<?php echo("<a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;disabletheme=1'>"); ?>Printer Friendly</a>] | [<?php echo("<a href='?p=collections/research&amp;f=email&amp;referer=" . urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) . "'"); ?>>Contact us about this collection</a>]</span>
+<span style='float: right;font-weight:bold'>[<?php echo("<a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;disabletheme=1'>"); ?>Printer Friendly</a>] | [
+<?php
+         if ($objCollection->RepositoryID == 2)
+         {
+            $emailmailto = "sousa@illinois.edu";
+            $emailsubject="Reference inquiry for Sousa Archives";
+            $emailbody="%0D---Please type your message above this line---%0DThis email was sent from: https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+         }
+         else 
+         {
+            $emailmailto = "illiarch@illinois.edu";
+            $emailsubject="Inquiry: University Archives Finding Aid";
+            $emailReferralPage = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+            $emailbody="%0D---Please type your message above this line---%0DReferral page: ".$emailReferralPage;
+         }
+         if($objCollection->Classification) {
+            $emailsubject .= " (RS ".$objCollection->Classification->toString(LINK_NONE, true, false, true, false);
+            $emailsubject .= "/".$objCollection->getString('CollectionIdentifier').")";
+         }
+         if($objCollection->RepositoryID == 2){
+            echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");
+         } else {
+            echo("<a href='https://archives.library.illinois.edu/email-ahx.php?this_page=".$emailReferralPage."' target='_blank'>");
+         }
+         echo("Email us about these ");
+					
+			if($objCollection->MaterialType == 'Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
+			{
+				echo ('records');
+			}
+            elseif($objCollection->MaterialType == 'Publications')
+            {
+               echo ('publications');
+            }
+            else
+            {
+               echo ('papers');
+            }
+
+            echo("</a>");
+            ?>
+]</span>
+
+
 <h2 style='text-align:left'><a name="overview"></a>Collection Overview</h2>
 <div class="indent-text">
    <?php if($objCollection->Title)

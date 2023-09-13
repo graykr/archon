@@ -48,12 +48,34 @@ include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}
    <a href='?p=collections/findingaid&amp;id=<?php echo($objCollection->ID); ?>&amp;templateset=print&amp;disabletheme=1'>
       Printer-friendly
    </a> |
-   <a href='?p=collections/research&amp;f=email&amp;repositoryid=<?php echo($repositoryid); ?>&amp;referer=<?php echo(urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'])); ?>'>
-      <img src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/email.png' alt='Email Us' />
-   </a>
-   <a href='?p=collections/research&amp;f=email&amp;repositoryid=<?php echo($repositoryid); ?>&amp;referer=<?php echo(urlencode($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'])); ?>'>
-      Contact Us About This Collection
-   </a>
+   <?php
+      $emailmailto = "ala-archives@library.illinois.edu";
+      $emailsubject="Inquiry: ALA Archives Finding Aid";
+      $emailReferralPage = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+      $emailbody="%0D---Please type your message above this line---%0DReferral page: ".$emailReferralPage;
+      if($objCollection->Classification) {
+         $emailsubject .= " (RS ".$objCollection->Classification->toString(LINK_NONE, true, false, true, false);
+         $emailsubject .= "/".$objCollection->getString('CollectionIdentifier').")";
+      }
+      echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");
+      echo("<img src='". $_ARCHON->PublicInterface->ImagePath . "/email.png'/> </a>");
+      echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");
+
+      echo("Email us about these ");
+      if ($objCollection->MaterialType=='Official Records--Non-University' || $objCollection->MaterialType == 'Official Records')
+      {
+         echo ('records');
+      }
+      elseif ($objCollection->MaterialType=='Publications')
+      {
+      echo ('publications');
+      }
+         else
+         {
+            echo ('papers');
+      }
+      echo("</a>");
+   ?>
 </div>
 
 <h2 style='text-align:left'><a name="overview"></a>Collection Overview</h2>

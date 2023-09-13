@@ -5,5 +5,6 @@ $TemplateIndex['Collection'] = "collection.inc.php";
 $TemplateIndex['DefaultContent'] = "item.inc.php";
 $TemplateIndex['Collections'] = "collections.inc.php";
 $TemplateIndex['Classifications'] = "classifications.inc.php";
-$TemplateIndex['CollectionsListForChar'] = "collectionslistforchar.inc.php"
+$TemplateIndex['CollectionsListForChar'] = "collectionslistforchar.inc.php";
+$TemplateIndex['Email'] = "email.inc.php";
 ?>
