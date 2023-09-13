@@ -52,12 +52,18 @@ a:link {
 color:#33b;
 }
 
+#requestModalLink, #requestModalLink2 {
+	color:#33b;
+	text-decoration: underline;
+	cursor: pointer;
+	}
+
 a:visited {
 color:purple;
 }
 
-a:hover {
-background:#6699c9;
+a:hover,#requestModalLink:hover {
+background:#CAD9EF;
 color:#0055A5;
 }
 
@@ -65,7 +71,7 @@ a:active {
 color:#fff;
 }
 
-a:focus {
+a:focus,#requestModalLink:focus {
 outline:none;
 background:#0055A5;
 color:#ffffff;
@@ -364,6 +370,12 @@ color:white;
 text-decoration:none;
 }
 
+#searchblock a:link.pdfsearchlink,
+#searchblock a:visited.pdfsearchlink,
+#searchblock a:hover.pdfsearchlink {
+text-decoration:underline;
+}
+
 #searchblock input[type="text"] {
 width:225px;
 }
@@ -377,6 +389,7 @@ text-align:center;
 
 a.pdfsearchlink {
 	color:white;
+	text-decoration: underline;
 }
 
 
@@ -776,6 +789,12 @@ margin:1em auto 1em auto;
 background:#eaeff7 url('images/contentsgradient.gif') repeat-x top left;
 border:#ddd 1px solid;
 width:95%;
+}
+
+#themeindex.bground {
+	margin-top:1em;
+	border:#ddd 1px solid;
+	width:70%;
 }
 
 dd.index {
@@ -1273,23 +1292,23 @@ margin-left:1em;
 padding-top:1em;
 }
 
-#locationtable {
+#locationtable, #locationsummarytable, .simple-table {
 border-collapse:collapse;
 border:solid 1px #ddd;
 margin-left:1em;
 }
 
-#locationtable th {
+#locationtable th, #locationsummarytable th, .simple-table th {
 background:#f3f3f3;
 padding:0.3em;
 }
 
-#locationtable tr {
+#locationtable tr, #locationsummarytable tr, .simple-table tr {
 font-size:90%;
 padding:0.5em;
 }
 
-#locationtable td {
+#locationtable td, #locationsummarytable td, .simple-table td {
 font-size:90%;
 padding:0.5em;
 text-align:center;
@@ -1727,6 +1746,123 @@ color:#888;
 	line-height:2em;
 }
 
+/*used for large seach box, barcode lookup (borrowed from IHLC stylesheet)*/
+.textcontainer {
+	width:100%; 
+	margin:1em auto; 
+	padding:1em; 
+	background-color:#F9F9FA; 
+	border:#ddd 1px solid; 
+	font-size:90%;
+	}
+	
+	.textcontainer h2 {
+		margin-top:.1em;
+		
+	}
+	
+	.textcontainer .button {
+	background:#ebeeef;
+	background-image:url('images/magglass.png');
+	background-position:5% 50%;
+	background-repeat:no-repeat;
+	border:1px solid #ddd ;
+	/*border-left:none;*/
+	cursor:pointer;
+	font-size:1.2em;
+	font-weight:100;
+	margin:0 0.6em 0 -0.25em;
+	padding-left:1.4em;
+	color:#888899;
+	max-height:1.5em;
+	min-width:1.33em;
+	}
+	
+	.textcontainer .button:hover {
+	background:#FEF1B5;
+	background-image:url('images/magglass.png');
+	background-position:5% 50%;
+	background-repeat:no-repeat;
+	color:#889;
+	}
+	
+	.keyphrase {
+	font-style:italic;
+	font-weight:bold;
+	}
+	
+	#multisearchoptions {
+	font-size:0.8em;
+	}
+	
+	.box1 {
+		width:75%;
+		text-align:center;
+		box-sizing:inherit;
+	}
+	
+	.textcontainer.box1{
+	background-color:#f2f2f2;/*#EEF1F7;*/ /*#F9F9FA; */
+	border:gray 2px solid; 
+	}
+	
+	.textcontainer.box2, .textcontainer.box3, .textcontainer.box4 {
+	border:gray 1px solid;
+	}
+	
+	.box4 {
+		width:40%;
+		text-align:center;
+		box-sizing:inherit;
+	}
+	
+	.textcontainer.box4.pdfsearch {
+		background-color:transparent;
+		border:#ddd 1px solid;
+	}
+	
+	.box5 {
+		width:50%;
+	}
+	
+	#multisearch {
+	font-size:1.25em;
+	padding:.25em;
+	}
+	
+	#multisearch#multisearchoptions {
+	font-size:1em;
+	}
+	
+	#multisearch .searchinput, #identifiersearch .searchinput, .box4 .searchinput{
+	font-size:1em;
+	padding:.25em;
+	}
+
+	.digital-files-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.digital-files-button button {
+		color: white;
+		font-weight: bold;
+		background: #1D58A7;
+		border: 2px solid #90AED5;
+		border-radius: 5px;
+		padding: 7px;
+		width:10em;
+		margin-bottom:10px;
+	  }
+	  .digital-files-button button:hover {
+		cursor:pointer;
+		background: #13294B;
+	  }
+	  .digital-files-button a:hover {
+		background:transparent;
+	  }
+
 /* Modal for request from location table, adapted from https://www.w3schools.com/howto/howto_css_modals.asp */
 /* The Modal (background) */
 .request-modal {
@@ -1781,6 +1917,10 @@ color:#888;
 		margin:0;
 	}
 	
+	.box4 {
+		width:70%;
+	}
+
 	#browsebyspan, .browseLink {
 		width:100%;
 	}

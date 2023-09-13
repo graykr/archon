@@ -279,7 +279,7 @@ abstract class Core_AdministrativeInterface
       $objDeleteMessagePhrase = Phrase::getPhrase($phrase, PACKAGE_CORE, 0, PHRASETYPE_ADMIN);
       $strDeleteMessage = $objDeleteMessagePhrase ? $objDeleteMessagePhrase->getPhraseValue(ENCODE_HTML) : 'Are you sure you want to delete this record AND all of its children (if applicable)?';
 
-
+     
       if(isset($this->Object))
       {
          $curObjectName = $this->Object->ID ? bb_decode($this->Object->toString()) . " (ID: {$this->Object->ID})" : 'Add New';
@@ -439,9 +439,7 @@ abstract class Core_AdministrativeInterface
                   <li><a id="savecontrol" class="control icon<?php echo($disableSaveClass); ?>" onclick="if($(this).hasClass('disabled')) return false; admin_ui_submit();">
                         <span></span><?php echo($strSave); ?>
                      </a></li>
-                  <li><a id="deletecontrol" class="control icon<?php echo($disableDeleteClass); ?>" onclick="if($(this).hasClass('disabled')) return false; admin_ui_confirm('<?php echo($strDeleteMessage); ?>', function() {admin_ui_delete(); return false});">
-                        <span></span><?php echo($strDelete); ?>
-                     </a></li>
+
                   <li><a id="cancelcontrol" class="control icon<?php echo($disableCancelClass); ?>" onclick="if($(this).hasClass('disabled')) return false; window.onbeforeunload= null; location.href = '<?php echo(htmlspecialchars($_SERVER['REQUEST_URI'])); ?>';">
                         <span></span><?php echo($strCancel); ?>
                      </a></li>
@@ -475,6 +473,9 @@ abstract class Core_AdministrativeInterface
                      echo("</a></li>\n");
                   }
                   ?>
+                  <li><a id="deletecontrol" class="control icon<?php echo($disableDeleteClass); ?>" onclick="if($(this).hasClass('disabled')) return false; admin_ui_confirm('<?php echo($strDeleteMessage); ?>', function() {admin_ui_delete(); return false});">
+                        <span></span><?php echo($strDelete); ?>
+                     </a></li>                  
                </ul>
                <div id="quicksearch" <?php if($this->DisableQuickSearch)
                echo("class='disabledrow'"); ?>>

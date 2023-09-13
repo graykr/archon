@@ -16,7 +16,7 @@ if ($_ARCHON->Security->Session->verifysession($session)){
 				exit ("No matching record(s) found for batch_start=".$_REQUEST['batch_start']);
 			}		
         	$arrClassificationbatch = objectToArray($arrClassificationbatch); 
-			if ($_ARCHON->db->ServerType == 'MSSQL') {array_walk_recursive($arrClassificationbatch, 'myutf8_encode');}  //fix unicode for MSSQL migrations; function will incorrectly transform mysql unicode
+			if ($_ARCHON->db->ServerType == 'MSSQL'AND !$_ARCHON->config->DatabaseEncodingUTF8) {array_walk_recursive($arrClassificationbatch, 'myutf8_encode');}  //fix unicode for MSSQL migrations; function will incorrectly transform mysql unicode
 
 			echo json_encode($arrClassificationbatch);
 			}

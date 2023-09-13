@@ -78,6 +78,9 @@ else
 	{
 		echo("<p><a href='?p=core/index&f=listall'>Generate list of all collections (admin)</a></p>");
 		echo("<p><a href='?p=core/index&f=openidentifiers'>Find open collection identifiers (admin)</a></p>");
+		echo("Subject term info (will load slowly):");
+		echo("<ul><li><a href='?p=core/index&f=listall-with-subj'>Generate list of all collections, with scope teaser and subject headings (admin)</a></li>");
+		echo("<li><a href='?p=core/index&f=list-subjects'>Generate list of all subject headings (admin)</a></li></ul>");
 	}
 ?>
 			
@@ -94,7 +97,7 @@ else
 <div id="userlogin" class="mdround" style="display:none">&nbsp;
     <form action="<?php echo(encode($_SERVER['REQUEST_URI'], ENCODE_HTML)); ?>" accept-charset="UTF-8" method="post">
     <div class='loginpair'>
-    	<div class='loginlabel'><label for="ArchonLoginField">Login/E-mail:</label></div>
+    	<div class='loginlabel'><label for="ArchonLoginField">Username:</label></div>
       	<div class='logininput'><input id="ArchonLoginField" type="text" name="ArchonLogin" size="20" tabindex="400" /></div>
     </div>
     <div class='loginpair'>
@@ -104,9 +107,7 @@ else
       <div id='loginsubmit'>
 	      <input type="submit" value="Log In" class="button" tabindex="700" />&nbsp;&nbsp;<label for="RememberMeField"><input id="RememberMeField" type="checkbox" name="RememberMe" value="1" tabindex="600" />Remember me</label>
 	  </div>
-      <div id='loginlink'>
-        <a href="?p=core/register" tabindex="800">Register an Account</a>
-      </div>
+
     </form>
 </div>
 <?php

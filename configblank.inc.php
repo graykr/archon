@@ -144,9 +144,71 @@
 
    $_ARCHON->db->DatabaseName = 'Archon';
 
+   // ********************************************
+   // * $_ARCHON->db->VersionTDS                        *
+   // ********************************************
+   //
+   //   - Explanation:
+   //       Enter the TDS version in use.
+   //   - If nothing is entered, Archon will default
+   //       to 70.
+   //
+
+  // $_ARCHON->db->VersionTDS = '70';
 
 
 // ***********************************************
+// * Database Encoding Conversion Settings       *
+// ***********************************************
+// Only used for MSSQL servers.
+//
+// Set to false to have the php convert from
+// Latin-1 to UTF-8 (previous behavior in Archon).
+//
+// Set to true to turn this conversion off if
+// the database is already in UTF-8 or if the
+// text is getting converted elsewhere already.
+//
+// Note: If you have trouble with Archon converting
+// special characters to multiple other characters
+// you may want to try setting this to true to 
+// see if double encoding is the culprit.
+
+   //$_ARCHON->config->DatabaseEncodingUTF8=false;
+
+  // ********************************************
+   // * $_ARCHON->db->VersionTDS                        *
+   // ********************************************
+   //
+   //   - Explanation:
+   //       Enter the TDS version in use.
+   //   - If nothing is entered, Archon will default
+   //       to 70.
+   //
+
+  // $_ARCHON->db->VersionTDS = '70';
+
+
+// ***********************************************
+// * Database Encoding Conversion Settings       *
+// ***********************************************
+// Only used for MSSQL servers.
+//
+// Set to false to have the php convert from
+// Latin-1 to UTF-8 (previous behavior in Archon).
+//
+// Set to true to turn this conversion off if
+// the database is already in UTF-8 or if the
+// text is getting converted elsewhere already.
+//
+// Note: If you have trouble with Archon converting
+// special characters to multiple other characters
+// you may want to try setting this to true to 
+// see if double encoding is the culprit.
+
+   //$_ARCHON->config->DatabaseEncodingUTF8=false;
+
+//  ***********************************************
 // * Google Analytics Configuration              *
 // ***********************************************
 
@@ -167,31 +229,38 @@
    
 // ***********************************************
 // * File Cache Configuration                    *
-// * Requires existence of directory             *
-// * packages/digitallibrary/files
 // ***********************************************
 
 //   $_ARCHON->config->CacheFiles = true;
 //   $_ARCHON->config->CachePermissions = 0755;
 
-
+ // ***********************************************
+// * Subject heading IDs for CHSTM list *
 // ***********************************************
-// * Search handling for identifiers             *
-// ***********************************************
-//
-//    If TRUE, will only return an exact match.
-//
-//    IF FALSE, will return an exact match if
-//       found and else will return a partial
-//       match. Note it will only return a single
-//       partial match, not all possible matches.
-//
-// ***********************************************
-
-$_ARCHON->config->SearchExactIdentifier=false;
+$_ARCHON->config->CHSTMSubjectList = array();
 
  // ***********************************************
-// * Request link configuration *
+// * Expand shelf field in admin for barcode *
 // ***********************************************
-include("config_request.inc.php");
+// Set to true in order to:
+//   - Expand shelf field width to 15 (to accomodate a barcode)
+//   - Expand section field width to 5 (to also fit shelf information)
+//
+// Note: Variable referenced from packages/collections/admin/collections.php
+
+$_ARCHON->config->ShelfFieldAsBarcode = false; 
+
+// **********************************************
+// * Restrict login by IP range *
+// ***********************************************
+// Note: Assumes that the account feature is used only by 
+// staff with access to the IP ranges specified. 
+//
+// Anyone not on the IP ranges specified will see the
+// restriction notice specified after attempting to login.
+
+$_ARCHON->config->RestrictAdminByIpRange = false;
+$_ARCHON->config->IpRestrictionNotice ="";
+$_ARCHON->config->AllowedAdminIpRanges = array();
+
 ?>

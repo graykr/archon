@@ -40,57 +40,7 @@ if($_ARCHON->config->AlertNoticeIHLC) {
 
 echo("<h1 id='titleheader'>" . $_ARCHON->PublicInterface->Title . "</h1>\n");
 
-/** Gather text to build a request link or other links to pre-filled forms **/
-
-	$requestTitle = ($objCollection->Title) ? $objCollection->Title : "";
-	$requestDates = ($objCollection->InclusiveDates) ? ", ".$objCollection->InclusiveDates : "";
-	$requestTitle = urlencode($requestTitle . $requestDates);
-
-	$requestIdentifier = ($objCollection->Classification) ? $objCollection->Classification->toString(LINK_NONE, true, false, true, false)."/".$objCollection->getString('CollectionIdentifier') : $objCollection->getString('CollectionIdentifier');
-
-	$requestExtent = ($objCollection->Extent) ? preg_replace('/\.(\d)0/', ".$1", $objCollection->getString('Extent')) . " " . $objCollection->getString('ExtentUnit') : "";
-	$requestExtent .= ($objCollection->AltExtentStatement) ? "; ".$objCollection->AltExtentStatement : "";
-
-/*For reading room request link */
-if($_ARCHON->config->AddRequestLink and $_ARCHON->config->RequestURL) 
-{
-	$requestBaseLink =	$_ARCHON->config->RequestURL;//defined in config file
-
-	//concatenate the field names (URL parameters) and metadata from the collection to form the request link
-	$requestLink = $requestBaseLink;
-	if($_ARCHON->config->RequestVarTitle){
-		$requestLink .= $_ARCHON->config->RequestVarTitle . $requestTitle;
-	}
-	if($_ARCHON->config->RequestVarIdentifier) {
-		$requestLink .= $_ARCHON->config->RequestVarIdentifier . $requestIdentifier;
-	}
-	if($_ARCHON->config->RequestVarDates) {
-		$requestLink .= $_ARCHON->config->RequestVarDates;
-		$requestLink .= ($objCollection->InclusiveDates) ? $objCollection->InclusiveDates : "";
-	}
-	if($_ARCHON->config->RequestVarExtent) {
-		$requestLink .= $_ARCHON->config->RequestVarExtent . $requestExtent;
-	}
-	
-	//location can be defined as a full string here, if defined in the config file, or added later (not yet coded)
-	if($_ARCHON->config->RequestHasConsistentLocation) {
-		if($_ARCHON->config->RequestVarLocation and $_ARCHON->config->RequestDefaultLocation){
-			$requestLink .= $_ARCHON->config->RequestVarLocation . $_ARCHON->config->RequestDefaultLocation;
-		}
-	}
-	
-	//for these variables, the values are defined in the config file (they will be the same for all collections)
-	if($_ARCHON->config->RequestStringBox) {
-		$requestLink .= $_ARCHON->config->RequestStringBox;
-	}
-	if($_ARCHON->config->RequestStringFolderNo){
-		$requestLink .= $_ARCHON->config->RequestStringFolderNo;
-	}
-	if($_ARCHON->config->RequestStringFolderTitle) {
-		$requestLink .= $_ARCHON->config->RequestStringFolderTitle;
-	}
-}
-/** End section for preparation of the request link.*/
+include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestprep.inc.php");
 
 /** Get user name for recording work needed or completed **/
 
@@ -650,32 +600,31 @@ echo("</div>"); //end ccardleft
 
 echo ("<div id='ccardprintcontact' class='smround'> ");
 
-//add request button
-if($requestLink) {
-	echo("<a href='" . $requestLink . "' target='_blank'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/box.png' alt='Request' style='padding-right:2px'/></a><a href='" . $requestLink . "' target='_blank'>");
-	if($_ARCHON->config->RequestLinkText) {
-		echo($_ARCHON->config->RequestLinkText);
-	} else {
-		echo("Submit request");
-	}
-	echo("</a>");
-
-	echo(" | ");
+/**add request button, or launch a modal with the location table if variable locations */
+//if it is a staff-only link, show this only if someone is logged in (note that repository restriction is addressed in the code for the modal and link itself)
+if(!$_ARCHON->config->StaffOnlyRequestLink){
+   include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
+} elseif($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ)){
+   include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestlink.inc.php");
 }
-//end section with the request button
 
 echo("<span class='print-friendly-link'><a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/printer.png' alt='Printer-friendly' /></a> <a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'>Printer-friendly</a>");
 
 
 echo(" | </span>");
 
-$emailsubject="Inquiry: IHLC Manuscript Collection";
+$emailmailto = "ihlc@library.illinois.edu";
+$emailsubject="Inquiry: IHLC Manuscript Collection Finding Aid";
+$emailReferralPage = "https://".urlencode($_SERVER['HTTP_HOST']). urlencode($_SERVER['REQUEST_URI']);
+$emailbody="%0D---Please type your message above this line---%0DReferral page: ".$emailReferralPage;
 
 if($objCollection->CollectionIdentifier) {
 	$emailsubject .= " (ID ".$objCollection->getString('CollectionIdentifier').")";
 }
-echo("<a href='mailto:ihlc@library.illinois.edu?subject=". $emailsubject ."'><img src='" . $_ARCHON->PublicInterface->ImagePath . "/email.png' alt='Email Us' /> </a><a href='mailto:ihlc@library.illinois.edu?subject=". $emailsubject ."'>Email Us</a>");
-
+echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");
+echo("<img src='". $_ARCHON->PublicInterface->ImagePath . "/email.png'/> </a>");
+echo("<a href='mailto:".$emailmailto."?subject=". $emailsubject .'&body='.$emailbody."'>");
+echo("Contact Us About This Collection</a>");
 echo("</div>");
 
 /* Link to email form (replaced above because the form is not sending email): 
@@ -748,7 +697,7 @@ if($objCollection->Scope || !empty($objCollection->Content) || ($objCollection->
 					  {
 						 //$ihlcDigitalContent
 						 $ihlcString .= "<li>";
-						 $ihlcString .= $ihlcDigitalContentArray[$ihlcKey]->toString(LINK_TOTAL, false);
+						 $ihlcString .= $ihlcDigitalContentArray[$ihlcKey]->toString(LINK_TOTAL, true);
 						 if ($ihlcValue==""){
 							$ihlcString .= ", undated";
 						 } else {
@@ -820,14 +769,21 @@ if($objCollection->Scope || !empty($objCollection->Content) || ($objCollection->
                if(!empty($objCollection->OtherURL))
                {
 					// only apply google analytics if not logged in as admin
-					if(!$_ARCHON->Security->userHasAdministrativeAccess())
-					{
-				  $onclick = ($_ARCHON->config->GACode && $_ARCHON->config->GACollectionsURL) ? "onclick='javascript: pageTracker._trackPageview(\"{$_ARCHON->config->GACollectionsURL}\");'" : "";
+						if(!$_ARCHON->Security->userHasAdministrativeAccess())
+						{
+					  $onclick = ($_ARCHON->config->GACode && $_ARCHON->config->GACollectionsURL) ? "onclick='javascript: pageTracker._trackPageview(\"{$_ARCHON->config->GACollectionsURL}\");'" : "";
+						}
+
+					if(strtolower(substr($objCollection->getString('OtherURL'),-3))=="pdf"){
+					   echo("<br /><strong><a href='?p=collections/findingaid&amp;id=".$objCollection->ID."#pdf-fa'>View full finding aid and PDF box/folder list</a></strong>");
+					} elseif($objCollection->getString('OtherURL')=="http://hdl.handle.net/2027/uc1.b4265910" OR $objCollection->getString('OtherURL')=="https://archive.org/details/guidetoheinricha00univ" OR $objCollection->getString('OtherURL')=="https://hdl.handle.net/2027/uiuo.ark:/13960/t9086670x"){
+						echo("<br /><strong><a href='?p=collections/findingaid&amp;id=".$objCollection->ID."#pdf-fa'>View full finding aid and published box/folder list</a></strong>");
+					} else {
+						echo("<div class='ccardcontent'><span class='ccardlabel'>Detailed list of collection contents:</span> <a href='");
+						echo($objCollection->getString('OtherURL')); ?>' <?php if(!$_ARCHON->Security->userHasAdministrativeAccess()) {echo($onclick);} ?> target="_blank"><?php echo($objCollection->getString('OtherURL')); 
+						echo("</a></div>");
 					}
-                  ?>
-               <div class='ccardcontent'><span class='ccardlabel'>Detailed list of collection contents:</span> <a href='<?php echo($objCollection->getString('OtherURL')); ?>' <?php if(!$_ARCHON->Security->userHasAdministrativeAccess()) {echo($onclick);} ?>><?php echo($objCollection->getString('OtherURL')); ?></a></div>
-                  <?php
-               }
+				}
 			   if(!empty($objCollection->OtherNote))
                {
                   ?>
@@ -848,38 +804,34 @@ if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ))
          ?>
 
    <?php
-   if(!empty($objCollection->LocationEntries))
-   {
+   if(!empty($objCollection->LocationEntries)){
+   //use the staff location summary table if it isn't a repository excluded from the request link system
+   //use the staff location table if the repository is excluded from the request link system
       ?>
 		<div id='ccardlocation' class='mdround'>
 
             <div class='ccardcontents'>
 			
                <span class='ccardstafflabel'>Storage Locations (staff view only):</span>
+               <br />
 			   
-                  <table id='locationtable' border='1'>
-                     <tr>
-                        <th>Content</th>
-                        <th>Location</th>
-                        <th>Range</th>
-                        <th>Section</th>
-                        <th>Shelf</th>
-                        <th>Extent</th>
-                     </tr>
-                     <tr>
-                        <td>
-      <?php echo($_ARCHON->createStringFromLocationEntryArray($objCollection->LocationEntries, '&nbsp;</td></tr><tr><td>', LINK_EACH, false, '&nbsp;</td><td>')); ?>
-                        </td>
-                     </tr>
-                  </table>
+               <?php
+               include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/stafflocationtable.inc.php");
+
+/*             if(!$_ARCHON->config->ExcludeRequestLink[$objCollection->RepositoryID]){
+                  include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/locationsummarystaff.inc.php");
+                  echo('<a href="#stafflocationtable">View full location list</a>');
+               } else {
+                  include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/stafflocationtable.inc.php");
+               }
+            } else {
+               echo("<p>No locations are listed for this collection.</p>");
+            } */
+            ?>
+
 				  <br /><br />
 				  <em>Note: To print the location information, please use the "<?php echo("<a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "&amp;templateset=print&amp;disabletheme=1'>Printer-friendly</a>");?>" version of this page.</em>
-      <?php
-   }
-   
 
-   
-   ?>
             </div>
 
 
@@ -887,15 +839,32 @@ if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ))
 
    <?php
 }
+}
 		 
 		 ?>
 
 		 </div>
  <!--end div ccardleft -->
  <?php
- /**
- if ($_ARCHON->Security->isAuthenticated()) {
-	echo("<div class='hide-link'><a href='?p=collections/controlcard&amp;id=" . $objCollection->ID . "'>Reload without highlighting</a></div>");
+if($_ARCHON->Security->verifyPermissions(MODULE_COLLECTIONS, READ) AND !$_ARCHON->config->ExcludeRequestLink[$objCollection->RepositoryID]){
+   ?>
+   <div style='clear:both;margin-left:1em;border-top:1px solid black' class='do-not-print'>
+   <p><strong>Additional Data Tables for Staff Use (hidden if not logged in)</strong></p><p>Copy these tables to Excel as needed to create bulk upload files.</strong></p>
+   <a href='#' onclick="toggleDisplay('locationupdate'); return false;"><img id='locationupdateImage' src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/plus.gif' alt='expand icon' /> <caption>Bulk update table for location entries</caption></a><br/>
+   <div style="display: none;" id="locationupdateResults">
+   <?php
+   include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/locationupdatetable.inc.php");
+   echo("</div>");
+   if($requestLink) {
+      ?>
+      <br />
+      <a href='#' onclick="toggleDisplay('bulkrequest'); return false;"><img id='bulkrequestImage' src='<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/plus.gif' alt='expand icon' /> <caption>Bulk request table, staff upload to Aeon (delete rows not needed)</caption></a><br/>
+      <div style="display: none;" id="bulkrequestResults">
+      <?php
+      include("packages/collections/templates/{$_ARCHON->PublicInterface->TemplateSet}/requestbulktable.inc.php");
+      echo("</div>");
+   }
+   echo("</div>");
 }
-*/
+
 ?>

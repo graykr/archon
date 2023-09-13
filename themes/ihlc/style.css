@@ -48,11 +48,17 @@ a:link {
 color:#33b;
 }
 
+#requestModalLink, #requestModalLink2 {
+	color:#33b;
+	text-decoration: underline;
+	cursor: pointer;
+	}
+
 a:visited {
 color:#999;
 }
 
-a:hover {
+a:hover, #requestModalLink:hover {
 background:#ddd;/*#fbdb7a;*/
 color:#10375D;
 }
@@ -61,11 +67,20 @@ a:active {
 color:#fff;
 }
 
-a:focus {
+a:focus, #requestModalLink:focus {
 outline:none;
 background:#ddd;/*#fbdb7a;*/
 color:#10375D;
 box-shadow: .2em .2em .4em #888888;
+}
+
+#headerbar a:focus, #contact-info-line a:focus {
+	outline: #009FD4 solid 2px;
+	background: transparent;
+}
+
+#pdfsearchlink a:focus, #searchblock input:focus{
+	outline: #009FD4 solid 2px;
 }
 
 h1 {
@@ -305,15 +320,13 @@ color: #10375D;
 
 
 position:absolute;
-background-color:#fff8e8;
-background-image: url('images/footergradient.gif');
-background-position:top left;
-background-repeat:repeat-x;
-border:1px solid #E8EEF7;
-font-size:75%;
+
+background: #e7e7e7;
+border: #ddd 1px solid;
+
 left:1.5em;
 margin-top:2em;
-width:20em;
+max-width:15em;
 padding:0 .5em;
 clear:none;
 float:left;
@@ -384,9 +397,14 @@ font-family:Adobe Garamond Pro, Garamond, Times New Roman, serif;
 }
 
 
-#topnavblock a, #researchblock a
+#researchblock a
 {
-color:#fff;
+	color:#fff;
+}
+
+#topnavblock a {
+	color:#fff;
+	display:block;
 }
 
 #headertitleblock a
@@ -474,11 +492,11 @@ min-width:1.33em;
 }
 
 #searchblock .button:hover {
-background:#FEF1B5;
+background:#AFC7DB;
 background-image:url('images/magglass.png');
 background-position:5% 50%;
 background-repeat:no-repeat;
-color:#889;
+color:#13294B;
 }
 
 #searchblock img {
@@ -731,24 +749,27 @@ background:#ebeeef;
 background-image:url('images/magglass.png');
 background-position:5% 50%;
 background-repeat:no-repeat;
-border:1px solid #ddd ;
+border:1px solid #1E3877 ;
 /*border-left:none;*/
 cursor:pointer;
 font-size:1.2em;
 font-weight:100;
-margin:0 0.6em 0 -0.25em;
-padding-left:1.4em;
-color:#888899;
+margin: 0em;
+padding-left: 1.4em;
+padding-right: .3em;
+padding-top: .1em;
+padding-bottom: 1.3em;
+color:#13294B;
 max-height:1.5em;
 min-width:1.33em;
 }
 
 .textcontainer .button:hover {
-background:#FEF1B5;
+background:#AFC7DB;
 background-image:url('images/magglass.png');
 background-position:5% 50%;
 background-repeat:no-repeat;
-color:#889;
+color:#13294B;
 }
 
 .keyphrase {
@@ -1077,10 +1098,16 @@ color:#FEF1B5;
 width:70%;
 }
 
-#fanavbox {
-font-size:small;
-vertical-align:top;
+#famain #ccardprintcontact {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	margin-top:0;
+}
 
+#fanavbox {
+font-size:85%;
+vertical-align:top;
 }
 
 #fabreadcrumbblock {
@@ -1146,16 +1173,20 @@ min-width:1.33em;
 }
 
 #fasearchblock .button:hover {
-background:#FEF1B5;
+background:#AFC7DB;
 background-image:url('images/magglass.png');
 background-position:5% 50%;
 background-repeat:no-repeat;
-color:#889;
+color:#13294B;
 }
 
 #fasearchblock img {
 vertical-align:middle;
 padding:0 0 0 0.3em;
+}
+
+.indent-text{
+	margin-left:2em;
 }
 
 /* END THEME STRUCTURES/FORMATTING -- BEGIN PUBLIC FILE FORMATTING */
@@ -1475,11 +1506,11 @@ margin:.3em 0.6em .3em -0.25em;
 }
 
 #dlsearchblock .button:hover {
-background:#FEF1B5;
+background:#AFC7DB;
 background-image:url('images/magglass.png');
 background-position:5% 50%;
 background-repeat:no-repeat;
-color:#889;
+color:#13294B;
 }
 
 #dlsearchblock img {
@@ -1621,26 +1652,26 @@ padding-top:1em;
 	float:right;
 }
 
-#locationtable {
-border-collapse:collapse;
-border:solid 1px #ddd;
-margin-left:1em;
+#locationtable, #locationsummarytable, .simple-table {
+	border-collapse:collapse;
+	border:solid 1px #ddd;
+	margin-left:1em;
 }
-
-#locationtable th {
-background:#f3f3f3;
-padding:0.3em;
+	
+#locationtable th, #locationsummarytable th, .simple-table th {
+	background:#f3f3f3;
+	padding:0.3em;
 }
-
-#locationtable tr {
-font-size:90%;
-padding:0.5em;
+	
+#locationtable tr, #locationsummarytable tr, .simple-table tr {
+	font-size:90%;
+	padding:0.5em;
 }
-
-#locationtable td {
-font-size:90%;
-padding:0.5em;
-text-align:center;
+	
+#locationtable td, #locationsummarytable td, .simple-table td {
+	font-size:90%;
+	padding:0.5em;
+	text-align:center;
 }
 
 
@@ -1884,11 +1915,11 @@ min-width:1.33em;
 }
 
 .researchformbox .button:hover {
-background:#FEF1B5;
+background:#AFC7DB;
 background-image:url('images/magglass.png');
 background-position:5% 50%;
 background-repeat:no-repeat;
-color:#889;
+color:#13294B;
 }
 
 
@@ -2068,6 +2099,89 @@ float:right;
 	font-size:5%;
 }
 
+/*for listall with subjects page*/
+#listall-with-subjects {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#listall-with-subjects td, #listall-with-subjects th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#listall-with-subjects tr:nth-child(even){background-color: #f2f2f2;}
+
+#listall-with-subjects th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #022544;
+  color: white;
+}
+
+/*for list subjects and locations pages*/
+#list-subjects, #list-styled {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#list-subjects td, #list-subjects th, #list-styled td, #list-styled th{
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#list-subjects tr:nth-child(even){background-color: #f2f2f2;}
+
+#list-subjects th, #list-styled th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #022544;
+  color: white;
+}
+
+/* Modal for request from location table, adapted from https://www.w3schools.com/howto/howto_css_modals.asp */
+/* The Modal (background) */
+.request-modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .request-modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 40%;
+	max-height: calc(100vh - 180px);
+	overflow-y: auto;
+  }
+  
+  /* The Close Button */
+  .request-modal-close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+  }
+  
+  .request-modal-close:hover,
+  .request-modal-close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+  }
 
 
 /*Adjustments for smaller screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
@@ -2196,7 +2310,7 @@ float:right;
 }
 
 @media print {
-    #top, #headernav, #userinfo, #ccardprintcontact, #ccardlocation, #ccardstaff, #ihlc-message, .edit, .hide-link{
+    #top, #headernav, #userinfo, #ccardprintcontact, #ccardlocation, #ccardstaff, #ihlc-message, .edit, .hide-link, .do-not-print{
 		display:none;
 	}
 	

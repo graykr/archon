@@ -34,7 +34,34 @@ elseif ($_REQUEST['f'] == 'listall')
 		require("listall.inc.php");
 		return;
 	}
-} elseif ($_REQUEST['f'] == 'openidentifiers')
+} elseif ($_REQUEST['f'] == 'listall-locations')
+{
+	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("listall-locations.inc.php");
+		return;
+	}
+}elseif ($_REQUEST['f'] == 'listall-with-subj')
+{
+	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("listall-with-subj.inc.php");
+		return;
+	}
+}	elseif ($_REQUEST['f'] == 'list-subjects')
+{
+	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("list-subjects.inc.php");
+		return;
+	}
+}elseif ($_REQUEST['f'] == 'openidentifiers')
 {
 	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
 		echo("<p>This page is admin access only. You must login to proceed.</p>");
@@ -43,9 +70,26 @@ elseif ($_REQUEST['f'] == 'listall')
 		require("openidentifiers.inc.php");
 		return;
 	}
-} elseif ($_REQUEST['f'] == 'identifiersearch')
+} elseif($_REQUEST['f'] == 'barcodelookup')
+{
+	if(!$_ARCHON->Security->userHasAdministrativeAccess()) {
+		echo("<p>This page is admin access only. You must login to proceed.</p>");
+		return;
+	} else {
+		require("barcodelookup.inc.php");
+		return;
+	}
+}elseif ($_REQUEST['f'] == 'identifiersearch')
 {
 	require("identifiersearch.inc.php");
+	return;
+}elseif ($_REQUEST['f'] == 'chstm-list')
+{
+	require("chstm-list.inc.php");
+	return;
+}elseif ($_REQUEST['f'] == 'chstm-table')
+{
+	require("chstm-table.inc.php");
 	return;
 }
 //notice
@@ -130,23 +174,23 @@ echo("</div>");
 </div>
 
 
-	<div class="bground textcontainer box1"><h2>Search Manuscript Collection Descriptions</h2>
+	<div class="bground textcontainer box1"><label for='mainsearch'><h2>Search Manuscript Collection Descriptions</h2></label>
 		<p>Search our collection descriptions for keywords, such as names, places, formats, or topics here. <br />To search by collection number, please use the <a href="#identifiersearch">identifier search box</a> at the bottom of the page.</p>
 		<div id ="multisearch">
 		 <form method="get" id="multisearchbox" action='index.php' accept-charset="UTF-8" onsubmit="if(!this.q.value) { alert('Please enter search terms.'); return false; } else { return true; }">
 		 
 		 <input type="hidden" id="hiddenquery" name="p" value="core/search"/>
 		 
-		 <input type="text" size="40" maxlength="150" name="q" id="q" class="searchinput" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="100" autofocus/>
+		 <input type="text" size="40" maxlength="150" name="q" id="mainsearch" class="searchinput" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="0" autofocus/>
 		 
-		 <input type="submit" value="Find" tabindex="300" class='button' title="Search" />
+		 <input type="submit" value="Find" tabindex="0" class='button' title="Search" />
 
 		<br/>
 		
 		<div id="multisearchoptions">
 		<input type="radio" class="radio_option" id="opt1" name="multisearch" onclick="document.getElementById('multisearchbox').action='index.php'; document.getElementById('hiddenquery').name='p'; document.getElementById('hiddenquery').value='core/search';" checked="checked"/> <label for="opt1">Search all collection and creator summaries in this database</label>
 		<br />- or -<br />
-		<input type="radio" name="multisearch" id="opt2" onclick="document.getElementById('multisearchbox').action='https://www.google.com/search'; document.getElementById('hiddenquery').name='hq'; document.getElementById('hiddenquery').value='inurl:www.library.illinois.edu/ihx/inventories';"/><label for="opt2">Use Google to search detailed folder and box lists for collections</label>
+		<input type="radio" name="multisearch" id="opt2" onclick="document.getElementById('multisearchbox').action='https://www.google.com/search'; document.getElementById('hiddenquery').name='hq'; document.getElementById('hiddenquery').value='site:www.library.illinois.edu/ihx/inventories OR site:files.archon.library.illinois.edu/ihlcsfa';"/><label for="opt2">Use Google to search detailed folder and box lists for collections</label>
 		
 		</div>
 		</form></div>
@@ -182,19 +226,31 @@ echo("</div>");
 
 
 <div style="clear:both;"></div>
-<div class="bground textcontainer box4"><h2>Look Up Collection by Identifier</h2>
+<div class="bground textcontainer box4"><label for='identifier'><h2>Look Up Collection by Identifier</h2></label>
 	<p>If you know the collection identifier number, you may look up the corresponding collection record in the database here.<p>
 	<form id="identifiersearch" action="index.php" accept-charset="UTF-8" method="get" onsubmit="if(!this.q.value) { alert('Please enter search terms.'); return false; } else { return true; }">
         <div>
             <input type="hidden" name="f" value="identifiersearch" />
-            <label for='q'></label>
-			<input class="searchinput" type="text" size="15" maxlength="10" name="q" id="q" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="100" />
-            <input type="submit" value="Find" tabindex="300" class='button' title="Search" /> 
+			<input class="searchinput" type="text" size="15" maxlength="10" name="q" id="identifier" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="0" />
+            <input type="submit" value="Find" tabindex="0" class='button' title="Search" /> 
         </div>
 	</form>
 </div>
-
-
+<?php
+if($_ARCHON->Security->userHasAdministrativeAccess()) {
+?>
+	<div class="bground textcontainer box4"><label for='barcode'><h2>Look Up by Barcode</h2></label>
+		<form id="barcodelookup" action="index.php" accept-charset="UTF-8" method="get" onsubmit="if(!this.barcode.value) { alert('Please enter barcode value.'); return false; } else { return true; }">
+			<div>
+				<input type="hidden" name="f" value="barcodelookup" />
+				<input class="searchinput" type="text" size="15" maxlength="20" name="barcode" id="barcode" value="<?php echo(encode($_ARCHON->QueryString, ENCODE_HTML)); ?>" tabindex="0" />
+				<input type="submit" value="Lookup" tabindex="0" class='button' title="Lookup" /> 
+			</div>
+		</form>
+	</div>
+<?php
+}
+?>
 <!--
 <div style='border:red 1px solid; text-align:center; float:left; font-size:small'>
 <img src="<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/memstad.gif" alt="Photo of Memorial Stadium, circa 1925"><br/>Memorial Stadium, circa 1925

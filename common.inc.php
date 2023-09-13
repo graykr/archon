@@ -333,6 +333,14 @@ function encode($String, $Encoding)
       return $String;
    }
 
+   //test encoding and convert to utf-8 from latin-1 as needed
+   //(needed if the server does not provide utf-8 encoded characters as expected)
+   $testString = $String;
+   $testSpecialString = htmlspecialchars($testString, ENT_QUOTES, 'UTF-8');
+   if(!$testSpecialString && $testString){
+      $String = encoding_convert_encoding($testString,"UTF-8","ISO-8859-1");
+   }
+
    if($Encoding == ENCODE_HTML || $Encoding == ENCODE_HTMLTHENJAVASCRIPT)
    {
       //ENT_NOQUOTES?

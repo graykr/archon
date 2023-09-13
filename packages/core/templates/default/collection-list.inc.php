@@ -69,7 +69,7 @@ if ($_ARCHON->Security->Session->verifysession($session)){
         }
 		$arrCollectionbatch = Normalize($arrCollectionbatch);
 		$arrCollectionbatch = objectToArray($arrCollectionbatch); 		
-		if ($_ARCHON->db->ServerType == 'MSSQL') {array_walk_recursive($arrCollectionbatch, 'myutf8_encode');}  //fix unicode for MSSQL migrations; function will incorrectly transform mysql unicode
+		if ($_ARCHON->db->ServerType == 'MSSQL'AND !$_ARCHON->config->DatabaseEncodingUTF8) {array_walk_recursive($arrCollectionbatch, 'myutf8_encode');}  //fix unicode for MSSQL migrations; function will incorrectly transform mysql unicode
 		echo $_ARCHON->bbcode_to_html(json_encode(($arrCollectionbatch)));
         }
         else

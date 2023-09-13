@@ -31,6 +31,30 @@ class Security extends AObject
 
       if($_REQUEST['archonlogin'] && $_REQUEST['archonpassword'])
       {
+
+         if ($_ARCHON->config->RestrictAdminByIpRange && isset($_ARCHON->config->AllowedAdminIpRanges)) {
+
+            $isAllowedIp = false;
+
+            foreach ($_ARCHON->config->AllowedAdminIpRanges as $cidr) {
+               list($subnet, $mask) = explode('/', $cidr);
+               if ((ip2long($_SERVER['REMOTE_ADDR']) & ~((1 << (32 - $mask)) - 1) ) == ip2long($subnet)) {
+                  $isAllowedIp = true;
+               }
+            }
+
+            if (! $isAllowedIp) {
+               if($_ARCHON->config->IpRestrictionNotice){
+                  $noticeIpRestriction = $_ARCHON->config->IpRestrictionNotice;
+               } else {
+                  $noticeIpRestriction = "Your IP address is not in the allowed range";
+               }
+               $_ARCHON->declareError($noticeIpRestriction);
+               return ;
+            }
+
+         }
+
          if(!$this->verifyCredentials($_REQUEST['archonlogin'], $_REQUEST['archonpassword'], $_REQUEST['rememberme']))
          {
             $_ARCHON->declareError("Authentication Failed");

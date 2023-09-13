@@ -220,10 +220,17 @@ function collections_ui_main()
                    'searchtype' => 'json'
                )
    ));
+   
    $locationSection->insertRow('locations_content')->insertTextField('Content', 10);
    $locationSection->insertRow('locations_rangevalue')->insertTextField('RangeValue', 2);
-   $locationSection->insertRow('locations_section')->insertTextField('Section', 2);
-   $locationSection->insertRow('locations_shelf')->insertTextField('Shelf', 2);
+   if($_ARCHON->config->ShelfFieldAsBarcode){
+      $locationSection->insertRow('locations_section')->insertTextField('Section', 5);
+      $locationSection->insertRow('locations_shelf')->insertTextField('Shelf', 15);
+   } else {
+      $locationSection->insertRow('locations_section')->insertTextField('Section', 2);
+      $locationSection->insertRow('locations_shelf')->insertTextField('Shelf', 2);
+   }
+   
    $locationSection->insertRow('locations_extent');
    $locationSection->getRow('locations_extent')->insertTextField('Extent', 4, 10);
    $locationSection->getRow('locations_extent')->insertSelect('ExtentUnitID', 'getAllExtentUnits');

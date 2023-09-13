@@ -63,7 +63,7 @@ $_ARCHON->PublicInterface->addNavigation('RBML', 'http://library.illinois.edu/rb
       <meta name="og:site_name" content="Rare Book & Manuscript Library Manuscript Collections Database"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title><?php echo(strip_tags($_ARCHON->PublicInterface->Title)); ?></title>
-      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css" />
+      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css?v=20230314" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/cluetip/jquery.cluetip.css" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/jgrowl/jquery.jgrowl.css" />
       <link rel="icon" type="image/ico" href="<?php echo($_ARCHON->PublicInterface->ImagePath); ?>/favicon.ico"/>
@@ -296,39 +296,25 @@ $_ARCHON->PublicInterface->addNavigation('RBML', 'http://library.illinois.edu/rb
                   if(!empty($objCollection->AccessRestrictions) || !empty($objCollection->UseRestrictions) || !empty($objCollection->PhysicalAccessNote) || !empty($objCollection->TechnicalAccessNote) || !empty($objCollection->AcquisitionSource) || !empty($objCollection->AcquisitionMethod) || !empty($objCollection->AppraisalInformation) || !empty($objCollection->CustodialHistory) || !empty($objCollection->OrigCopiesNote) || !empty($objCollection->OrigCopiesURL) || !empty($objCollection->RelatedMaterials) || !empty($objCollection->RelatedMaterialsURL) || !empty($objCollection->RelatedPublications) || !empty($objCollection->PreferredCitation) || !empty($objCollection->ProcessingInfo) || !empty($objCollection->RevisionHistory))
                   {
             ?> <p><a href="#admininfo" tabindex="700">Administrative Information</a></p> <?php } ?>
-               <?php
-                  if(!empty($objCollection->Content))
+   
+   <?php if(!empty($objCollection->Content))
                   {
-               ?> <p><a href="#boxfolder" tabindex="800">Detailed Description</a></p><?php
-                  }
+ ?> <p><a href="#boxfolder" tabindex="800">Detailed Description</a></p><?php
+                  
 
                   foreach($objCollection->Content as $ID => $objContent)
                   {
-
-                     if(!$objContent->ParentID)
+                     if(!$objContent->ParentID && trim($objContent->Title))
                      {
-                        if($objContent->enabled())
-                        {
-                           if(trim($objContent->Title))
-                           {
-                              echo("<p class='faitemcontent'><a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;q=$_ARCHON->QueryStringURL&amp;rootcontentid=$ID#id$ID'>" . $objContent->getString('Title') . "</a></p>\n");
-                           }
-                           else
-                           {
-                              $LevelContainerString = $objContent->LevelContainer ? $objContent->LevelContainer->getString('LevelContainer') : '';
-                              echo("<p class='faitemcontent'><a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;q=$_ARCHON->QueryStringURL&amp;rootcontentid=$ID#id$ID'>{$LevelContainerString} " . $objContent->getString('LevelContainerIdentifier', 0, false) . "</a></p>\n");
-                           }
-                        }
-                        else
-                        {
-                           
-                           $objInfoRestrictedPhrase = Phrase::getPhrase('informationrestricted', PACKAGE_CORE, 0, PHRASETYPE_PUBLIC);
-                           $strInfoRestricted = $objInfoRestrictedPhrase ? $objInfoRestrictedPhrase->getPhraseValue(ENCODE_HTML) : 'Information restricted, please contact us for additional information.';
-                           echo("<p class='faitemcontent'>{$strInfoRestricted}</p>\n");
-                        }
+                        echo("<p class='faitemcontent'><a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;q=$_ARCHON->QueryStringURL&amp;rootcontentid=$ID#id$ID'>" . $objContent->getString('Title') . "</a></p>\n");
+                     }
+                     else if(!$objContent->ParentID)
+                     {
+                        $LevelContainerString = $objContent->LevelContainer ? $objContent->LevelContainer->getString('LevelContainer') : '';
+                        echo("<p class='faitemcontent'><a href='?p=collections/findingaid&amp;id=$objCollection->ID&amp;q=$_ARCHON->QueryStringURL&amp;rootcontentid=$ID#id$ID'>{$LevelContainerString} " . formatNumber($objContent->LevelContainerIdentifier) . "</a></p>\n");
                      }
                   }
-               ?>
+            ?>
                   <form action="index.php" accept-charset="UTF-8" method="get" onsubmit="if(!this.q.value) { alert('Please enter search terms.'); return false; } else { return true; }">
                      <div id="fasearchblock">
                         <input type="hidden" name="p" value="core/search" />
@@ -340,6 +326,15 @@ $_ARCHON->PublicInterface->addNavigation('RBML', 'http://library.illinois.edu/rb
                      </div>
                   </form>
 <?php
+                  }//end if statement for if collection content is not empty
+
+                  if($objCollection->OtherURL){
+
+                     if(strtolower(substr($objCollection->getString('OtherURL'),-3))=="pdf"){
+                        echo( '<p><a href="#pdf-fa" tabindex="800">PDF Box/Folder List</a></p>');
+                     }
+
+                  }
                   if(defined('PACKAGE_COLLECTIONS'))
                   {
                      echo("<hr/><p class='center' style='font-weight:bold'><a href='https://forms.illinois.edu/sec/7016277' target='_blank'>Contact us about this collection</a></p>");
