@@ -12,7 +12,8 @@ class FindingAidCache extends AObject
          return '';
       }
 
-      $query = "SELECT Dirty,FindingAidText FROM tblCollections_FindingAidCache WHERE CollectionID = ? AND TemplateSet = ? AND ReadPermissions = ? AND RootContentID = ? ";
+      $query = "SELECT TOP 1 Dirty,FindingAidText FROM tblCollections_FindingAidCache WHERE CollectionID = ? AND TemplateSet = ? AND ReadPermissions = ? AND RootContentID = ? ORDER BY id desc";
+
 
       $prep = $_ARCHON->mdb2->prepare($query, array('integer', 'text', 'integer', 'integer'), MDB2_PREPARE_RESULT);
 
@@ -50,7 +51,7 @@ class FindingAidCache extends AObject
       $prep = $_ARCHON->mdb2->prepare($query, array('integer', 'text', 'integer', 'integer'), MDB2_PREPARE_RESULT);
 
       $result = $prep->execute(array($CollectionID, $TemplateSet, $ReadPermissions, $RootContentID));
-      
+
       if(pear_isError($result))
       {
          echo($query);
