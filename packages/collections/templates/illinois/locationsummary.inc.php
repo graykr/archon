@@ -35,14 +35,14 @@ if(!empty($objCollection->LocationEntries) && !empty($_ARCHON->config->RequestLi
 		if($requestLink) {
          if(!$_ARCHON->config->StaffOnlyRequestLink){
             if($_ARCHON->config->RequestHasConsistentLocation){
-               echo("<a href='" . $requestLink . "' target='_blank'>");
+               echo("<a href='" . $requestLink . "' target='_blank' tabindex='0'>");
             } else {
                if(count($uniqueLocationCodes)>1){
                   echo('<p><em>Click "');
                   echo($_ARCHON->config->RequestLinkText ? $_ARCHON->config->RequestLinkText : "Submit request");
                   echo('" to view locations for each box.</em></p>');
                }
-               echo("<a id='requestModalLink2'>");
+               echo("<a id='requestModalLink2' tabindex='0' role='button'>");
             }
             echo("<img src='" . $_ARCHON->PublicInterface->ImagePath . "/box.png' alt='Request' style='padding-right:2px'/>");
             echo($_ARCHON->config->RequestLinkText ? $_ARCHON->config->RequestLinkText : "Submit request");
@@ -57,9 +57,22 @@ var modal = document.getElementById("requestModal");
 
 var btn2 = document.getElementById("requestModalLink2");
 
-btn2.onclick = function() {
-  modal.style.display = "block";
-}
+btn2.addEventListener('click', function() {
+  openRequestModal();
+});
+
+btn2.addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+	openRequestModal();
+  }
+});
+
+btn2.addEventListener("keydown", function(event) {
+  if (event.keyCode == 32) {
+  event.preventDefault();
+	openRequestModal();
+  }
+});
 
 </script>
 
