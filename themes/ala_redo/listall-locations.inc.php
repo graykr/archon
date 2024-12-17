@@ -128,9 +128,13 @@ if(!$_ARCHON->Error)
 					echo("<td class='minimize-info'>");
 					echo($objLocationEntry->getString('ID'));
 					echo("</td>");
-					//split content value on dashes
+					//split content value on dashes unless if is says "e-records"
 					$objLocContentStr=$objLocationEntry->getString('Content');
-					$objLocContentArray=explode("-",$objLocContentStr);
+					if($objLocContentStr != "e-records"){
+						$objLocContentArray=explode("-",$objLocContentStr);
+					} else {
+						$objLocContentArray=explode(",",$objLocContentStr);
+					}
 					echo("<td>");
 					echo(count($objLocContentArray));
 					echo("</td>");
