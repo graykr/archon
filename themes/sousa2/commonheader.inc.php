@@ -15,7 +15,7 @@ $_ARCHON->PublicInterface->addNavigation('Archon', 'index.php', true);
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title><?php echo(strip_tags($_ARCHON->PublicInterface->Title)); ?></title>
-      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css?v=20240717" />
+      <link rel="stylesheet" type="text/css" href="themes/<?php echo($_ARCHON->PublicInterface->Theme); ?>/style.css?v=20241220" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/cluetip/jquery.cluetip.css" />
       <link rel="stylesheet" type="text/css" href="<?php echo($_ARCHON->PublicInterface->ThemeJavascriptPath); ?>/jgrowl/jquery.jgrowl.css" />
 
@@ -250,4 +250,27 @@ $_ARCHON->PublicInterface->addNavigation('Archon', 'index.php', true);
          }
          /* ]]> */
       </script>
+      <?php
+      if(defined('PACKAGE_COLLECTIONS'))
+      {
+         if($_ARCHON->QueryString && $_ARCHON->Script == 'packages/core/pub/search.php')
+         {
+            ?>
+            <script>
+            window.onload = function checkArchonInfo() {
+               if($('#archoninfo').length > 0){
+                  $(".show-if-error").hide();
+               } else{
+                  $(".show-if-error").show();
+               }
+            }
+            </script>
+            <?php
+            // add note for how to recover from the memory error (hide if footer is displaying)
+            echo("<div id='custom-message' class='show-if-error'>Did your search fail? Click here to <a href='?p=core/search&q=");
+            echo(encode($_ARCHON->QueryString, ENCODE_HTML));
+            echo("&content=0'>try searching again in the collection summaries only</a>.</div>");
+         }
+      }
+      ?>
       <div id="main">

@@ -1574,6 +1574,26 @@ img.digcontentfile {
 	background:transparent;
   }
 
+/*Styling for custom message if search fails*/
+#custom-message {
+   text-align:center;
+   margin:.5em 1em -0.5em 1em;
+   padding:.5em;
+   border:black 1px solid;
+   background:#fbdb7a;
+   font-weight:bold;
+   }
+   
+   #custom-message.show-if-error {
+       padding: 2em;
+       font-size: larger;
+       border: 4px dotted;
+   }
+   
+   #custom-message a, #custom-message a:visited {
+   color:#BE1E2D;
+   }
+
 /*Adjustments for smaller screens. Note that the header files in the theme will need to be upgraded to HTML5 with a viewport meta tag for this styling to display properly on a phone as intended.*/
 @media screen and (max-width: 750px) {
 
